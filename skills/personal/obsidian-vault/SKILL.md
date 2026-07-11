@@ -1,31 +1,31 @@
 ---
 name: obsidian-vault
-description: Search, create, and manage notes in the Obsidian vault with wikilinks and index notes. Use when user wants to find, create, or organize notes in Obsidian.
+description: ค้นหา สร้าง และจัดการ note ใน Obsidian vault ด้วย wikilinks และ index note ใช้เมื่อ user อยากหา สร้าง หรือจัดระเบียบ note ใน Obsidian
 ---
 
 # Obsidian Vault
 
-## Vault location
+## ตำแหน่งของ vault
 
 `/mnt/d/Obsidian Vault/AI Research/`
 
-Mostly flat at root level.
+ส่วนใหญ่เป็นไฟล์วางแบน ๆ อยู่ที่ระดับ root
 
-## Naming conventions
+## ธรรมเนียมการตั้งชื่อ
 
-- **Index notes**: aggregate related topics (e.g., `Ralph Wiggum Index.md`, `Skills Index.md`, `RAG Index.md`)
-- **Title case** for all note names
-- No folders for organization - use links and index notes instead
+- **Index note**: รวมหัวข้อที่เกี่ยวข้องกันไว้ด้วยกัน (เช่น `Ralph Wiggum Index.md`, `Skills Index.md`, `RAG Index.md`)
+- ใช้ **Title Case** กับชื่อ note ทุกอัน
+- ไม่ใช้ folder ในการจัดระเบียบ - ใช้ link กับ index note แทน
 
-## Linking
+## การ link
 
-- Use Obsidian `[[wikilinks]]` syntax: `[[Note Title]]`
-- Notes link to dependencies/related notes at the bottom
-- Index notes are just lists of `[[wikilinks]]`
+- ใช้ syntax `[[wikilinks]]` ของ Obsidian: `[[Note Title]]`
+- แต่ละ note จะ link ไปหา dependency/note ที่เกี่ยวข้องไว้ที่ท้ายไฟล์
+- index note ก็คือ list ของ `[[wikilinks]]` เฉย ๆ
 
-## Workflows
+## Workflow
 
-### Search for notes
+### ค้นหา note
 
 ```bash
 # Search by filename
@@ -35,24 +35,24 @@ find "/mnt/d/Obsidian Vault/AI Research/" -name "*.md" | grep -i "keyword"
 grep -rl "keyword" "/mnt/d/Obsidian Vault/AI Research/" --include="*.md"
 ```
 
-Or use Grep/Glob tools directly on the vault path.
+หรือจะใช้ Grep/Glob tool ตรง ๆ บน path ของ vault ก็ได้
 
-### Create a new note
+### สร้าง note ใหม่
 
-1. Use **Title Case** for filename
-2. Write content as a unit of learning (per vault rules)
-3. Add `[[wikilinks]]` to related notes at the bottom
-4. If part of a numbered sequence, use the hierarchical numbering scheme
+1. ตั้งชื่อไฟล์แบบ **Title Case**
+2. เขียนเนื้อหาให้เป็นหนึ่งหน่วยของการเรียนรู้ (ตามกฎของ vault)
+3. เพิ่ม `[[wikilinks]]` ไปยัง note ที่เกี่ยวข้องไว้ที่ท้ายไฟล์
+4. ถ้าเป็นส่วนหนึ่งของลำดับที่มีเลขกำกับ ให้ใช้ระบบเลขแบบลำดับชั้น
 
-### Find related notes
+### หา note ที่เกี่ยวข้อง
 
-Search for `[[Note Title]]` across the vault to find backlinks:
+ค้นหา `[[Note Title]]` ทั่วทั้ง vault เพื่อหา backlink:
 
 ```bash
 grep -rl "\\[\\[Note Title\\]\\]" "/mnt/d/Obsidian Vault/AI Research/"
 ```
 
-### Find index notes
+### หา index note
 
 ```bash
 find "/mnt/d/Obsidian Vault/AI Research/" -name "*Index*"

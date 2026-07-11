@@ -1,75 +1,75 @@
 ---
 name: to-spec
-description: Turn the current conversation into a spec and publish it to the project issue tracker — no interview, just synthesis of what you've already discussed.
+description: เปลี่ยนบทสนทนาปัจจุบันให้เป็น spec แล้ว publish ขึ้น issue tracker ของโปรเจกต์ — ไม่มีการสัมภาษณ์ แค่สังเคราะห์จากสิ่งที่คุยกันมาแล้ว
 disable-model-invocation: true
 ---
 
-This skill takes the current conversation context and codebase understanding and produces a spec (you may know this document as a PRD). Do NOT interview the user — just synthesize what you already know.
+skill นี้เอา context ของบทสนทนาปัจจุบันและความเข้าใจใน codebase มาผลิตเป็น spec (บางคนอาจรู้จักเอกสารแบบนี้ในชื่อ PRD) ห้ามสัมภาษณ์ user — แค่สังเคราะห์จากสิ่งที่รู้อยู่แล้ว
 
-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+ข้อมูล issue tracker และชุดคำศัพท์ของ triage label ควรถูกเตรียมมาให้แล้ว — ถ้ายังไม่มีให้รัน `/setup-matt-pocock-skills`
 
-## Process
+## ขั้นตอน
 
-1. Explore the repo to understand the current state of the codebase, if you haven't already. Use the project's domain glossary vocabulary throughout the spec, and respect any ADRs in the area you're touching.
+1. สำรวจ repo เพื่อทำความเข้าใจสถานะปัจจุบันของ codebase ถ้ายังไม่ได้ทำ ใช้คำศัพท์จาก domain glossary ของโปรเจกต์ให้สม่ำเสมอตลอดทั้ง spec และเคารพ ADR ที่มีอยู่ในบริเวณของ codebase ที่กำลังแตะ
 
-2. Sketch out the seams at which you're going to test the feature. Existing seams should be preferred to new ones. Use the highest seam possible. If new seams are needed, propose them at the highest point you can. The fewer seams across the codebase, the better - the ideal number is one.
+2. ร่างว่าจะ test feature นี้ที่ seam (จุดต่อสาธารณะที่เราใช้ test พฤติกรรม) ไหนบ้าง ควรเลือกใช้ seam ที่มีอยู่แล้วก่อนสร้างใหม่ ใช้ seam ที่อยู่สูงที่สุดเท่าที่เป็นไปได้ ถ้าจำเป็นต้องมี seam ใหม่ ให้เสนอไว้ที่จุดสูงสุดเท่าที่ทำได้ ยิ่งทั้ง codebase มี seam น้อยยิ่งดี — จำนวนในอุดมคติคือหนึ่งเดียว
 
-Check with the user that these seams match their expectations.
+เช็คกับ user ว่า seam เหล่านี้ตรงกับที่เขาคาดหวังไว้
 
-3. Write the spec using the template below, then publish it to the project issue tracker. Apply the `ready-for-agent` triage label - no need for additional triage.
+3. เขียน spec ตาม template ด้านล่าง แล้ว publish ขึ้น issue tracker ของโปรเจกต์ ติด triage label `ready-for-agent` — ไม่ต้อง triage เพิ่มอีก
 
 <spec-template>
 
-## Problem Statement
+## โจทย์ปัญหา
 
-The problem that the user is facing, from the user's perspective.
+ปัญหาที่ user กำลังเจอ เล่าจากมุมมองของ user
 
-## Solution
+## แนวทางแก้
 
-The solution to the problem, from the user's perspective.
+วิธีแก้ปัญหา จากมุมมองของ user
 
 ## User Stories
 
-A LONG, numbered list of user stories. Each user story should be in the format of:
+รายการ user story แบบมีเลขกำกับ ยาว ๆ แต่ละ user story ต้องอยู่ในรูปแบบ:
 
-1. As an <actor>, I want a <feature>, so that <benefit>
+1. ในฐานะ <actor> ฉันต้องการ <feature> เพื่อ <benefit>
 
 <user-story-example>
-1. As a mobile bank customer, I want to see balance on my accounts, so that I can make better informed decisions about my spending
+1. ในฐานะลูกค้าธนาคารบนมือถือ ฉันต้องการเห็นยอดเงินในบัญชีของฉัน เพื่อให้ตัดสินใจเรื่องการใช้จ่ายได้อย่างมีข้อมูลมากขึ้น
 </user-story-example>
 
-This list of user stories should be extremely extensive and cover all aspects of the feature.
+รายการ user story นี้ต้องละเอียดครอบคลุมสุด ๆ และแตะทุกแง่มุมของ feature
 
-## Implementation Decisions
+## ข้อตัดสินใจด้าน implementation
 
-A list of implementation decisions that were made. This can include:
+รายการการตัดสินใจด้าน implementation ที่เกิดขึ้น ซึ่งอาจรวมถึง:
 
-- The modules that will be built/modified
-- The interfaces of those modules that will be modified
-- Technical clarifications from the developer
-- Architectural decisions
-- Schema changes
-- API contracts
-- Specific interactions
+- module ที่จะสร้าง/แก้ไข
+- interface ของ module เหล่านั้นที่จะถูกแก้ไข
+- ข้อชี้แจงเชิงเทคนิคจาก developer
+- การตัดสินใจเชิงสถาปัตยกรรม
+- การเปลี่ยน schema
+- API contract
+- interaction เฉพาะจุด
 
-Do NOT include specific file paths or code snippets. They may end up being outdated very quickly.
+ห้ามใส่ file path หรือ code snippet แบบเจาะจง เพราะพวกมันอาจล้าสมัยเร็วมาก
 
-Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it within the relevant decision and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.
+ข้อยกเว้น: ถ้า prototype ให้ snippet ที่บันทึกการตัดสินใจได้แม่นยำกว่าคำบรรยาย (state machine, reducer, schema, รูปร่างของ type) ให้แทรกมันไว้ในข้อตัดสินใจที่เกี่ยวข้อง พร้อมโน้ตสั้น ๆ ว่ามาจาก prototype ตัดให้เหลือเฉพาะส่วนที่อัดแน่นด้วยการตัดสินใจ — ไม่ใช่ demo ที่รันได้ เอาแค่ส่วนสำคัญ
 
-## Testing Decisions
+## ข้อตัดสินใจด้านการ test
 
-A list of testing decisions that were made. Include:
+รายการการตัดสินใจด้านการ test ที่เกิดขึ้น ให้ใส่:
 
-- A description of what makes a good test (only test external behavior, not implementation details)
-- Which modules will be tested
-- Prior art for the tests (i.e. similar types of tests in the codebase)
+- คำอธิบายว่า test ที่ดีเป็นอย่างไร (test เฉพาะพฤติกรรมภายนอก ไม่ใช่รายละเอียดของ implementation)
+- module ไหนบ้างที่จะถูก test
+- ตัวอย่างที่มีอยู่ก่อนแล้วสำหรับ test พวกนี้ (เช่น test แนวเดียวกันที่มีอยู่ใน codebase)
 
-## Out of Scope
+## นอกขอบเขต
 
-A description of the things that are out of scope for this spec.
+คำอธิบายสิ่งที่อยู่นอกขอบเขตของ spec นี้
 
-## Further Notes
+## โน้ตเพิ่มเติม
 
-Any further notes about the feature.
+โน้ตอื่น ๆ เกี่ยวกับ feature นี้
 
 </spec-template>

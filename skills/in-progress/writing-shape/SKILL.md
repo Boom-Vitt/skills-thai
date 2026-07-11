@@ -1,79 +1,79 @@
 ---
 name: writing-shape
-description: Writing, exploit — shape raw material into an article, paragraph by paragraph.
+description: งานเขียน โหมด exploit — ปั้นวัตถุดิบดิบให้เป็นบทความ ทีละย่อหน้า
 disable-model-invocation: true
 ---
 
 <what-to-do>
 
-The user has passed (or will pass) a markdown file of raw material. Treat it as the input pile — anything from a tidy list of fragments to a wall of unstructured prose to a transcript. The format does not matter. Read it end-to-end before doing anything else.
+user ได้ส่ง (หรือกำลังจะส่ง) ไฟล์ markdown ของวัตถุดิบดิบมาให้ ให้มองมันเป็นกอง input — จะเป็น list ของ fragment ที่เรียบเรียงมาแล้ว กำแพง prose ไร้โครงสร้าง หรือ transcript ก็ได้ format ไม่สำคัญ อ่านให้จบตั้งแต่ต้นจนท้ายก่อนทำอย่างอื่น
 
-Then run a shaping session that produces a separate article document. This is **exploit**: the exploring is done, the pile is fixed — commit to a structure and mine the pile to fill it. Do not edit the raw material file — it is read-only to this skill.
+จากนั้นรัน session ปั้นรูปทรง (shaping) ที่ผลิตเอกสารบทความแยกออกมาอีกไฟล์ นี่คือโหมด **exploit**: ช่วงสำรวจจบไปแล้ว กองวัตถุดิบนิ่งแล้ว — ให้ commit กับโครงสร้างหนึ่งโครง แล้วขุดจากกองมาเติมให้เต็ม ห้ามแก้ไฟล์วัตถุดิบ — สำหรับ skill นี้ไฟล์นั้นเป็น read-only
 
-If the user did not say where to save the article, ask once and remember the path.
+ถ้า user ไม่ได้บอกว่าให้เซฟบทความไว้ที่ไหน ถามครั้งเดียวแล้วจำ path นั้นไว้
 
 </what-to-do>
 
 <supporting-info>
 
-## The loop
+## ลูปการทำงาน
 
-1. **Read the pile.** Read the input file in full. Form a sense of what's in it.
-2. **Establish the prerequisites.** Settle with the user what the reader knows walking in — the concepts that are **grounded** from the start. Everything else must be grounded by a block before a later block can lean on it. See [Grounding](#grounding).
-3. **Draft 2–3 candidate openings.** Each opening should imply a different thesis or angle for the article. Show all of them. Force the user to pick or compose a hybrid. The chosen opening defines what the rest of the article must do.
-4. **Grow paragraph by paragraph.** After the opening lands, ask "given this opening, what does the reader need to hear next?" Pull material from the pile to answer. The next block may only lean on grounded concepts, and grounds new ones as it lands. Argue about the form the next block takes — a paragraph, a list, a table, a callout, a quote, a code block. Each format choice should be deliberate and defensible.
-5. **Append to the article file as you go.** Don't batch. Write each agreed paragraph or block immediately so the user can see the article taking shape.
-6. **Loop step 4 until the article is done.** The user decides when it's done.
+1. **อ่านกองวัตถุดิบ** อ่านไฟล์ input ให้ครบทั้งไฟล์ จับภาพรวมว่าข้างในมีอะไรบ้าง
+2. **ตั้ง prerequisite** ตกลงกับ user ว่าผู้อ่านรู้อะไรมาก่อนแล้วตอนเปิดบทความ — นั่นคือ concept ที่ **grounded** ตั้งแต่ต้น ที่เหลือทั้งหมดต้องถูก ground โดย block หนึ่งเสียก่อน block ถัด ๆ ไปถึงจะพิงมันได้ ดู [Grounding](#grounding)
+3. **ร่าง opening 2–3 แบบ** แต่ละ opening ควรสื่อ thesis หรือมุมของบทความคนละแบบ โชว์ให้ดูทั้งหมด บังคับให้ user เลือกหรือผสมเป็น hybrid opening ที่เลือกจะกำหนดว่าบทความส่วนที่เหลือต้องทำอะไร
+4. **โตทีละย่อหน้า** หลัง opening ลงตัวแล้ว ถามว่า "ด้วย opening แบบนี้ ผู้อ่านต้องได้ยินอะไรเป็นอย่างต่อไป?" ดึงวัตถุดิบจากกองมาตอบ block ถัดไปพิงได้เฉพาะ concept ที่ grounded แล้ว และพอมันลงจอด มันก็ ground concept ใหม่ให้บทความต่อ ถกกันเรื่องรูปแบบของ block ถัดไปด้วย — จะเป็นย่อหน้า, list, ตาราง, callout, quote หรือ code block ทุกการเลือก format ต้องตั้งใจและอธิบายเหตุผลได้
+5. **เขียนต่อท้ายไฟล์บทความไปเรื่อย ๆ** อย่ารอสะสมแล้วเขียนทีเดียว เขียนย่อหน้าหรือ block ที่ตกลงกันได้แล้วลงไฟล์ทันที เพื่อให้ user เห็นบทความค่อย ๆ เป็นรูปเป็นร่าง
+6. **วนข้อ 4 จนบทความเสร็จ** user เป็นคนตัดสินว่าเสร็จเมื่อไหร่
 
 ## Grounding
 
-Every **concept** has to be **grounded** before a block can lean on it: the reader either walked in knowing it or met it in an earlier block. A block that reaches for an ungrounded concept loses the reader. The unit is the concept, not the word for it — a block can lean on an idea the reader lacks even with no jargon in sight. Where a concept has a name — a **term** — grounding it means landing the idea and the term together.
+ทุก **concept** ต้องถูก **ground** ก่อนที่ block ไหนจะพิงมันได้: ผู้อ่านต้องรู้มันมาก่อนตอนเปิดอ่าน หรือได้เจอมันใน block ก่อนหน้าแล้ว block ที่เอื้อมไปหา concept ที่ยังไม่ grounded จะทำผู้อ่านหลุด หน่วยของเรื่องนี้คือตัว concept ไม่ใช่คำที่ใช้เรียกมัน — block อาจพิง idea ที่ผู้อ่านไม่มีได้ทั้งที่ไม่มี jargon สักคำ ส่วน concept ที่มีชื่อเรียก — มี **term** — การ ground มันหมายถึงส่งทั้ง idea และ term ลงจอดพร้อมกัน
 
-A concept gets grounded one of two ways:
+concept ถูก ground ได้สองทาง:
 
-- **Prerequisite** — grounded before the opening. The reader brings it. Fixed at the start.
-- **Introduced** — a block establishes it, and from then on it's grounded for the rest of the article.
+- **Prerequisite** — grounded ก่อน opening ผู้อ่านพกมาเอง ตกลงกันตายตัวตั้งแต่ต้น
+- **Introduced** — มี block หนึ่งตั้งมันขึ้นมา จากนั้นมันก็ grounded ไปตลอดทั้งบทความ
 
-Keep a running list of what's grounded. When you ask "what does the reader need to hear next?", an ungrounded concept the next move needs is itself the answer: ground it first — here or in an earlier block — or you can't make the move. This is the gap-naming of [Pulling from the pile](#pulling-from-the-pile) one level up: there the pile is missing material; here the article is missing a foundation.
+เก็บ list ของสิ่งที่ grounded แล้วไว้ตลอด เวลาถามว่า "ผู้อ่านต้องได้ยินอะไรต่อ?" ถ้า move ถัดไปต้องใช้ concept ที่ยังไม่ grounded คำตอบก็คือตัว concept นั้นเอง: ต้อง ground มันก่อน — ตรงนี้เลยหรือใน block ก่อนหน้า — ไม่งั้นเดิน move นั้นไม่ได้ นี่คือการชี้ช่องว่างแบบเดียวกับ [Pulling from the pile](#pulling-from-the-pile) แต่ยกขึ้นมาอีกชั้น: ที่นั่นกองวัตถุดิบขาดเนื้อหา ที่นี่บทความขาดฐานราก
 
-The lever is what you make a prerequisite versus what you ground inside the article. Demand too much up front and you shut readers out; ground too much inside and the opening drowns in definitions. Settle it with the user when you establish prerequisites.
+คานงัดอยู่ที่การเลือกว่าอะไรเป็น prerequisite และอะไรถูก ground ในตัวบทความ เรียกร้องจากผู้อ่านมากไปตั้งแต่ต้นก็เท่ากับปิดประตูใส่คนอ่าน แต่ถ้า ground ในบทความมากไป opening ก็จมอยู่กับนิยาม ตกลงเรื่องนี้กับ user ตอนตั้ง prerequisite
 
-## Conversational feel
+## ฟีลของบทสนทนา
 
-This is a grilling session inverted. In ideation, the question was "what are you actually noticing?" Here it's "what is this article actually arguing, and in what order does the reader need to hear it?" Push back. Refuse to let weak transitions slide. If a paragraph doesn't earn its place, cut it.
+นี่คือ grilling session แบบกลับด้าน ตอน ideation คำถามคือ "จริง ๆ แล้วคุณกำลังสังเกตเห็นอะไร?" ที่นี่คำถามคือ "บทความนี้กำลัง argue อะไรกันแน่ และผู้อ่านต้องได้ยินมันเรียงลำดับแบบไหน?" ดันกลับด้วย อย่าปล่อย transition อ่อน ๆ ผ่านไปเฉย ๆ ถ้าย่อหน้าไหนไม่คู่ควรกับที่ของมัน ตัดทิ้ง
 
-Specific moves to keep using:
+moves ที่ควรใช้ซ้ำ ๆ:
 
-- "What does this paragraph do for the reader that the previous one didn't?"
-- "If I cut this, what breaks?"
-- "Is this prose, or should it be a list? Why prose?"
-- "This sentence is doing two jobs — split it or pick one."
-- "The opening promised X. We've drifted to Y. Either re-thread it or change the opening."
+- "ย่อหน้านี้ให้อะไรผู้อ่านที่ย่อหน้าก่อนหน้ายังไม่ได้ให้?"
+- "ถ้าตัดตรงนี้ทิ้ง อะไรพังบ้าง?"
+- "นี่ควรเป็น prose หรือควรเป็น list กันแน่? ทำไมถึงเลือก prose?"
+- "ประโยคนี้ทำสองงานพร้อมกัน — แยกมัน หรือเลือกงานเดียว"
+- "opening สัญญาไว้ว่า X แต่ตอนนี้เราลอยไป Y แล้ว จะร้อยเรื่องกลับ หรือจะเปลี่ยน opening"
 
 ## Pulling from the pile
 
-Treat the raw material as a quarry, not a script. Pull a fragment, rework it to fit the surrounding paragraph, and place it. A fragment may be split across multiple paragraphs, merged with another, or paraphrased. The pile's job is to be mined; the article's job is to read as one voice.
+มองวัตถุดิบดิบเป็นเหมืองหิน ไม่ใช่ script ดึง fragment ออกมา ปรับให้เข้ากับย่อหน้ารอบ ๆ แล้ววางลงไป fragment ชิ้นหนึ่งอาจถูกหั่นกระจายไปหลายย่อหน้า ถูกควบรวมกับอีกชิ้น หรือถูก paraphrase ก็ได้ หน้าที่ของกองคือถูกขุด หน้าที่ของบทความคืออ่านแล้วเป็นเสียงเดียวกันทั้งเรื่อง
 
-If the pile lacks something the article needs, name the gap explicitly: "We need an example here and the pile doesn't have one — give me one now or we cut this section."
+ถ้ากองวัตถุดิบขาดสิ่งที่บทความต้องการ ให้ชี้ช่องว่างออกมาตรง ๆ: "ตรงนี้ต้องมีตัวอย่าง แต่ในกองไม่มี — ให้มาเดี๋ยวนี้ หรือไม่ก็ตัด section นี้ทิ้ง"
 
-## Format arguments to actually have
+## ประเด็นเรื่อง format ที่ควรถกกันจริง ๆ
 
-When choosing how to render a block, weigh these tradeoffs out loud with the user, not silently:
+เวลาเลือกว่าจะ render block ออกมาแบบไหน ให้ชั่ง tradeoff เหล่านี้ออกมาดัง ๆ กับ user อย่าตัดสินใจเงียบ ๆ:
 
-- **Prose vs. list.** Prose carries argument; lists carry parallel items. If items aren't truly parallel, prose is better. If they are, a list is faster to scan.
-- **Inline vs. callout.** Tips, warnings, and asides go in callouts (`> [!TIP]`, `> [!NOTE]`) — but only if they'd genuinely derail the main argument inline. Otherwise leave them inline.
-- **Table vs. repeated structure.** If the same shape repeats 3+ times with the same fields, a table. Otherwise prose with bold leads.
-- **Quote vs. paraphrase.** Quote when the original wording is the point. Paraphrase when only the idea matters.
-- **Code block vs. inline code.** Multi-line, runnable, or illustrative → block. Single token or identifier → inline.
+- **Prose vs. list** prose พาเหตุผลเดินไปข้างหน้า list เหมาะกับ item ที่ขนานกัน ถ้า item ไม่ได้ขนานกันจริง prose ดีกว่า ถ้าขนานกันจริง list สแกนเร็วกว่า
+- **Inline vs. callout** tip, warning และเรื่องแทรกไปอยู่ใน callout (`> [!TIP]`, `> [!NOTE]`) — แต่เฉพาะกรณีที่ถ้าปล่อยไว้ inline แล้วมันจะลากประเด็นหลักออกนอกเรื่องจริง ๆ ไม่งั้นปล่อยไว้ inline
+- **ตาราง vs. โครงสร้างซ้ำ** ถ้ารูปทรงเดิมซ้ำ 3+ ครั้งด้วย field ชุดเดิม ใช้ตาราง ไม่งั้นใช้ prose ที่ขึ้นต้นแต่ละท่อนด้วยตัวหนา
+- **Quote vs. paraphrase** quote เมื่อถ้อยคำต้นฉบับคือประเด็น paraphrase เมื่อสนใจแค่ตัว idea
+- **Code block vs. inline code** หลายบรรทัด รันได้ หรือใช้ประกอบคำอธิบาย → block ส่วน token หรือ identifier เดี่ยว ๆ → inline
 
-## Writing rhythm
+## จังหวะการเขียน
 
-Append to the article file as each block is agreed. Re-read the file from disk before every write — the user may have edited between turns. Never overwrite blindly. If the user wants a paragraph rewritten, edit that specific paragraph in place; leave the rest alone.
+เขียนต่อท้ายไฟล์บทความทุกครั้งที่ block ตกลงกันได้ อ่านไฟล์จาก disk ใหม่ก่อนเขียนทุกครั้ง — user อาจแก้ไฟล์ระหว่างเทิร์น ห้ามเขียนทับสุ่มสี่สุ่มห้า ถ้า user อยากให้ rewrite ย่อหน้าไหน แก้เฉพาะย่อหน้านั้นตรงที่เดิม ที่เหลืออย่าไปแตะ
 
-## Out of scope
+## นอกขอบเขต
 
-- Mining for new fragments that aren't in the pile (handle gaps as in "Pulling from the pile").
-- Editing the raw material file.
-- Publishing, formatting for a specific platform, or adding frontmatter the user didn't ask for.
+- ขุดหา fragment ใหม่ที่ไม่อยู่ในกอง (จัดการช่องว่างตามวิธีใน "Pulling from the pile")
+- แก้ไฟล์วัตถุดิบดิบ
+- publish, จัด format ให้ platform ใดเป็นการเฉพาะ หรือเพิ่ม frontmatter ที่ user ไม่ได้ขอ
 
 </supporting-info>

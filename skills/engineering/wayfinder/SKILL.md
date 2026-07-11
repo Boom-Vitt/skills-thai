@@ -1,32 +1,32 @@
 ---
 name: wayfinder
-description: Plan a huge chunk of work — more than one agent session can hold — as a shared map of investigation tickets on your issue tracker, and resolve them one at a time until the way to the destination is clear.
+description: วางแผนงานก้อนใหญ่ — ใหญ่เกินกว่าหนึ่ง agent session จะรับไหว — เป็นแผนที่ร่วมของ ticket สำหรับการ investigate บน issue tracker ของคุณ แล้วไล่ resolve ทีละใบจนกว่าเส้นทางไปยังจุดหมายจะชัด
 disable-model-invocation: true
 ---
 
-A loose idea has arrived — too big for one agent session, and wrapped in fog: the way from here to the **destination** isn't visible yet. Wayfinding is about finding that way, not charging at the destination. This skill charts the way as a **shared map** on the repo's issue tracker, then works its tickets one at a time until the route is clear.
+ไอเดียหลวม ๆ ก้อนหนึ่งเพิ่งมาถึง — ใหญ่เกินกว่าหนึ่ง agent session และถูกหมอกปกคลุม: เส้นทางจากตรงนี้ไปยัง **จุดหมาย (destination)** ยังมองไม่เห็น Wayfinding คือการหาเส้นทางนั้น ไม่ใช่การพุ่งเข้าใส่จุดหมาย skill นี้จะวาดเส้นทางเป็น **แผนที่ร่วม (shared map)** บน issue tracker ของ repo แล้วไล่ทำ ticket ของมันทีละใบจนกว่าเส้นทางจะชัด
 
-The destination varies per effort, and naming it is the first act of charting — it shapes every ticket. It might be a spec to hand off and iterate on, a decision to lock before planning starts, or a change made in place like a data-structure migration. The map is domain-agnostic — engineering work, course content, whatever fits the shape.
+จุดหมายของแต่ละ effort ไม่เหมือนกัน และการตั้งชื่อจุดหมายคือก้าวแรกของการวาดแผนที่ — มันกำหนดรูปร่างของทุก ticket จุดหมายอาจเป็น spec ที่จะส่งต่อไป iterate กันต่อ เป็นการตัดสินใจที่ต้องล็อกก่อนเริ่มวางแผน หรือเป็นการเปลี่ยนแปลงที่ลงมือทำในที่เลย เช่นการ migrate data structure ตัวแผนที่ไม่ผูกกับ domain ไหน — งาน engineering เนื้อหาคอร์ส หรืออะไรก็ตามที่เข้ารูปแบบนี้
 
-## Plan, don't do
+## วางแผน อย่าเพิ่งลงมือทำ
 
-Wayfinder is **planning** by default: each ticket resolves a decision, and the map is done when the way is clear — nothing left to decide before someone goes and does the thing. The pull to just do the work is usually the signal you've reached the edge of the map and it's time to hand off. An effort can override this in its **Notes** — carrying execution into the map itself — but absent that, produce decisions, not deliverables.
+Wayfinder คือการ**วางแผน**โดย default: แต่ละ ticket ปิดการตัดสินใจหนึ่งเรื่อง และแผนที่จะเสร็จเมื่อเส้นทางชัด — ไม่เหลืออะไรให้ตัดสินใจก่อนที่ใครสักคนจะไปลงมือทำของจริง แรงดึงที่อยากลงมือทำงานเลยมักเป็นสัญญาณว่าคุณมาถึงขอบแผนที่แล้ว และถึงเวลา hand off แต่ละ effort สามารถ override เรื่องนี้ได้ใน **Notes** ของมัน — ดึง execution เข้ามาอยู่ในแผนที่ด้วย — แต่ถ้าไม่ได้ระบุไว้ ให้ผลิตการตัดสินใจ ไม่ใช่ deliverable
 
-## Refer by name
+## เรียกด้วยชื่อ
 
-Every map and ticket is an issue, so it has a **name** — its title. In everything the human reads — narration, the map's Decisions-so-far — refer to it by that name, never by a bare id, number, or slug. A wall of `#42, #43, #44` is illegible; names read at a glance. The id and URL don't vanish — a name wraps its link — but they ride *inside* the name, never stand in for it.
+ทุกแผนที่และทุก ticket เป็น issue จึงมี **ชื่อ** — คือ title ของมัน ในทุกอย่างที่มนุษย์อ่าน — คำบรรยายระหว่างทำงาน, Decisions-so-far ของแผนที่ — ให้เรียกมันด้วยชื่อนั้น อย่าเรียกด้วย id เปล่า ๆ ตัวเลข หรือ slug กำแพงข้อความแบบ `#42, #43, #44` อ่านไม่รู้เรื่อง แต่ชื่ออ่านปราดเดียวก็เข้าใจ id กับ URL ไม่ได้หายไปไหน — ชื่อห่อลิงก์ของมันไว้ — แต่พวกมันอยู่*ข้างใน*ชื่อ ไม่ใช่มาแทนที่ชื่อ
 
-## The Map
+## แผนที่
 
-The map is a single issue on this repo's issue tracker, labelled `wayfinder:map` — the canonical artifact. Its tickets are child issues of the map.
+แผนที่คือ issue เดียวบน issue tracker ของ repo นี้ ติด label `wayfinder:map` — เป็น artifact หลักของงานนี้ ticket ของมันคือ child issue ของแผนที่
 
-The map is an **index**, not a store. It lists the decisions made and points at the tickets that hold their detail; a decision lives in exactly one place — its ticket — so the map never restates it, only gists it and links.
+แผนที่เป็น **index** ไม่ใช่ที่เก็บข้อมูล มัน list การตัดสินใจที่ทำไปแล้วและชี้ไปยัง ticket ที่เก็บรายละเอียด; การตัดสินใจหนึ่งเรื่องอยู่ในที่เดียวเท่านั้น — ticket ของมัน — แผนที่จึงไม่เล่าซ้ำ แค่สรุปใจความแล้วใส่ลิงก์
 
-**Where the map, its child tickets, blocking, and frontier queries physically live is tracker-specific.** The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if not. Consult the tracker doc's "Wayfinding operations" section for how _this_ repo expresses them. If no tracker has been provided, default to the local-markdown tracker.
+**ส่วนที่ว่าแผนที่ child ticket การ block และ query หา frontier อยู่ตรงไหนจริง ๆ นั้นขึ้นกับ tracker แต่ละตัว** issue tracker ควรถูกส่งมอบให้คุณมาแล้ว — ถ้ายัง ให้รัน `/setup-matt-pocock-skills` ดูวิธีที่ repo _นี้_ ใช้ได้จาก section "Wayfinding operations" ในเอกสารของ tracker ถ้าไม่มี tracker ให้มา ให้ใช้ tracker แบบ local markdown เป็น default
 
-### The map body
+### เนื้อหาของแผนที่
 
-The whole map at low resolution, loaded once per session. Open tickets are **not** listed — they are open child issues, found by query.
+ทั้งแผนที่ในความละเอียดต่ำ โหลดครั้งเดียวต่อ session ticket ที่ยังเปิดอยู่จะ**ไม่**ถูก list ไว้ — พวกมันคือ child issue ที่เปิดอยู่ หาเจอได้ด้วย query
 
 ```markdown
 ## Destination
@@ -52,9 +52,9 @@ The whole map at low resolution, loaded once per session. Open tickets are **not
 <!-- see "Out of scope": work ruled beyond the destination; closed, never graduates -->
 ```
 
-### Tickets
+### Ticket
 
-Each ticket is a **child issue** of the map; the tracker's issue id is its identity. Its body is the question, sized to one 100K token agent session:
+แต่ละ ticket เป็น **child issue** ของแผนที่; issue id ของ tracker คือ identity ของมัน เนื้อหาของ ticket คือคำถาม ขนาดพอดีกับ agent session ขนาด 100K token หนึ่ง session:
 
 ```markdown
 ## Question
@@ -62,66 +62,66 @@ Each ticket is a **child issue** of the map; the tracker's issue id is its ident
 <the decision or investigation this ticket resolves>
 ```
 
-Each ticket carries a `wayfinder:<type>` label — one of `research`, `prototype`, `grilling`, `task` (see [Ticket Types](#ticket-types)).
+แต่ละ ticket ติด label `wayfinder:<type>` — หนึ่งใน `research`, `prototype`, `grilling`, `task` (ดู [ประเภทของ ticket](#ticket-types))
 
-A session **claims** a ticket by assigning it to the dev driving the map, **first**, before any work, so concurrent sessions skip it. That assignee _is_ the claim: an open, unassigned ticket is unclaimed.
+session จะ **claim** ticket ด้วยการ assign ให้ dev ที่ขับเคลื่อนแผนที่ **ก่อน** เริ่มงานใด ๆ เพื่อให้ session อื่นที่รันพร้อมกัน skip มันไป assignee นั่นแหละ_คือ_ตัว claim: ticket ที่เปิดอยู่และไม่มี assignee คือยังไม่ถูก claim
 
-Blocking uses the tracker's **native** dependency relationship — essential because it renders the frontier _visually_ in the tracker's own UI, so the human sees what's takeable without opening the map. Only a tracker that lacks native blocking falls back to a body convention. A ticket is **unblocked** when every ticket blocking it is closed; the **frontier** is the open, unblocked, unclaimed children — the edge of the known.
+การ block ใช้ dependency relationship แบบ **native** ของ tracker — สำคัญมาก เพราะมัน render frontier ให้_เห็นด้วยตา_ใน UI ของ tracker เอง มนุษย์จึงเห็นว่าอะไรหยิบทำได้โดยไม่ต้องเปิดแผนที่ เฉพาะ tracker ที่ไม่มี native blocking เท่านั้นที่ fallback ไปใช้ convention ในเนื้อหา issue ticket จะ **unblocked** เมื่อทุก ticket ที่ block มันถูกปิดหมดแล้ว; **frontier** คือ child ที่เปิดอยู่ ไม่ถูก block และยังไม่ถูก claim — ขอบเขตของสิ่งที่รู้แล้ว
 
-The answer isn't part of the body — it's recorded on resolution (see [Work through the map](#work-through-the-map)). Assets created while resolving a ticket are linked from the issue, not pasted in.
+คำตอบไม่ใช่ส่วนหนึ่งของเนื้อหา ticket — มันถูกบันทึกตอน resolve (ดู [ไล่ทำตามแผนที่](#work-through-the-map)) asset ที่สร้างขึ้นระหว่าง resolve ticket ให้ลิงก์จาก issue ไม่ใช่แปะเนื้อหาลงไปตรง ๆ
 
-## Ticket Types
+## ประเภทของ ticket
 
-Every ticket is either **HITL** — human in the loop, worked *with* a human who speaks for themselves — or **AFK**, driven by the agent alone. A HITL ticket only resolves through that live exchange; the agent never stands in for the human's side of it (a grilling agent that answers its own questions has broken this).
+ทุก ticket เป็นได้อย่างใดอย่างหนึ่ง: **HITL** — human in the loop, ทำ*ร่วมกับ*มนุษย์ที่พูดแทนตัวเองได้ — หรือ **AFK** ที่ agent ขับเคลื่อนคนเดียว ticket แบบ HITL จะ resolve ได้ก็ต่อเมื่อมีการแลกเปลี่ยนสด ๆ นั้นเท่านั้น; agent ห้ามสวมบทตอบแทนฝั่งมนุษย์เด็ดขาด (agent ที่ grill แล้วตอบคำถามตัวเองคือละเมิดข้อนี้แล้ว)
 
-- **Research** (AFK): Reading documentation, third-party APIs, or local resources like knowledge bases. Creates a markdown summary as a linked asset. Use when knowledge outside the current working directory is required.
-- **Prototype** (HITL): Raise the fidelity of the discussion by making a cheap, rough, concrete artifact to react to — an outline, a rough take, a stub, or UI/logic code via the /prototype skill. Links the prototype as an asset. Use when "how should it look" or "how should it behave" is the key question.
-- **Grilling** (HITL): Conversation via the /grilling and /domain-modeling skills, one question at a time. The default case.
-- **Task** (HITL or AFK): Manual work that must happen before a *decision* can be made — nothing to decide, prototype, or research, but the discussion is blocked until it's done. Signing up for a service so its API can be judged, provisioning access, moving data so its shape can be seen. This is the one type that *does* rather than decides — and it earns its place by unblocking a decision, not by delivering the destination. The agent drives it alone where it can (AFK); otherwise it hands the human a precise checklist (HITL). Resolved when the work is done; the answer records what was done and any resulting facts (credentials location, new URLs, row counts) later tickets depend on.
+- **Research** (AFK): อ่านเอกสาร, third-party API หรือ resource ในเครื่องอย่าง knowledge base สร้างสรุปเป็น markdown ลิงก์ไว้เป็น asset ใช้เมื่อต้องการความรู้ที่อยู่นอก working directory ปัจจุบัน
+- **Prototype** (HITL): ยกระดับความคมชัดของการถกเถียงด้วยการทำ artifact ที่ถูก หยาบ แต่จับต้องได้ ให้คนได้ลองตอบสนอง — outline, ร่างคร่าว ๆ, stub หรือโค้ด UI/logic ผ่าน /prototype skill ลิงก์ prototype ไว้เป็น asset ใช้เมื่อคำถามหลักคือ "ควรหน้าตาเป็นยังไง" หรือ "ควรทำงานยังไง"
+- **Grilling** (HITL): คุยกันผ่าน skill /grilling และ /domain-modeling ทีละคำถาม เป็นเคส default
+- **Task** (HITL หรือ AFK): งาน manual ที่ต้องเกิดขึ้นก่อนจะ*ตัดสินใจ*อะไรได้ — ไม่มีอะไรให้ตัดสินใจ prototype หรือ research แต่การถกเถียงถูก block จนกว่างานนี้จะเสร็จ เช่น สมัครใช้ service เพื่อให้ประเมิน API ของมันได้, จัดเตรียม access, ย้ายข้อมูลเพื่อให้เห็นรูปร่างของมัน นี่คือประเภทเดียวที่*ลงมือทำ*แทนที่จะตัดสินใจ — และมันมีที่ยืนเพราะไป unblock การตัดสินใจ ไม่ใช่เพราะ deliver จุดหมาย ถ้า agent ทำเองคนเดียวได้ก็ทำเลย (AFK); ไม่งั้นก็ส่ง checklist ที่แม่นยำให้มนุษย์ (HITL) ถือว่า resolve เมื่องานเสร็จ; คำตอบบันทึกว่าทำอะไรไปและ fact ที่ตามมา (ที่เก็บ credentials, URL ใหม่, จำนวน row) ซึ่ง ticket ใบต่อ ๆ ไปต้องพึ่ง
 
 ## Fog of war
 
-The map is _deliberately_ incomplete: don't chart what you can't yet see. Beyond the live tickets lies the **fog of war** — the dim view of decisions and investigations you can tell are coming but can't yet pin down, because they hang on questions still open. Resolving a ticket clears the fog ahead of it, graduating whatever's now specifiable into fresh tickets — one at a time, until the way to the destination is clear and no tickets remain.
+แผนที่_ตั้งใจ_ให้ไม่สมบูรณ์: อย่าวาดสิ่งที่ยังมองไม่เห็น พ้นจาก ticket ที่ active อยู่ออกไปคือ **fog of war** (หมอกสงคราม — พื้นที่ที่ยังมองไม่ชัด) — ภาพราง ๆ ของการตัดสินใจและการ investigate ที่พอบอกได้ว่ากำลังจะมา แต่ยังปักหมุดไม่ได้ เพราะมันแขวนอยู่กับคำถามที่ยังเปิดอยู่ การ resolve ticket หนึ่งใบจะเคลียร์หมอกที่อยู่ข้างหน้ามัน เลื่อนขั้นสิ่งที่ตอนนี้ระบุได้แล้วให้กลายเป็น ticket ใหม่ — ทีละใบ จนเส้นทางไปจุดหมายชัดและไม่เหลือ ticket
 
-The map's **Not yet specified** section is where that dim view is written down: the suspected question, the area to revisit later. It's the undiscovered frontier _toward_ the destination — everything here is in scope, just not sharp enough to ticket. Write as loosely or as fully as the view allows; it doubles as a signpost for collaborators reading where the effort is headed.
+section **Not yet specified** ของแผนที่คือที่จดภาพราง ๆ นั้น: คำถามที่คาดว่าจะมี พื้นที่ที่ต้องกลับมาดูทีหลัง มันคือ frontier ที่ยังไม่ถูกค้นพบ ซึ่งมุ่ง_ไปหา_จุดหมาย — ทุกอย่างตรงนี้อยู่ใน scope แค่ยังไม่คมพอจะตั้งเป็น ticket จะเขียนหลวมหรือละเอียดแค่ไหนก็ได้ตามที่มองเห็น; มันทำหน้าที่เป็นป้ายบอกทางให้ collaborator ที่มาอ่านรู้ด้วยว่า effort นี้กำลังมุ่งไปทางไหน
 
-**Fog or ticket?** The test is whether you can state the question precisely now — _not_ whether you can answer it now.
+**หมอกหรือ ticket?** เกณฑ์ตัดสินคือคุณตั้งคำถามได้อย่างแม่นยำตอนนี้หรือยัง — _ไม่ใช่_ว่าคุณตอบมันได้ตอนนี้หรือเปล่า
 
-- **Ticket when** the question is already sharp — even if it's blocked and you can't act on it yet.
-- **Not yet specified when** you can't yet phrase it that sharply. Don't pre-slice the fog into ticket-sized pieces: it's coarser than a ticket, and one patch may graduate into several tickets, or none, once the frontier reaches it.
+- **เป็น ticket เมื่อ** คำถามคมแล้ว — ต่อให้มันถูก block และยังลงมือทำไม่ได้ก็ตาม
+- **เป็น Not yet specified เมื่อ** ยังเรียบเรียงให้คมขนาดนั้นไม่ได้ อย่าหั่นหมอกล่วงหน้าเป็นชิ้นขนาด ticket: มันหยาบกว่า ticket และหมอกก้อนหนึ่งอาจเลื่อนขั้นเป็นหลาย ticket หรือไม่เป็นเลยสักใบก็ได้ เมื่อ frontier ไปถึงมัน
 
-**Not yet specified** excludes what's already decided (Decisions so far), what's already a live ticket, and what's out of scope (the next section).
+**Not yet specified** ไม่รวมสิ่งที่ตัดสินใจไปแล้ว (Decisions so far) สิ่งที่เป็น ticket อยู่แล้ว และสิ่งที่อยู่นอก scope (section ถัดไป)
 
 ## Out of scope
 
-Fog only ever gathers _toward_ the destination. The destination fixes the scope, so work beyond it is **out of scope** — it isn't fog, and it doesn't belong in **Not yet specified**. It gets its own **Out of scope** section on the map: work you've consciously ruled out of _this_ effort. Scope, not sharpness, lands it here.
+หมอกก่อตัว_มุ่งไปหา_จุดหมายเท่านั้น จุดหมายเป็นตัวกำหนด scope งานที่เลยจุดหมายออกไปจึงเป็น **out of scope** — มันไม่ใช่หมอก และไม่ควรอยู่ใน **Not yet specified** มันได้ section ของตัวเองบนแผนที่ชื่อ **Out of scope**: งานที่คุณตั้งใจตัดออกจาก effort _นี้_ สิ่งที่พามันมาลงตรงนี้คือ scope ไม่ใช่ความคมของคำถาม
 
-Out-of-scope work never graduates — the frontier stops at the destination — so it returns only if the destination is redrawn, and then as a fresh effort, not a resumption.
+งานที่ out of scope ไม่มีวันเลื่อนขั้น — frontier หยุดที่จุดหมาย — มันจะกลับมาก็ต่อเมื่อจุดหมายถูกวาดใหม่ และถึงตอนนั้นก็กลับมาเป็น effort ใหม่ ไม่ใช่ทำต่อจากของเดิม
 
-Ruling something out of scope is a scoping act, not a step on the route. When a ticket that already exists turns out to sit past the destination — mis-scoped in while charting, or exposed by a resolution — **close it** (a closed ticket is unambiguously off the frontier) and leave one line in the **Out of scope** section: the gist plus why it's out of scope, linking the closed ticket. It stays out of **Decisions so far**, which records the route actually walked — a scope boundary isn't a step on it.
+การตัดอะไรออกนอก scope เป็นการกำหนดขอบเขต ไม่ใช่ก้าวหนึ่งบนเส้นทาง เมื่อ ticket ที่มีอยู่แล้วกลายเป็นว่าอยู่เลยจุดหมาย — หลุด scope เข้ามาตั้งแต่ตอนวาดแผนที่ หรือถูกเปิดเผยโดย resolution — ให้**ปิดมัน** (ticket ที่ปิดแล้วหลุดจาก frontier แบบไม่มีข้อกังขา) แล้วทิ้งไว้หนึ่งบรรทัดใน section **Out of scope**: ใจความสั้น ๆ บวกเหตุผลว่าทำไมถึง out of scope พร้อมลิงก์ไปยัง ticket ที่ปิด มันไม่เข้า **Decisions so far** ซึ่งบันทึกเฉพาะเส้นทางที่เดินจริง — เส้นแบ่ง scope ไม่ใช่ก้าวหนึ่งบนเส้นทางนั้น
 
-## Invocation
+## การเรียกใช้
 
-Two modes. Either way, **never resolve more than one ticket per session.**
+มีสองโหมด ไม่ว่าโหมดไหน **ห้าม resolve เกินหนึ่ง ticket ต่อ session**
 
-### Chart the map
+### วาดแผนที่
 
-User invokes with a loose idea.
+ผู้ใช้เรียกใช้พร้อมไอเดียหลวม ๆ
 
-1. **Name the destination.** Run a `/grilling` and `/domain-modeling` session to pin down what this map is finding its way to — the spec, decision, or change. The destination fixes the scope, so it's settled first.
-2. **Map the frontier.** Grill again, **breadth-first** this time: fan out across the whole space rather than deep on any one thread, surfacing the open decisions and the first steps takeable now. **If this surfaces no fog** — the way to the destination is already clear, the whole journey small enough for one session — you don't need a map. Stop and ask the user how they'd like to proceed.
-3. **Create the map** (label `wayfinder:map`): Destination and Notes filled in, Decisions-so-far empty, the fog sketched into **Not yet specified**.
-4. **Create the tickets you can specify now** as child issues of the map — then wire blocking edges in a **second pass** (issues need ids before they can reference each other). Wiring sorts them into the frontier and the blocked; everything you can't yet specify stays in the fog — the **Not yet specified** section.
-5. Stop — charting the map is one session's work; do not also resolve tickets.
+1. **ตั้งชื่อจุดหมาย** รัน session `/grilling` และ `/domain-modeling` เพื่อปักหมุดว่าแผนที่นี้กำลังหาทางไปที่ไหน — spec การตัดสินใจ หรือการเปลี่ยนแปลง จุดหมายเป็นตัวกำหนด scope จึงต้องเคลียร์ให้จบก่อน
+2. **สำรวจ frontier** grill อีกรอบ คราวนี้แบบ **breadth-first**: กระจายให้ทั่วทั้งพื้นที่แทนที่จะเจาะลึก thread ใดหนึ่ง เพื่อให้เห็นการตัดสินใจที่ยังเปิดอยู่และก้าวแรก ๆ ที่ทำได้เลยตอนนี้ **ถ้ารอบนี้ไม่เจอหมอกเลย** — เส้นทางไปจุดหมายชัดอยู่แล้ว ทั้งงานเล็กพอสำหรับ session เดียว — ก็ไม่จำเป็นต้องมีแผนที่ หยุดแล้วถามผู้ใช้ว่าอยากไปต่อยังไง
+3. **สร้างแผนที่** (label `wayfinder:map`): กรอก Destination กับ Notes, ปล่อย Decisions-so-far ว่างไว้, สเก็ตช์หมอกลงใน **Not yet specified**
+4. **สร้าง ticket ที่ระบุได้ตอนนี้** เป็น child issue ของแผนที่ — แล้วค่อยโยงเส้น blocking ใน**รอบที่สอง** (issue ต้องมี id ก่อนถึงจะอ้างถึงกันได้) การโยงเส้นจะแยกพวกมันออกเป็น frontier กับพวกที่ถูก block; อะไรที่ยังระบุไม่ได้ให้คงอยู่ในหมอก — section **Not yet specified**
+5. หยุด — การวาดแผนที่คืองานของหนึ่ง session; อย่าเลยไป resolve ticket ต่อ
 
-### Work through the map
+### ไล่ทำตามแผนที่
 
-User invokes with a map (URL or number). A ticket is **optional** — without one, you pick the next decision, not the user.
+ผู้ใช้เรียกใช้พร้อมแผนที่ (URL หรือหมายเลข) จะระบุ ticket มาด้วยหรือไม่ก็ได้ — ถ้าไม่ระบุ คุณเป็นคนเลือกการตัดสินใจถัดไป ไม่ใช่ผู้ใช้
 
-1. Load the **map** — the low-res view, not every ticket body.
-2. Choose the ticket. If the user named one, use it. Otherwise take the first frontier ticket in order. **Claim it**: assign it to yourself before any work.
-3. Resolve it — **zoom as needed**: fetch the full body of any related or closed ticket on demand; invoke the skills the `## Notes` block names. If in doubt, use `/grilling` and `/domain-modeling`.
-4. Record the resolution: post the answer as a **resolution comment**, **close** the issue, and **append a context pointer** to the map's Decisions-so-far.
-5. Add newly-surfaced tickets (create-then-wire); graduate any fog the answer has made specifiable, clearing each graduated patch from **Not yet specified** so it lives only as its new ticket. If the answer reveals a ticket — this one or another — sits beyond the destination, **rule it out of scope** rather than resolving it on the route. If the decision invalidates other parts of the map, update or delete those tickets.
+1. โหลด **แผนที่** — มุมมองความละเอียดต่ำ ไม่ต้องโหลดเนื้อหาของทุก ticket
+2. เลือก ticket ถ้าผู้ใช้ระบุมา ใช้ใบนั้น ไม่งั้นหยิบ ticket แรกใน frontier ตามลำดับ **claim มัน**: assign ให้ตัวเองก่อนเริ่มงานใด ๆ
+3. resolve มัน — **zoom เท่าที่จำเป็น**: ดึงเนื้อหาเต็มของ ticket ที่เกี่ยวข้องหรือปิดไปแล้วเมื่อต้องใช้; เรียกใช้ skill ที่ block `## Notes` ระบุไว้ ถ้าไม่แน่ใจ ใช้ `/grilling` และ `/domain-modeling`
+4. บันทึกผลการ resolve: โพสต์คำตอบเป็น **resolution comment**, **ปิด** issue แล้ว **เพิ่ม context pointer** ต่อท้าย Decisions-so-far ของแผนที่
+5. เพิ่ม ticket ที่เพิ่งโผล่ขึ้นมาใหม่ (สร้างก่อนแล้วค่อยโยงเส้น); เลื่อนขั้นหมอกที่คำตอบทำให้ระบุได้แล้ว โดยลบหมอกก้อนที่เลื่อนขั้นออกจาก **Not yet specified** ให้มันเหลืออยู่แค่ในรูป ticket ใหม่เท่านั้น ถ้าคำตอบเผยว่า ticket ใบไหน — ใบนี้หรือใบอื่น — อยู่เลยจุดหมายไป ให้**ตัดมันออกนอก scope** แทนที่จะ resolve บนเส้นทาง ถ้าการตัดสินใจนี้ทำให้ส่วนอื่นของแผนที่ใช้ไม่ได้ ให้ update หรือลบ ticket เหล่านั้น
 
-The user may run unblocked tickets in parallel, so expect other sessions to be editing the tracker concurrently.
+ผู้ใช้อาจรัน ticket ที่ unblocked หลายใบขนานกัน ดังนั้นให้เผื่อใจว่ามี session อื่นกำลังแก้ tracker อยู่พร้อมกัน

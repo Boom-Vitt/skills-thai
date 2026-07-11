@@ -1,15 +1,15 @@
 ---
 name: domain-modeling
-description: Build and sharpen a project's domain model. Use when the user wants to pin down domain terminology or a ubiquitous language, record an architectural decision, or when another skill needs to maintain the domain model.
+description: สร้างและลับ domain model ของ project ให้คม ใช้เมื่อ user อยาก pin down ศัพท์ของ domain หรือ ubiquitous language, บันทึกการตัดสินใจเชิงสถาปัตยกรรม หรือเมื่อ skill อื่นต้องดูแล domain model
 ---
 
 # Domain Modeling
 
-Actively build and sharpen the project's domain model as you design. This is the *active* discipline — challenging terms, inventing edge-case scenarios, and writing the glossary and decisions down the moment they crystallise. (Merely *reading* `CONTEXT.md` for vocabulary is not this skill — that's a one-line habit any skill can do. This skill is for when you're changing the model, not just consuming it.)
+สร้างและลับ domain model (โมเดลความเข้าใจในโดเมนธุรกิจ) ของ project ให้คมอย่างจริงจังระหว่างที่ออกแบบ นี่คือวินัยแบบ *active* — ท้าทายคำศัพท์ คิด scenario แบบ edge case ขึ้นมาทดสอบ และเขียน glossary กับการตัดสินใจลงไฟล์ทันทีที่มันตกผลึก (แค่ *อ่าน* `CONTEXT.md` เพื่อเอาคำศัพท์มาใช้ไม่นับเป็น skill นี้ — นั่นเป็นนิสัยบรรทัดเดียวที่ skill ไหนก็ทำได้ skill นี้มีไว้ตอนที่คุณกำลังเปลี่ยนตัว model ไม่ใช่แค่ใช้งานมัน)
 
-## File structure
+## โครงสร้างไฟล์
 
-Most repos have a single context:
+repo ส่วนใหญ่มี context เดียว:
 
 ```
 /
@@ -21,7 +21,7 @@ Most repos have a single context:
 └── src/
 ```
 
-If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The map points to where each one lives:
+ถ้ามี `CONTEXT-MAP.md` อยู่ที่ root แปลว่า repo มีหลาย context ตัว map จะชี้ว่าแต่ละ context อยู่ตรงไหน:
 
 ```
 /
@@ -37,38 +37,38 @@ If a `CONTEXT-MAP.md` exists at the root, the repo has multiple contexts. The ma
 │       └── docs/adr/
 ```
 
-Create files lazily — only when you have something to write. If no `CONTEXT.md` exists, create one when the first term is resolved. If no `docs/adr/` exists, create it when the first ADR is needed.
+สร้างไฟล์แบบ lazy — สร้างต่อเมื่อมีอะไรจะเขียนจริง ๆ ถ้ายังไม่มี `CONTEXT.md` ให้สร้างตอนที่คำแรกถูกเคาะข้อสรุป ถ้ายังไม่มี `docs/adr/` ให้สร้างตอนที่ต้องเขียน ADR อันแรก
 
-## During the session
+## ระหว่าง session
 
-### Challenge against the glossary
+### ท้าทายกับ glossary
 
-When the user uses a term that conflicts with the existing language in `CONTEXT.md`, call it out immediately. "Your glossary defines 'cancellation' as X, but you seem to mean Y — which is it?"
+เมื่อ user ใช้คำที่ขัดกับภาษาที่มีอยู่แล้วใน `CONTEXT.md` ให้ท้วงทันที "glossary ของคุณนิยาม 'cancellation' ว่า X แต่ดูเหมือนคุณหมายถึง Y — ตกลงอันไหนกันแน่?"
 
-### Sharpen fuzzy language
+### ลับภาษาที่คลุมเครือให้คม
 
-When the user uses vague or overloaded terms, propose a precise canonical term. "You're saying 'account' — do you mean the Customer or the User? Those are different things."
+เมื่อ user ใช้คำที่กำกวมหรือความหมายซ้อนทับกัน ให้เสนอคำ canonical ที่แม่นยำ "คุณพูดว่า 'account' — หมายถึง Customer หรือ User? สองอย่างนี้เป็นคนละเรื่องกัน"
 
-### Discuss concrete scenarios
+### คุยด้วย scenario ที่เป็นรูปธรรม
 
-When domain relationships are being discussed, stress-test them with specific scenarios. Invent scenarios that probe edge cases and force the user to be precise about the boundaries between concepts.
+เมื่อกำลังคุยเรื่องความสัมพันธ์ใน domain ให้ stress-test ด้วย scenario เฉพาะเจาะจง คิด scenario ที่จิ้มไปที่ edge case และบังคับให้ user ต้องแม่นยำกับเส้นแบ่งระหว่าง concept
 
-### Cross-reference with code
+### Cross-reference กับ code
 
-When the user states how something works, check whether the code agrees. If you find a contradiction, surface it: "Your code cancels entire Orders, but you just said partial cancellation is possible — which is right?"
+เมื่อ user บอกว่าอะไรทำงานยังไง ให้เช็คว่า code เห็นตรงกันไหม ถ้าเจอความขัดแย้ง ให้ยกขึ้นมา: "code ของคุณ cancel ทั้ง Order แต่คุณเพิ่งบอกว่า cancel บางส่วนได้ — อันไหนถูก?"
 
-### Update CONTEXT.md inline
+### อัปเดต CONTEXT.md ทันทีในบทสนทนา
 
-When a term is resolved, update `CONTEXT.md` right there. Don't batch these up — capture them as they happen. Use the format in [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md).
+เมื่อคำหนึ่งได้ข้อสรุปแล้ว ให้อัปเดต `CONTEXT.md` ตรงนั้นเลย อย่าสะสมไว้ทำทีเดียว — เก็บมันตอนที่มันเกิดขึ้น ใช้ format ใน [CONTEXT-FORMAT.md](./CONTEXT-FORMAT.md)
 
-`CONTEXT.md` should be totally devoid of implementation details. Do not treat `CONTEXT.md` as a spec, a scratch pad, or a repository for implementation decisions. It is a glossary and nothing else.
+`CONTEXT.md` ต้องปลอดรายละเอียด implementation โดยสิ้นเชิง อย่าใช้ `CONTEXT.md` เป็น spec, เป็นกระดาษทด หรือเป็นที่เก็บการตัดสินใจด้าน implementation มันคือ glossary และเป็นแค่นั้น
 
-### Offer ADRs sparingly
+### เสนอ ADR แบบระมัดระวัง
 
-Only offer to create an ADR when all three are true:
+เสนอสร้าง ADR ก็ต่อเมื่อครบทั้งสามข้อนี้เท่านั้น:
 
-1. **Hard to reverse** — the cost of changing your mind later is meaningful
-2. **Surprising without context** — a future reader will wonder "why did they do it this way?"
-3. **The result of a real trade-off** — there were genuine alternatives and you picked one for specific reasons
+1. **ย้อนกลับยาก** — ต้นทุนของการเปลี่ยนใจทีหลังมีนัยสำคัญ
+2. **ดูแปลกถ้าไม่มี context** — คนอ่านในอนาคตจะสงสัยว่า "ทำไมถึงทำแบบนี้?"
+3. **เป็นผลจาก trade-off จริง** — มีทางเลือกอื่นที่เป็นไปได้จริง และคุณเลือกทางนี้ด้วยเหตุผลเฉพาะ
 
-If any of the three is missing, skip the ADR. Use the format in [ADR-FORMAT.md](./ADR-FORMAT.md).
+ถ้าขาดข้อใดข้อหนึ่งในสามข้อ ให้ข้าม ADR ไป ใช้ format ใน [ADR-FORMAT.md](./ADR-FORMAT.md)

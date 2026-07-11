@@ -1,36 +1,36 @@
 ---
 name: tdd
-description: Test-driven development. Use when the user wants to build features or fix bugs test-first, mentions "red-green-refactor", or wants integration tests.
+description: Test-driven development ใช้เมื่อ user อยากสร้าง feature หรือแก้ bug แบบ test-first, พูดถึง "red-green-refactor" หรืออยากได้ integration test
 ---
 
 # Test-Driven Development
 
-TDD is the red → green loop. This skill is the reference that makes that loop produce tests worth keeping: what a good test is, where tests go, the anti-patterns, and the rules of the loop. Every section applies on every cycle — consult them before and during the loop, not after.
+TDD คือ loop red → green skill นี้คือ reference ที่ทำให้ loop นั้น produce test ที่ควรค่าแก่การเก็บไว้: test ที่ดีคืออะไร, test ควรอยู่ตรงไหน, anti-pattern มีอะไรบ้าง และกฎของ loop ทุก section ใช้กับทุก cycle — เปิดดูก่อนและระหว่างทำ loop ไม่ใช่หลังจบ
 
-When exploring the codebase, read `CONTEXT.md` (if it exists) so test names and interface vocabulary match the project's domain language, and respect ADRs in the area you're touching.
+ตอนสำรวจ codebase ให้อ่าน `CONTEXT.md` (ถ้ามี) เพื่อให้ชื่อ test กับคำศัพท์ของ interface ตรงกับภาษา domain ของ project และเคารพ ADR ในบริเวณที่คุณกำลังแตะ
 
-## What a good test is
+## Test ที่ดีคืออะไร
 
-Tests verify behavior through public interfaces, not implementation details. Code can change entirely; tests shouldn't. A good test reads like a specification — "user can checkout with valid cart" tells you exactly what capability exists — and survives refactors because it doesn't care about internal structure.
+test ตรวจสอบพฤติกรรมผ่าน public interface ไม่ใช่รายละเอียด implementation ตัว code เปลี่ยนทั้งหมดได้ แต่ test ไม่ควรต้องเปลี่ยนตาม test ที่ดีอ่านแล้วเหมือน spec — "user can checkout with valid cart" บอกชัดเจนว่าระบบทำอะไรได้ — และรอด refactor ได้เพราะมันไม่สนใจโครงสร้างภายใน
 
-See [tests.md](tests.md) for examples and [mocking.md](mocking.md) for mocking guidelines.
+ดูตัวอย่างใน [tests.md](tests.md) และแนวทางการ mock ใน [mocking.md](mocking.md)
 
-## Seams — where tests go
+## Seam — จุดที่ test อยู่
 
-A **seam** is the public boundary you test at: the interface where you observe behavior without reaching inside. Tests live at seams, never against internals.
+**seam** (จุดต่อสาธารณะที่เราใช้ test พฤติกรรม) คือขอบเขต public ที่คุณ test: interface ที่คุณสังเกตพฤติกรรมได้โดยไม่ต้องล้วงเข้าไปข้างใน test อยู่ที่ seam เสมอ ไม่มีวัน test ตัว internals
 
-**Test only at pre-agreed seams.** Before writing any test, write down the seams under test and confirm them with the user. No test is written at an unconfirmed seam. You can't test everything — agreeing the seams up front is how testing effort lands on the critical paths and complex logic instead of every edge case.
+**Test เฉพาะที่ seam ที่ตกลงกันไว้ล่วงหน้าเท่านั้น** ก่อนเขียน test ใด ๆ ให้เขียนรายการ seam ที่จะ test แล้ว confirm กับ user ห้ามเขียน test ที่ seam ที่ยังไม่ได้ confirm คุณ test ทุกอย่างไม่ได้อยู่แล้ว — การตกลง seam กันตั้งแต่ต้นคือวิธีทำให้แรงที่ลงกับการ test ไปตกอยู่บน critical path และ logic ที่ซับซ้อน แทนที่จะกระจายไปทุก edge case
 
-Ask: "What's the public interface, and which seams should we test?"
+ถามว่า: "public interface คืออะไร และเราควร test ที่ seam ไหนบ้าง?"
 
 ## Anti-patterns
 
-- **Implementation-coupled** — mocks internal collaborators, tests private methods, or verifies through a side channel (querying the database instead of using the interface). The tell: the test breaks when you refactor but behavior hasn't changed.
-- **Tautological** — the assertion recomputes the expected value the way the code does (`expect(add(a, b)).toBe(a + b)`, a snapshot derived by hand the same way, a constant asserted equal to itself), so it passes by construction and can never disagree with the code. Expected values must come from an independent source of truth — a known-good literal, a worked example, the spec.
-- **Horizontal slicing** — writing all tests first, then all implementation. Bulk tests verify _imagined_ behavior: you test the _shape_ of things rather than user-facing behavior, the tests go insensitive to real changes, and you commit to test structure before understanding the implementation. Work in **vertical slices** instead — one test → one implementation → repeat, each test a **tracer bullet** that responds to what the last cycle taught you.
+- **ผูกกับ implementation** — mock ตัว collaborator ภายใน, test method ที่เป็น private หรือตรวจสอบผ่านช่องทางอ้อม (query database ตรง ๆ แทนที่จะใช้ interface) จุดสังเกต: test พังตอน refactor ทั้งที่พฤติกรรมไม่ได้เปลี่ยน
+- **Tautological** — assertion คำนวณค่าที่คาดหวังซ้ำด้วยวิธีเดียวกับที่ code ทำ (`expect(add(a, b)).toBe(a + b)`, snapshot ที่ derive ด้วยมือแบบเดียวกัน, ค่าคงที่ที่ assert ว่าเท่ากับตัวเอง) มันจึงผ่านโดยโครงสร้างของมันเองและไม่มีวันขัดแย้งกับ code ได้ ค่าที่คาดหวังต้องมาจากแหล่งความจริงที่เป็นอิสระ — literal ที่รู้ว่าถูก, ตัวอย่างที่คำนวณมือไว้, ตัว spec
+- **Horizontal slicing** — เขียน test ทั้งหมดก่อน แล้วค่อย implement ทั้งหมด test ที่เขียนเป็นก้อนใหญ่ตรวจสอบพฤติกรรมที่_จินตนาการเอา_: คุณจะ test _รูปทรง_ ของสิ่งต่าง ๆ แทนพฤติกรรมที่ user เจอจริง, test จะด้านชาต่อการเปลี่ยนแปลงจริง และคุณ commit กับโครงสร้าง test ก่อนจะเข้าใจ implementation ให้ทำงานเป็น **vertical slice** แทน — หนึ่ง test → หนึ่ง implementation → วนซ้ำ โดยแต่ละ test เป็น **tracer bullet** ที่ตอบสนองต่อสิ่งที่ cycle ก่อนหน้าสอนคุณ
 
-## Rules of the loop
+## กฎของ loop
 
-- **Red before green.** Write the failing test first, then only enough code to pass it. Don't anticipate future tests or add speculative features.
-- **One slice at a time.** One seam, one test, one minimal implementation per cycle.
-- **Refactoring is not part of the loop.** It belongs to the review stage (see the `code-review` skill), not the red → green implementation cycle.
+- **Red ก่อน green** เขียน test ที่ fail ก่อน แล้วค่อยเขียน code แค่พอให้ test ผ่าน อย่าเผื่อ test ในอนาคตหรือเพิ่ม feature แบบเผื่อ ๆ
+- **ทีละ slice** หนึ่ง seam, หนึ่ง test, หนึ่ง implementation ที่ minimal ต่อหนึ่ง cycle
+- **Refactoring ไม่ใช่ส่วนหนึ่งของ loop** มันเป็นของขั้น review (ดู skill `code-review`) ไม่ใช่ของ cycle implement แบบ red → green

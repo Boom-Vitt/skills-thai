@@ -1,42 +1,42 @@
 ---
 name: setup-pre-commit
-description: Set up Husky pre-commit hooks with lint-staged (Prettier), type checking, and tests in the current repo. Use when user wants to add pre-commit hooks, set up Husky, configure lint-staged, or add commit-time formatting/typechecking/testing.
+description: ตั้งค่า Husky pre-commit hook พร้อม lint-staged (Prettier), type checking, และ test ใน repo ปัจจุบัน ใช้เมื่อผู้ใช้อยากเพิ่ม pre-commit hook, ตั้งค่า Husky, ตั้งค่า lint-staged หรือเพิ่มการ format/typecheck/test ตอน commit
 ---
 
 # Setup Pre-Commit Hooks
 
-## What This Sets Up
+## สิ่งที่จะตั้งค่าให้
 
 - **Husky** pre-commit hook
-- **lint-staged** running Prettier on all staged files
-- **Prettier** config (if missing)
-- **typecheck** and **test** scripts in the pre-commit hook
+- **lint-staged** ที่รัน Prettier กับไฟล์ที่ stage ไว้ทั้งหมด
+- config ของ **Prettier** (ถ้ายังไม่มี)
+- script **typecheck** และ **test** ใน pre-commit hook
 
-## Steps
+## ขั้นตอน
 
-### 1. Detect package manager
+### 1. ตรวจหา package manager
 
-Check for `package-lock.json` (npm), `pnpm-lock.yaml` (pnpm), `yarn.lock` (yarn), `bun.lockb` (bun). Use whichever is present. Default to npm if unclear.
+เช็กว่ามี `package-lock.json` (npm), `pnpm-lock.yaml` (pnpm), `yarn.lock` (yarn), `bun.lockb` (bun) ตัวไหนอยู่ก็ใช้ตัวนั้น ถ้าไม่ชัดให้ default เป็น npm
 
-### 2. Install dependencies
+### 2. ติดตั้ง dependency
 
-Install as devDependencies:
+ติดตั้งเป็น devDependencies:
 
 ```
 husky lint-staged prettier
 ```
 
-### 3. Initialize Husky
+### 3. เริ่มต้น Husky
 
 ```bash
 npx husky init
 ```
 
-This creates `.husky/` dir and adds `prepare: "husky"` to package.json.
+คำสั่งนี้สร้างโฟลเดอร์ `.husky/` และเพิ่ม `prepare: "husky"` ลง package.json
 
-### 4. Create `.husky/pre-commit`
+### 4. สร้าง `.husky/pre-commit`
 
-Write this file (no shebang needed for Husky v9+):
+เขียนไฟล์นี้ (Husky v9+ ไม่ต้องใส่ shebang):
 
 ```
 npx lint-staged
@@ -44,9 +44,9 @@ npm run typecheck
 npm run test
 ```
 
-**Adapt**: Replace `npm` with detected package manager. If repo has no `typecheck` or `test` script in package.json, omit those lines and tell the user.
+**ปรับตามจริง**: แทน `npm` ด้วย package manager ที่ตรวจเจอ ถ้า repo ไม่มี script `typecheck` หรือ `test` ใน package.json ให้ตัดบรรทัดนั้นออกแล้วบอกผู้ใช้
 
-### 5. Create `.lintstagedrc`
+### 5. สร้าง `.lintstagedrc`
 
 ```json
 {
@@ -54,9 +54,9 @@ npm run test
 }
 ```
 
-### 6. Create `.prettierrc` (if missing)
+### 6. สร้าง `.prettierrc` (ถ้ายังไม่มี)
 
-Only create if no Prettier config exists. Use these defaults:
+สร้างเฉพาะเมื่อยังไม่มี config ของ Prettier อยู่เลย ใช้ค่า default เหล่านี้:
 
 ```json
 {
@@ -70,22 +70,22 @@ Only create if no Prettier config exists. Use these defaults:
 }
 ```
 
-### 7. Verify
+### 7. ตรวจสอบ
 
-- [ ] `.husky/pre-commit` exists and is executable
-- [ ] `.lintstagedrc` exists
-- [ ] `prepare` script in package.json is `"husky"`
-- [ ] `prettier` config exists
-- [ ] Run `npx lint-staged` to verify it works
+- [ ] `.husky/pre-commit` มีอยู่และ execute ได้
+- [ ] `.lintstagedrc` มีอยู่
+- [ ] script `prepare` ใน package.json เป็น `"husky"`
+- [ ] config ของ `prettier` มีอยู่
+- [ ] รัน `npx lint-staged` เพื่อยืนยันว่าทำงานได้
 
 ### 8. Commit
 
-Stage all changed/created files and commit with message: `Add pre-commit hooks (husky + lint-staged + prettier)`
+Stage ไฟล์ที่แก้/สร้างทั้งหมด แล้ว commit ด้วยข้อความ: `Add pre-commit hooks (husky + lint-staged + prettier)`
 
-This will run through the new pre-commit hooks — a good smoke test that everything works.
+การ commit นี้จะวิ่งผ่าน pre-commit hook ตัวใหม่ — เป็น smoke test ที่ดีว่าทุกอย่างทำงานจริง
 
-## Notes
+## หมายเหตุ
 
-- Husky v9+ doesn't need shebangs in hook files
-- `prettier --ignore-unknown` skips files Prettier can't parse (images, etc.)
-- The pre-commit runs lint-staged first (fast, staged-only), then full typecheck and tests
+- Husky v9+ ไม่ต้องใส่ shebang ในไฟล์ hook
+- `prettier --ignore-unknown` จะข้ามไฟล์ที่ Prettier parse ไม่ได้ (รูปภาพ ฯลฯ)
+- pre-commit รัน lint-staged ก่อน (เร็ว เฉพาะไฟล์ที่ stage) แล้วค่อยรัน typecheck กับ test เต็ม ๆ

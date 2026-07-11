@@ -1,83 +1,83 @@
 ---
 name: writing-great-skills
-description: Reference for writing and editing skills well — the vocabulary and principles that make a skill predictable.
+description: อ้างอิงสำหรับการเขียนและแก้ไข skill ให้ดี — คำศัพท์และหลักการที่ทำให้ skill ทำงานได้อย่างคาดเดาได้
 disable-model-invocation: true
 ---
 
-A skill exists to wrangle determinism out of a stochastic system. **Predictability** — the agent taking the same _process_ every run, not producing the same output — is the root virtue; every lever below serves it.
+skill มีไว้เพื่อรีดความ deterministic ออกจากระบบที่ทำงานแบบ stochastic (สุ่มโดยธรรมชาติ) **Predictability** — การที่ agent เดิน_กระบวนการ_เดิมทุกครั้งที่รัน ไม่ใช่การผลิต output เหมือนเดิม — คือคุณสมบัติรากฐาน กลไกทุกตัวด้านล่างมีไว้รับใช้สิ่งนี้
 
-**Bold terms** are defined in [`GLOSSARY.md`](GLOSSARY.md); look them up there for the full meaning.
+**คำตัวหนา** มีนิยามอยู่ใน [`GLOSSARY.md`](GLOSSARY.md) เปิดดูที่นั่นเพื่อความหมายฉบับเต็ม
 
 ## Invocation
 
-Two choices, trading different costs:
+มีให้เลือกสองแบบ แลกกันคนละต้นทุน:
 
-- A **model-invoked** skill keeps a **description**, so the agent can fire it autonomously _and_ other skills can reach it (you can still type its name too). It contributes to **context load** — the description sits in the window every turn. Mechanics: omit `disable-model-invocation`, and write a model-facing description with rich trigger phrasing ("Use when the user wants…, mentions…").
-- A **user-invoked** skill strips the description from the agent's reach: only you, typing its name, can invoke it — and no other skill can. Zero context load, but it spends **cognitive load**: _you_ are the index that must remember it exists. Mechanics: set `disable-model-invocation: true`; the `description` becomes human-facing — a one-line summary, trigger lists stripped.
+- skill แบบ **model-invoked** ยังเก็บ **description** ไว้ ทำให้ agent เรียกมันเองได้ _และ_ skill อื่นก็เข้าถึงมันได้ (คุณยังพิมพ์ชื่อเรียกเองได้เหมือนเดิม) แต่มันเพิ่ม **context load** — description นั่งอยู่ใน context window ทุก turn กลไก: ไม่ต้องใส่ `disable-model-invocation` และเขียน description ให้ model อ่าน พร้อม trigger phrase ที่ครอบคลุม ("Use when the user wants…, mentions…")
+- skill แบบ **user-invoked** ตัด description ออกจากการรับรู้ของ agent: มีแค่คุณที่พิมพ์ชื่อมันเท่านั้นที่ invoke ได้ — และ skill อื่นก็เรียกไม่ได้ context load เป็นศูนย์ แต่จ่ายเป็น **cognitive load** แทน: _คุณ_ คือ index ที่ต้องจำเองว่ามันมีอยู่ กลไก: ตั้ง `disable-model-invocation: true` แล้ว `description` จะกลายเป็นข้อความสำหรับคนอ่าน — สรุปหนึ่งบรรทัด ตัด trigger list ทิ้ง
 
-Pick model-invocation only when the agent must reach the skill on its own, or another skill must. If it only ever fires by hand, make it user-invoked and pay no context load.
+เลือก model-invocation ก็ต่อเมื่อ agent ต้องเข้าถึง skill นั้นได้ด้วยตัวเอง หรือ skill อื่นต้องเรียกมัน ถ้ามันถูกเรียกด้วยมือเท่านั้น ให้ทำเป็น user-invoked แล้วไม่ต้องจ่าย context load เลย
 
-When user-invoked skills multiply past what you can remember, that piled-up cognitive load is cured by a **router skill**: one user-invoked skill that names the others and when to reach for each.
+เมื่อ user-invoked skill เพิ่มจำนวนจนเกินกว่าจะจำไหว cognitive load ที่กองสะสมนั้นแก้ได้ด้วย **router skill**: skill แบบ user-invoked ตัวเดียวที่บอกชื่อ skill ตัวอื่น และบอกว่าเมื่อไหร่ควรหยิบตัวไหน
 
-## Writing the description
+## การเขียน description
 
-A model-invoked **description** does two jobs — state what the skill is, and list the **branches** that should trigger it. Every word increases **context load**, so a description earns even harder pruning than the body:
+**description** แบบ model-invoked ทำงานสองอย่าง — บอกว่า skill นี้คืออะไร และไล่รายการ **branch** ที่ควร trigger มัน ทุกคำที่เพิ่มเข้าไปเพิ่ม **context load** ดังนั้น description ต้องถูก prune หนักยิ่งกว่าตัว body เสียอีก:
 
-- **Front-load the skill's leading word** — the description is where it does its invocation work.
-- **One trigger per branch.** Synonyms that rename a single branch are **duplication** — "build features using TDD … asks for test-first development" is one branch written twice. Collapse them; keep only genuinely distinct branches.
-- **Cut identity that's already in the body.** Keep the description to triggers, plus any "when another skill needs…" reach clause.
+- **เอา leading word ของ skill ขึ้นหน้าสุด** — description คือที่ที่มันทำหน้าที่ด้าน invocation
+- **หนึ่ง trigger ต่อหนึ่ง branch** synonym ที่แค่เรียก branch เดียวกันด้วยชื่อใหม่คือ **duplication** — "build features using TDD … asks for test-first development" คือ branch เดียวที่ถูกเขียนสองรอบ ยุบให้เหลืออันเดียว เก็บไว้เฉพาะ branch ที่ต่างกันจริง
+- **ตัด identity ที่มีอยู่ใน body แล้วทิ้งไป** ให้ description เหลือแค่ trigger บวกประโยค reach แบบ "when another skill needs…" ถ้าจำเป็น
 
 ## Information hierarchy
 
-A skill is built from two content types — **steps** and **reference** — that mix freely: a skill can be all steps, all reference, or both. The core decision is which to use and where each sits on the **information hierarchy**, a ladder ranked by how immediately the agent needs the material:
+skill ประกอบจากเนื้อหาสองชนิด — **step** และ **reference** — ที่ผสมกันได้อิสระ: skill หนึ่งอาจเป็น step ล้วน reference ล้วน หรือทั้งคู่ การตัดสินใจหลักคือจะใช้ชนิดไหน และแต่ละชิ้นควรอยู่ตรงไหนบน **information hierarchy** — บันไดที่จัดอันดับตามว่า agent ต้องใช้เนื้อหานั้นเร่งด่วนแค่ไหน:
 
-1. **In-skill step** — an ordered action in `SKILL.md`, the primary tier: what the agent does, in order. Each step ends on a **completion criterion**, the condition that tells the agent the work is done. Make it _checkable_ (can the agent tell done from not-done?) and, where it matters, _exhaustive_ ("every modified model accounted for", not "produce a change list") — a vague criterion invites **premature completion**.
-2. **In-skill reference** — a definition, rule, or fact in `SKILL.md`, consulted on demand. Often a legitimately flat peer-set (every rule of a review on one rung) — a fine arrangement, not a smell. _This skill is all reference._
-3. **External reference** — reference pushed out of `SKILL.md` into a separate file, reached by a **context pointer**, loaded only when the pointer fires. (Spans _disclosed_ reference — a sibling file like `GLOSSARY.md`, still part of the skill — through fully **external reference** that lives outside the skill system and any skill can point at.)
+1. **In-skill step** — action ที่เรียงลำดับใน `SKILL.md` เป็นชั้นหลัก: สิ่งที่ agent ทำ ตามลำดับ แต่ละ step จบด้วย **completion criterion** เงื่อนไขที่บอก agent ว่างานเสร็จแล้ว ทำให้มัน_เช็คได้_ (agent แยกออกไหมว่าเสร็จหรือยังไม่เสร็จ?) และในจุดที่สำคัญ ให้มัน_ครอบคลุมถ้วนทั่ว_ ("ทุก model ที่ถูกแก้ต้องถูกไล่ครบ" ไม่ใช่ "ทำรายการการเปลี่ยนแปลงออกมา") — criterion ที่คลุมเครือเชื้อเชิญ **premature completion**
+2. **In-skill reference** — นิยาม กฎ หรือข้อเท็จจริงใน `SKILL.md` ที่เปิดดูเมื่อต้องใช้ บ่อยครั้งเป็นชุดเนื้อหาระนาบเดียวที่เท่ากันโดยชอบธรรม (กฎทุกข้อของ review อยู่บนขั้นเดียวกัน) — เป็นการจัดวางที่ดี ไม่ใช่กลิ่นไม่ดี _skill นี้ทั้งไฟล์คือ reference_
+3. **External reference** — reference ที่ถูกดันออกจาก `SKILL.md` ไปอยู่ไฟล์แยก เข้าถึงผ่าน **context pointer** และโหลดเฉพาะตอนที่ pointer ทำงาน (ครอบคลุมตั้งแต่ reference แบบ _disclosed_ — ไฟล์พี่น้องอย่าง `GLOSSARY.md` ที่ยังเป็นส่วนหนึ่งของ skill — ไปจนถึง **external reference** เต็มตัวที่อยู่นอกระบบ skill และ skill ไหนก็ชี้ถึงได้)
 
-A demanding completion criterion drives thorough **legwork** — the digging the agent does within the work — whether the skill has steps or not, since "every rule applied" binds flat reference just as "every step done" binds a sequence.
+completion criterion ที่เข้มงวดผลักดันให้เกิด **legwork** ที่ทั่วถึง — การขุดคุ้ยที่ agent ทำระหว่างงาน — ไม่ว่า skill จะมี step หรือไม่ เพราะ "ทุกกฎถูกใช้ครบ" ผูกมัด reference ระนาบเดียวแบบเดียวกับที่ "ทุก step ทำครบ" ผูกมัด sequence
 
-Push too little down and the top bloats; push too much and you hide material the agent actually needs. That tension is the whole decision.
+ดันลงไปน้อยเกิน ชั้นบนก็บวม ดันลงมากเกิน ก็ซ่อนเนื้อหาที่ agent ต้องใช้จริง ความตึงนี้แหละคือทั้งหมดของการตัดสินใจ
 
-**Progressive disclosure** is the move down the ladder — out of `SKILL.md` into a linked file — so the top stays legible. Mechanics: a linked `.md` file in the skill folder, named for what it holds (this skill discloses its full definitions to `GLOSSARY.md`). Some skills are used in more than one way, and each distinct way is a **branch** — different runs taking different paths through the skill. Branching is the cleanest disclosure test: inline what every branch needs, and push behind a pointer what only some branches reach. A **context pointer**'s _wording_, not its target, decides when and how reliably the agent reaches the material.
+**Progressive disclosure** คือการเลื่อนลงบันได — ออกจาก `SKILL.md` ไปยังไฟล์ที่ link ไว้ — เพื่อให้ชั้นบนยังอ่านง่าย กลไก: ไฟล์ `.md` ที่ link ไว้ในโฟลเดอร์ของ skill ตั้งชื่อตามสิ่งที่มันเก็บ (skill นี้ disclose นิยามฉบับเต็มของตัวเองไปไว้ที่ `GLOSSARY.md`) skill บางตัวถูกใช้มากกว่าหนึ่งแบบ และแต่ละแบบที่ต่างกันคือหนึ่ง **branch** — การรันคนละครั้งเดินคนละเส้นทางผ่าน skill branching คือ disclosure test ที่สะอาดที่สุด: inline สิ่งที่ทุก branch ต้องใช้ และดันสิ่งที่มีแค่บาง branch เข้าถึงไปไว้หลัง pointer สิ่งที่ตัดสินว่า agent จะไปถึงเนื้อหาเมื่อไหร่และแม่นแค่ไหนคือ_ถ้อยคำ_ของ **context pointer** ไม่ใช่เป้าหมายของมัน
 
-Where the ladder decides _how far down_ a piece sits, **co-location** decides _what sits beside it_ once there: keep a concept's definition, rules, and caveats under one heading rather than scattered, so reading one part brings its neighbours with it.
+ขณะที่บันไดตัดสินว่าเนื้อหาชิ้นหนึ่งควรอยู่_ลึกลงไปแค่ไหน_ **co-location** ตัดสินว่า_อะไรควรอยู่ข้างมัน_เมื่อไปถึงตรงนั้นแล้ว: เก็บนิยาม กฎ และข้อควรระวังของ concept หนึ่งไว้ใต้ heading เดียวกัน ไม่ใช่กระจัดกระจาย เพื่อให้การอ่านส่วนหนึ่งพาเพื่อนบ้านของมันมาด้วย
 
-## When to split
+## เมื่อไหร่ควร split
 
-**Granularity** is how finely you divide skills, and each cut spends one of the two loads, so split only when the cut earns it. Two cuts:
+**Granularity** คือความละเอียดในการแบ่ง skill และการตัดแต่ละครั้งจ่ายด้วย load หนึ่งในสองแบบ ดังนั้น split เฉพาะเมื่อการตัดนั้นคุ้ม การตัดมีสองแบบ:
 
-- **By invocation** — split off a **model-invoked** skill when you have a distinct **leading word** that should trigger it on its own, or another skill must reach it. You pay **context load** for the new always-loaded **description**, so that independent reach has to be worth it.
-- **By sequence** — split a run of **steps** when the steps still ahead (a step's **post-completion steps**) tempt the agent to rush the one in front of it (**premature completion**). Keeping them out of view encourages the agent to do more **legwork** on the current task.
+- **ตัดตาม invocation** — แยก skill แบบ **model-invoked** ออกมาเมื่อคุณมี **leading word** ที่ชัดเจนพอจะ trigger มันได้ด้วยตัวเอง หรือเมื่อ skill อื่นต้องเรียกมัน คุณจ่าย **context load** ให้ **description** ตัวใหม่ที่ถูกโหลดตลอดเวลา ดังนั้นการเข้าถึงแบบอิสระนั้นต้องคุ้มค่าจริง
+- **ตัดตาม sequence** — แยกช่วงของ **step** เมื่อ step ที่รออยู่ข้างหน้า (**post-completion steps** ของ step หนึ่ง) ล่อให้ agent รีบปิด step ตรงหน้า (**premature completion**) การเก็บพวกมันให้พ้นสายตากระตุ้นให้ agent ทำ **legwork** กับงานตรงหน้ามากขึ้น
 
 ## Pruning
 
-Keep each meaning in a **single source of truth**: one authoritative place, so changing the behaviour is a one-place edit.
+เก็บแต่ละความหมายไว้ใน **single source of truth**: ที่ทางการที่เดียว เพื่อให้การเปลี่ยนพฤติกรรมเป็นการแก้ที่เดียวจบ
 
-Check every line for **relevance**: does it still bear on what the skill does?
+เช็คทุกบรรทัดเรื่อง **relevance**: มันยังเกี่ยวกับสิ่งที่ skill ทำอยู่ไหม?
 
-Then hunt **no-ops** sentence by sentence, not just line by line: run the no-op test on each sentence in isolation, and when one fails, delete the whole sentence rather than trim words from it. Be aggressive — most prose that fails should go, not be rewritten.
+จากนั้นล่า **no-op** ทีละประโยค ไม่ใช่แค่ทีละบรรทัด: รัน no-op test กับแต่ละประโยคแบบแยกเดี่ยว และเมื่อประโยคไหนสอบตก ให้ลบทั้งประโยคแทนที่จะเล็มคำออกจากมัน จงดุดัน — prose ส่วนใหญ่ที่สอบตกควรถูกลบทิ้ง ไม่ใช่ถูกเขียนใหม่
 
 ## Leading words
 
-A **leading word** is a compact concept already living in the model's pretraining that the agent thinks with while running the skill (e.g. _lesson_, _fog of war_, _tracer bullets_). Repeated throughout the text (though not necessarily - a strong leading word might only be needed once), it accumulates a distributed definition and anchors a whole region of behaviour in the fewest tokens, by recruiting priors the model already holds.
+**leading word** คือ concept อัดแน่นที่มีอยู่ใน pretraining ของ model อยู่แล้ว ซึ่ง agent ใช้คิดตามระหว่างรัน skill (เช่น _lesson_, _fog of war_, _tracer bullets_) เมื่อถูกใช้ซ้ำทั่วทั้งข้อความ (แม้ไม่จำเป็นเสมอไป — leading word ที่แรงพออาจต้องใช้แค่ครั้งเดียว) มันสะสมนิยามแบบกระจายและตรึงพฤติกรรมทั้งย่านไว้ด้วย token น้อยที่สุด โดยดึง prior ที่ model ถืออยู่แล้วมาใช้งาน
 
-It serves predictability twice. In the body it anchors _execution_: the agent reaches for the same behaviour every time the word appears. In the description it anchors _invocation_: when the same word lives in your prompts, docs, and code, the agent links that shared language to the skill and fires it more reliably.
+มันรับใช้ predictability สองต่อ ใน body มันตรึง_การ execute_: agent หยิบพฤติกรรมเดิมทุกครั้งที่คำนั้นโผล่มา ใน description มันตรึง_การ invoke_: เมื่อคำเดียวกันอยู่ทั้งใน prompt เอกสาร และ code ของคุณ agent จะโยงภาษาที่ใช้ร่วมกันนั้นเข้ากับ skill และเรียกมันได้แม่นยำขึ้น
 
-Hunt for opportunities to refactor skills to use leading words. A triad spelled out at three sites (**duplication**), a description spending a sentence to gesture at one idea — each is a passage begging to **collapse** into a single token. Examples include:
+ล่าโอกาส refactor skill ให้ใช้ leading word อยู่เสมอ ชุดคุณสมบัติสามคำที่ถูกสะกดออกมาสามจุด (**duplication**) description ที่เปลืองทั้งประโยคเพื่อชี้ๆ ไปที่ idea เดียว — แต่ละอันคือข้อความที่ร้องขอให้ถูก **collapse** เป็น token เดียว ตัวอย่างเช่น:
 
-- "fast, deterministic, low-overhead" -> _tight_ — one quality restated across a phase — into a single pretrained word (a _tight_ loop).
-- "a loop you believe in" -> _red_ — converts a fuzzy gate into a binary observable state (the loop goes _red_ on the bug, or it doesn't).
+- "fast, deterministic, low-overhead" -> _tight_ — คุณสมบัติเดียวที่ถูกพูดซ้ำตลอดทั้ง phase — ยุบเป็นคำ pretrained คำเดียว (loop ที่ _tight_)
+- "a loop you believe in" -> _red_ — เปลี่ยน gate ที่คลุมเครือให้เป็น state ที่สังเกตได้แบบ binary (loop จะ _red_ กับ bug นั้น หรือไม่ก็ไม่ red)
 
-You win twice over: fewer tokens, _and_ a sharper hook for the agent to hang its thinking on. Assume every skill is carrying restatements that leading words retire — go find them.
+คุณชนะสองต่อ: token น้อยลง _และ_ ได้ hook ที่คมขึ้นให้ agent แขวนความคิด ให้ตั้งข้อสันนิษฐานว่าทุก skill กำลังแบกการพูดซ้ำที่ leading word ปลดระวางได้ — ไปหามันให้เจอ
 
 ## Failure modes
 
-Use these to diagnose issues the user may be having with the skill.
+ใช้รายการนี้วินิจฉัยปัญหาที่ user อาจเจอกับ skill
 
-- **Premature completion** — ending a step before it's genuinely done, attention slipping to _being done_. Defence, in order: sharpen the completion criterion first (cheap, local); only if it is irreducibly fuzzy _and_ you observe the rush, hide the post-completion steps by splitting (the sequence cut).
-- **Duplication** — the same meaning in more than one place. Costs maintenance and tokens, and inflates a meaning's prominence on the ladder past its real rank.
-- **Sediment** — stale layers that settle because adding feels safe and removing feels risky. The default fate of any skill without a pruning discipline.
-- **Sprawl** — a skill simply too long, even when every line is live and unique. Hurts readability and maintainability and wastes tokens. The cure is the ladder: disclose **reference** behind pointers, and split by **branch** or sequence so each path carries only what it needs.
-- **No-op** — a line the model already obeys by default, so you pay load to say nothing. The test: does it change behaviour versus the default? A weak leading word (_be thorough_ when the agent is already thorough-ish) is a no-op; the fix is a stronger word (_relentless_), not a different technique.
-- **Negation** — steering by prohibition backfires: _don't think of an elephant_ names the elephant and makes it more available, not less. Prompt the **positive** — state the target behaviour so the banned one is never spoken; keep a prohibition only as a hard guardrail you can't phrase positively, and even then pair it with what to do instead.
+- **Premature completion** — จบ step ก่อนที่มันจะเสร็จจริง ความสนใจไถลไปอยู่ที่_การได้เสร็จ_ วิธีป้องกันตามลำดับ: ลับ completion criterion ให้คมก่อน (ถูกและแก้เฉพาะจุด); เฉพาะเมื่อมันคลุมเครือจนลดทอนไม่ได้แล้ว _และ_ คุณเห็นอาการรีบจริง ค่อยซ่อน post-completion steps ด้วยการ split (การตัดตาม sequence)
+- **Duplication** — ความหมายเดียวกันอยู่มากกว่าหนึ่งที่ เปลืองทั้ง maintenance และ token และดันความเด่นของความหมายนั้นบนบันไดให้สูงเกินอันดับจริง
+- **Sediment** — ชั้นตะกอนเก่าที่ทับถมเพราะการเพิ่มรู้สึกปลอดภัยแต่การลบรู้สึกเสี่ยง ชะตากรรม default ของ skill ที่ไม่มีวินัยการ prune
+- **Sprawl** — skill ที่ยาวเกินไปเฉยๆ แม้ทุกบรรทัดจะยังสดและไม่ซ้ำกัน ทำร้ายทั้งความอ่านง่าย ความ maintain ง่าย และเปลือง token ทางแก้คือบันได: disclose **reference** ไปไว้หลัง pointer และ split ตาม **branch** หรือ sequence เพื่อให้แต่ละเส้นทางแบกเฉพาะสิ่งที่ตัวเองต้องใช้
+- **No-op** — บรรทัดที่ model ทำตามอยู่แล้วโดย default คุณจึงจ่าย load เพื่อพูดสิ่งที่ไม่เปลี่ยนอะไรเลย วิธีทดสอบ: มันเปลี่ยนพฤติกรรมเทียบกับ default ไหม? leading word ที่อ่อน (_be thorough_ ทั้งที่ agent ก็ค่อนข้าง thorough อยู่แล้ว) คือ no-op ทางแก้คือคำที่แรงกว่า (_relentless_) ไม่ใช่เปลี่ยนไปใช้เทคนิคอื่น
+- **Negation** — การบังคับทิศทางด้วยข้อห้ามให้ผลย้อนศร: _don't think of an elephant_ เอ่ยชื่อช้างและทำให้มันเด่นขึ้นในหัว ไม่ใช่จางลง จง prompt ด้าน**บวก** — ระบุพฤติกรรมเป้าหมายเพื่อไม่ต้องเอ่ยถึงพฤติกรรมต้องห้ามเลย เก็บข้อห้ามไว้เฉพาะกรณี guardrail แข็งๆ ที่เขียนเป็นบวกไม่ได้จริงๆ และถึงตอนนั้นก็ต้องจับคู่กับสิ่งที่ให้ทำแทนเสมอ

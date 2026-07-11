@@ -1,35 +1,35 @@
 ---
 name: codebase-design
-description: Shared vocabulary for designing deep modules. Use when the user wants to design or improve a module's interface, find deepening opportunities, decide where a seam goes, make code more testable or AI-navigable, or when another skill needs the deep-module vocabulary.
+description: คำศัพท์กลางสำหรับออกแบบ deep module ใช้เมื่อ user อยากออกแบบหรือปรับปรุง interface ของ module, หาโอกาสทำ module ให้ deep ขึ้น, ตัดสินใจว่า seam ควรอยู่ตรงไหน, ทำ code ให้ test ง่ายขึ้นหรือให้ AI นำทางได้ง่ายขึ้น หรือเมื่อ skill อื่นต้องใช้คำศัพท์เรื่อง deep module
 ---
 
-# Codebase Design
+# การออกแบบ Codebase
 
-Design **deep modules**: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface. Use this language and these principles wherever code is being designed or restructured. The aim is leverage for callers, locality for maintainers, and testability for everyone.
+ออกแบบ **deep module**: พฤติกรรมจำนวนมากอยู่หลัง interface เล็ก ๆ วางไว้ที่ seam (จุดต่อที่เราสลับพฤติกรรมได้โดยไม่ต้องแก้ code ตรงนั้น) ที่สะอาด และ test ได้ผ่าน interface นั้น ใช้ภาษาและหลักการชุดนี้ทุกที่ที่มีการออกแบบหรือปรับโครงสร้าง code เป้าหมายคือ leverage ให้ฝั่ง caller, locality ให้คนดูแล code และความ testable ให้ทุกคน
 
 ## Glossary
 
-Use these terms exactly — don't substitute "component," "service," "API," or "boundary." Consistent language is the whole point.
+ใช้คำเหล่านี้แบบเป๊ะ ๆ — อย่าเปลี่ยนไปใช้ "component," "service," "API," หรือ "boundary" แทน ภาษาที่สม่ำเสมอคือหัวใจของเรื่องนี้
 
-**Module** — anything with an interface and an implementation. Deliberately scale-agnostic: a function, class, package, or tier-spanning slice. _Avoid_: unit, component, service.
+**Module** — อะไรก็ตามที่มี interface กับ implementation ตั้งใจให้ไม่ผูกกับขนาด: จะเป็น function, class, package หรือ slice ที่พาดผ่านหลาย tier ก็ได้ _เลี่ยง_: unit, component, service
 
-**Interface** — everything a caller must know to use the module correctly: the type signature, but also invariants, ordering constraints, error modes, required configuration, and performance characteristics. _Avoid_: API, signature (too narrow — they refer only to the type-level surface).
+**Interface** — ทุกอย่างที่ caller ต้องรู้เพื่อใช้ module ได้ถูกต้อง: ไม่ใช่แค่ type signature แต่รวมถึง invariant, ข้อบังคับเรื่องลำดับการเรียก, รูปแบบ error, config ที่ต้องมี และคุณสมบัติด้าน performance ด้วย _เลี่ยง_: API, signature (แคบเกินไป — สองคำนี้พูดถึงแค่ผิวระดับ type เท่านั้น)
 
-**Implementation** — what's inside a module, its body of code. Distinct from **Adapter**: a thing can be a small adapter with a large implementation (a Postgres repo) or a large adapter with a small implementation (an in-memory fake). Reach for "adapter" when the seam is the topic; "implementation" otherwise.
+**Implementation** — สิ่งที่อยู่ข้างใน module ตัวเนื้อ code ของมัน ต่างจาก **Adapter**: ของชิ้นหนึ่งอาจเป็น adapter เล็กที่มี implementation ใหญ่ (Postgres repo) หรือ adapter ใหญ่ที่มี implementation เล็ก (fake ใน memory) ก็ได้ ใช้คำว่า "adapter" เมื่อประเด็นอยู่ที่ seam นอกนั้นใช้ "implementation"
 
-**Depth** — leverage at the interface: the amount of behaviour a caller (or test) can exercise per unit of interface they have to learn. A module is **deep** when a large amount of behaviour sits behind a small interface, **shallow** when the interface is nearly as complex as the implementation.
+**Depth** — leverage ที่ตัว interface: ปริมาณพฤติกรรมที่ caller (หรือ test) ใช้งานได้ต่อหน่วยของ interface ที่ต้องเรียนรู้ module จะ **deep** เมื่อพฤติกรรมจำนวนมากอยู่หลัง interface เล็ก ๆ และ **shallow** เมื่อ interface ซับซ้อนแทบเท่า implementation
 
-**Seam** _(Michael Feathers)_ — a place where you can alter behaviour without editing in that place; the *location* at which a module's interface lives. Where to put the seam is its own design decision, distinct from what goes behind it. _Avoid_: boundary (overloaded with DDD's bounded context).
+**Seam** _(Michael Feathers)_ — จุดที่เราเปลี่ยนพฤติกรรมได้โดยไม่ต้องแก้ code ตรงจุดนั้น; คือ*ตำแหน่ง*ที่ interface ของ module อาศัยอยู่ จะวาง seam ตรงไหนเป็นการตัดสินใจออกแบบอีกเรื่องหนึ่ง แยกจากว่าอะไรจะอยู่ข้างหลังมัน _เลี่ยง_: boundary (ความหมายชนกับ bounded context ของ DDD)
 
-**Adapter** — a concrete thing that satisfies an interface at a seam. Describes *role* (what slot it fills), not substance (what's inside).
+**Adapter** — ของจริงชิ้นหนึ่งที่ทำตาม interface ณ seam หนึ่ง อธิบาย*บทบาท* (เสียบเข้าช่องไหน) ไม่ใช่เนื้อใน (ข้างในมีอะไร)
 
-**Leverage** — what callers get from depth: more capability per unit of interface they learn. One implementation pays back across N call sites and M tests.
+**Leverage** — สิ่งที่ caller ได้จาก depth: ความสามารถมากขึ้นต่อหน่วย interface ที่ต้องเรียนรู้ implementation เดียวคืนทุนกระจายไปทั่ว N จุดเรียกใช้และ M test
 
-**Locality** — what maintainers get from depth: change, bugs, knowledge, and verification concentrate in one place rather than spreading across callers. Fix once, fixed everywhere.
+**Locality** — สิ่งที่คนดูแล code ได้จาก depth: การเปลี่ยนแปลง, bug, ความรู้ และการ verify กระจุกอยู่ที่เดียวแทนที่จะกระจายไปตาม caller แก้ครั้งเดียว หายทุกที่
 
 ## Deep vs shallow
 
-**Deep module** = small interface + lots of implementation:
+**Deep module** = interface เล็ก + implementation เยอะ:
 
 ```
 ┌─────────────────────┐
@@ -41,7 +41,7 @@ Use these terms exactly — don't substitute "component," "service," "API," or "
 └─────────────────────┘
 ```
 
-**Shallow module** = large interface + little implementation (avoid):
+**Shallow module** = interface ใหญ่ + implementation น้อย (ควรเลี่ยง):
 
 ```
 ┌─────────────────────────────────┐
@@ -51,24 +51,24 @@ Use these terms exactly — don't substitute "component," "service," "API," or "
 └─────────────────────────────────┘
 ```
 
-When designing an interface, ask:
+เวลาออกแบบ interface ให้ถามว่า:
 
-- Can I reduce the number of methods?
-- Can I simplify the parameters?
-- Can I hide more complexity inside?
+- ลดจำนวน method ลงได้ไหม?
+- ทำ parameter ให้เรียบง่ายกว่านี้ได้ไหม?
+- ซ่อนความซับซ้อนไว้ข้างในได้มากกว่านี้ไหม?
 
-## Principles
+## หลักการ
 
-- **Depth is a property of the interface, not the implementation.** A deep module can be internally composed of small, mockable, swappable parts — they just aren't part of the interface. A module can have **internal seams** (private to its implementation, used by its own tests) as well as the **external seam** at its interface.
-- **The deletion test.** Imagine deleting the module. If complexity vanishes, it was a pass-through. If complexity reappears across N callers, it was earning its keep.
-- **The interface is the test surface.** Callers and tests cross the same seam. If you want to test *past* the interface, the module is probably the wrong shape.
-- **One adapter means a hypothetical seam. Two adapters means a real one.** Don't introduce a seam unless something actually varies across it.
+- **Depth เป็นคุณสมบัติของ interface ไม่ใช่ของ implementation** deep module ข้างในอาจประกอบจากชิ้นเล็ก ๆ ที่ mock ได้ สลับได้ — แค่ชิ้นพวกนั้นไม่ได้เป็นส่วนหนึ่งของ interface และ module มี **internal seam** ได้ (เป็นของ private ภายใน implementation ใช้โดย test ของตัวมันเอง) ควบคู่กับ **external seam** ที่ interface ของมัน
+- **Deletion test** ลองจินตนาการว่าลบ module ทิ้ง ถ้าความซับซ้อนหายไปด้วย แปลว่ามันเป็นแค่ pass-through ถ้าความซับซ้อนโผล่กลับมากระจายอยู่ใน caller ทั้ง N ที่ แปลว่ามันทำหน้าที่คุ้มค่าตัวอยู่จริง
+- **Interface คือพื้นผิวสำหรับ test** caller กับ test ข้าม seam เดียวกัน ถ้าเราอยาก test *ทะลุ* interface เข้าไปข้างใน แปลว่า module น่าจะมีรูปทรงที่ผิด
+- **Adapter เดียวคือ seam สมมุติ สอง adapter ถึงเป็น seam จริง** อย่าใส่ seam ถ้าไม่มีอะไรแปรผันข้ามมันจริง ๆ
 
-## Designing for testability
+## ออกแบบเพื่อความ testable
 
-Good interfaces make testing natural:
+Interface ที่ดีทำให้การ test เป็นเรื่องธรรมชาติ:
 
-1. **Accept dependencies, don't create them.**
+1. **รับ dependency เข้ามา อย่าสร้างเอง**
 
    ```typescript
    // Testable
@@ -80,7 +80,7 @@ Good interfaces make testing natural:
    }
    ```
 
-2. **Return results, don't produce side effects.**
+2. **คืนผลลัพธ์ อย่าสร้าง side effect**
 
    ```typescript
    // Testable
@@ -92,23 +92,23 @@ Good interfaces make testing natural:
    }
    ```
 
-3. **Small surface area.** Fewer methods = fewer tests needed. Fewer params = simpler test setup.
+3. **พื้นผิวเล็ก** method น้อย = test ที่ต้องเขียนน้อย parameter น้อย = setup test ง่ายขึ้น
 
-## Relationships
+## ความสัมพันธ์
 
-- A **Module** has exactly one **Interface** (the surface it presents to callers and tests).
-- **Depth** is a property of a **Module**, measured against its **Interface**.
-- A **Seam** is where a **Module**'s **Interface** lives.
-- An **Adapter** sits at a **Seam** and satisfies the **Interface**.
-- **Depth** produces **Leverage** for callers and **Locality** for maintainers.
+- **Module** หนึ่งตัวมี **Interface** เดียวเป๊ะ ๆ (พื้นผิวที่มันเปิดให้ caller และ test)
+- **Depth** เป็นคุณสมบัติของ **Module** วัดเทียบกับ **Interface** ของมัน
+- **Seam** คือตำแหน่งที่ **Interface** ของ **Module** อาศัยอยู่
+- **Adapter** อยู่ที่ **Seam** และทำตาม **Interface**
+- **Depth** ให้ **Leverage** แก่ caller และให้ **Locality** แก่คนดูแล code
 
-## Rejected framings
+## Framing ที่ตัดทิ้งไปแล้ว
 
-- **Depth as ratio of implementation-lines to interface-lines** (Ousterhout): rewards padding the implementation. We use depth-as-leverage instead.
-- **"Interface" as the TypeScript `interface` keyword or a class's public methods**: too narrow — interface here includes every fact a caller must know.
-- **"Boundary"**: overloaded with DDD's bounded context. Say **seam** or **interface**.
+- **Depth แบบอัตราส่วนจำนวนบรรทัด implementation ต่อบรรทัด interface** (Ousterhout): จูงใจให้ปั้น implementation ให้บวมเปล่า ๆ เราใช้ depth แบบ leverage แทน
+- **"Interface" ในความหมาย keyword `interface` ของ TypeScript หรือ public method ของ class**: แคบเกินไป — interface ในที่นี้รวมทุกข้อเท็จจริงที่ caller ต้องรู้
+- **"Boundary"**: ความหมายชนกับ bounded context ของ DDD ให้พูดว่า **seam** หรือ **interface**
 
-## Going deeper
+## ไปให้ลึกกว่านี้
 
-- **Deepening a cluster given its dependencies** — see [DEEPENING.md](DEEPENING.md): dependency categories, seam discipline, and replace-don't-layer testing.
-- **Exploring alternative interfaces** — see [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): spin up parallel sub-agents to design the interface several radically different ways, then compare on depth, locality, and seam placement.
+- **ทำ cluster ให้ deep ขึ้นตาม dependency ของมัน** — ดู [DEEPENING.md](DEEPENING.md): หมวดหมู่ของ dependency, วินัยเรื่อง seam และการ test แบบ replace-don't-layer
+- **สำรวจ interface ทางเลือกอื่น** — ดู [DESIGN-IT-TWICE.md](DESIGN-IT-TWICE.md): ปั่น sub-agent ขนานกันหลายตัวให้ออกแบบ interface หลายแบบที่ต่างกันสุดขั้ว แล้วเอามาเทียบกันด้วย depth, locality และตำแหน่งของ seam

@@ -1,89 +1,89 @@
 ---
 name: code-review
-description: Review the changes since a fixed point (commit, branch, tag, or merge-base) along two axes — Standards (does the code follow this repo's documented coding standards?) and Spec (does the code match what the originating issue/PRD asked for?). Runs both reviews in parallel sub-agents and reports them side by side. Use when the user wants to review a branch, a PR, work-in-progress changes, or asks to "review since X".
+description: รีวิวการเปลี่ยนแปลงตั้งแต่จุดอ้างอิงคงที่ (commit, branch, tag หรือ merge-base) ตามสองแกน — Standards (code ทำตาม coding standards ที่ repo นี้บันทึกไว้ไหม?) และ Spec (code ตรงกับสิ่งที่ issue/PRD ต้นทางขอไหม?) รันรีวิวทั้งสองแกนใน sub-agent ที่ทำงานขนานกันแล้วรายงานเทียบเคียงกัน ใช้เมื่อ user อยากรีวิว branch, PR, งานที่ยังทำค้างอยู่ หรือพูดว่า "review since X"
 ---
 
-Two-axis review of the diff between `HEAD` and a fixed point the user supplies:
+รีวิวสองแกนบน diff ระหว่าง `HEAD` กับจุดอ้างอิงคงที่ที่ user ระบุมา:
 
-- **Standards** — does the code conform to this repo's documented coding standards?
-- **Spec** — does the code faithfully implement the originating issue / PRD / spec?
+- **Standards** — code ทำตาม coding standards ที่ repo นี้บันทึกไว้เป็นเอกสารหรือเปล่า?
+- **Spec** — code implement ตาม issue / PRD / spec ต้นทางอย่างซื่อตรงหรือเปล่า?
 
-Both axes run as **parallel sub-agents** so they don't pollute each other's context, then this skill aggregates their findings.
+ทั้งสองแกนรันเป็น **sub-agent ขนานกัน** เพื่อไม่ให้ context ของกันและกันปนกัน แล้ว skill นี้ค่อยรวมผลที่แต่ละฝั่งเจอ
 
-The issue tracker should have been provided to you — run `/setup-matt-pocock-skills` if `docs/agents/issue-tracker.md` is missing.
+ข้อมูล issue tracker ควรถูกส่งมาให้คุณแล้ว — ถ้าไม่มี `docs/agents/issue-tracker.md` ให้รัน `/setup-matt-pocock-skills`
 
-## Process
+## ขั้นตอน
 
-### 1. Pin the fixed point
+### 1. ปักหมุดจุดอ้างอิง
 
-Whatever the user said is the fixed point — a commit SHA, branch name, tag, `main`, `HEAD~5`, etc. If they didn't specify one, ask for it.
+จุดอ้างอิงคือสิ่งที่ user บอกมา — commit SHA, ชื่อ branch, tag, `main`, `HEAD~5` ฯลฯ ถ้าไม่ได้ระบุมา ให้ถาม
 
-Capture the diff command once: `git diff <fixed-point>...HEAD` (three-dot, so the comparison is against the merge-base). Also note the list of commits via `git log <fixed-point>..HEAD --oneline`.
+เก็บคำสั่ง diff ไว้ครั้งเดียว: `git diff <fixed-point>...HEAD` (สามจุด เพื่อให้เทียบกับ merge-base) และจดรายการ commit ผ่าน `git log <fixed-point>..HEAD --oneline` ด้วย
 
-Before going further, confirm the fixed point resolves (`git rev-parse <fixed-point>`) and the diff is non-empty. A bad ref or empty diff should fail here — not inside two parallel sub-agents.
+ก่อนไปต่อ ยืนยันว่าจุดอ้างอิง resolve ได้จริง (`git rev-parse <fixed-point>`) และ diff ไม่ว่างเปล่า ref ที่ผิดหรือ diff ว่างควร fail ตรงนี้ — ไม่ใช่ไปตายอยู่ใน sub-agent สองตัวที่รันขนานกัน
 
-### 2. Identify the spec source
+### 2. ระบุแหล่งที่มาของ spec
 
-Look for the originating spec, in this order:
+หา spec ต้นทางตามลำดับนี้:
 
-1. Issue references in the commit messages (`#123`, `Closes #45`, GitLab `!67`, etc.) — fetch via the workflow in `docs/agents/issue-tracker.md`.
-2. A path the user passed as an argument.
-3. A PRD/spec file under `docs/`, `specs/`, or `.scratch/` matching the branch name or feature.
-4. If nothing is found, ask the user where the spec is. If they say there isn't one, the **Spec** sub-agent will skip and report "no spec available".
+1. การอ้างถึง issue ใน commit message (`#123`, `Closes #45`, GitLab `!67` ฯลฯ) — ดึงข้อมูลตาม workflow ใน `docs/agents/issue-tracker.md`
+2. path ที่ user ส่งมาเป็น argument
+3. ไฟล์ PRD/spec ใต้ `docs/`, `specs/` หรือ `.scratch/` ที่ชื่อตรงกับ branch หรือ feature
+4. ถ้าไม่เจออะไรเลย ให้ถาม user ว่า spec อยู่ไหน ถ้าเขาบอกว่าไม่มี sub-agent ฝั่ง **Spec** จะข้ามและรายงานว่า "no spec available"
 
-### 3. Identify the standards sources
+### 3. ระบุแหล่งที่มาของ standards
 
-Anything in the repo that documents how code should be written, such as `CODING_STANDARDS.md` or `CONTRIBUTING.md`.
+อะไรก็ตามใน repo ที่บันทึกไว้ว่า code ควรเขียนยังไง เช่น `CODING_STANDARDS.md` หรือ `CONTRIBUTING.md`
 
-On top of whatever the repo documents, the Standards axis always carries the **smell baseline** below — a fixed set of Fowler code smells (_Refactoring_, ch.3) that applies even when a repo documents nothing. Two rules bind it:
+นอกเหนือจากสิ่งที่ repo บันทึกไว้ แกน Standards จะพก **smell baseline** ด้านล่างติดตัวเสมอ — ชุด code smell ของ Fowler ที่ตายตัว (_Refactoring_ บทที่ 3) ซึ่งใช้ได้แม้ repo ไม่ได้บันทึกอะไรไว้เลย มีกติกาสองข้อกำกับ:
 
-- **The repo overrides.** A documented repo standard always wins; where it endorses something the baseline would flag, suppress the smell.
-- **Always a judgement call.** Each smell is a labelled heuristic ("possible Feature Envy"), never a hard violation — and, like any standard here, skip anything tooling already enforces.
+- **Repo ชนะเสมอ** standard ที่ repo บันทึกไว้ชนะทุกครั้ง; จุดไหนที่ repo รับรองสิ่งที่ baseline จะ flag ให้กด smell นั้นทิ้งไป
+- **เป็น judgement call เสมอ** แต่ละ smell เป็น heuristic ที่ติดป้ายกำกับ ("possible Feature Envy") ไม่ใช่การละเมิดแบบฟันธง — และเช่นเดียวกับ standard อื่นในที่นี้ ให้ข้ามอะไรก็ตามที่ tooling บังคับให้อยู่แล้ว
 
-Each smell reads *what it is* → *how to fix*; match it against the diff:
+แต่ละ smell อ่านเป็น *มันคืออะไร* → *แก้ยังไง* เอาไปเทียบกับ diff:
 
-- **Mysterious Name** — a function, variable, or type whose name doesn't reveal what it does or holds. → rename it; if no honest name comes, the design's murky.
-- **Duplicated Code** — the same logic shape appears in more than one hunk or file in the change. → extract the shared shape, call it from both.
-- **Feature Envy** — a method that reaches into another object's data more than its own. → move the method onto the data it envies.
-- **Data Clumps** — the same few fields or params keep travelling together (a type wanting to be born). → bundle them into one type, pass that.
-- **Primitive Obsession** — a primitive or string standing in for a domain concept that deserves its own type. → give the concept its own small type.
-- **Repeated Switches** — the same `switch`/`if`-cascade on the same type recurs across the change. → replace with polymorphism, or one map both sites share.
-- **Shotgun Surgery** — one logical change forces scattered edits across many files in the diff. → gather what changes together into one module.
-- **Divergent Change** — one file or module is edited for several unrelated reasons. → split so each module changes for one reason.
-- **Speculative Generality** — abstraction, parameters, or hooks added for needs the spec doesn't have. → delete it; inline back until a real need shows.
-- **Message Chains** — long `a.b().c().d()` navigation the caller shouldn't depend on. → hide the walk behind one method on the first object.
-- **Middle Man** — a class or function that mostly just delegates onward. → cut it, call the real target direct.
-- **Refused Bequest** — a subclass or implementer that ignores or overrides most of what it inherits. → drop the inheritance, use composition.
+- **Mysterious Name** — function, ตัวแปร หรือ type ที่ชื่อไม่บอกว่ามันทำอะไรหรือเก็บอะไร → เปลี่ยนชื่อ; ถ้าคิดชื่อที่ตรงไปตรงมาไม่ออก แปลว่า design ยังขุ่นมัวอยู่
+- **Duplicated Code** — logic รูปทรงเดียวกันโผล่ในมากกว่าหนึ่ง hunk หรือหนึ่งไฟล์ของการเปลี่ยนแปลงนี้ → extract รูปทรงที่ใช้ร่วมออกมา แล้วเรียกจากทั้งสองที่
+- **Feature Envy** — method ที่ล้วงข้อมูลของ object อื่นมากกว่าของตัวเอง → ย้าย method ไปอยู่กับข้อมูลที่มันอิจฉา
+- **Data Clumps** — field หรือ param ไม่กี่ตัวเดิม ๆ ที่เดินทางไปด้วยกันตลอด (type ที่รอวันได้เกิด) → มัดรวมเป็น type เดียว แล้วส่งอันนั้นแทน
+- **Primitive Obsession** — primitive หรือ string ที่ยืนแทน concept ของ domain ซึ่งสมควรมี type ของตัวเอง → ให้ concept นั้นมี type เล็ก ๆ ของตัวเอง
+- **Repeated Switches** — `switch`/`if`-cascade แบบเดียวกันบน type เดียวกันโผล่ซ้ำหลายจุดในการเปลี่ยนแปลง → แทนด้วย polymorphism หรือ map เดียวที่ทั้งสองจุดใช้ร่วมกัน
+- **Shotgun Surgery** — การเปลี่ยนแปลงเชิง logic เรื่องเดียวบังคับให้ต้องแก้กระจัดกระจายหลายไฟล์ใน diff → รวบสิ่งที่ต้องเปลี่ยนพร้อมกันมาไว้ใน module เดียว
+- **Divergent Change** — ไฟล์หรือ module เดียวถูกแก้ด้วยเหตุผลหลายเรื่องที่ไม่เกี่ยวกัน → แยกออกให้แต่ละ module เปลี่ยนด้วยเหตุผลเดียว
+- **Speculative Generality** — abstraction, parameter หรือ hook ที่เพิ่มมาเผื่อความต้องการที่ spec ไม่มี → ลบทิ้ง; inline กลับไปจนกว่าจะมีความต้องการจริงโผล่มา
+- **Message Chains** — การไล่สายเรียกยาว ๆ แบบ `a.b().c().d()` ที่ฝั่งเรียกไม่ควรต้องผูกติดด้วย → ซ่อนการไล่สายไว้หลัง method เดียวบน object ตัวแรก
+- **Middle Man** — class หรือ function ที่แทบจะเอาแต่ delegate ต่อให้คนอื่น → ตัดทิ้ง แล้วเรียกเป้าหมายจริงตรง ๆ
+- **Refused Bequest** — subclass หรือ implementer ที่เมินหรือ override สิ่งที่สืบทอดมาแทบทั้งหมด → เลิกใช้ inheritance แล้วใช้ composition แทน
 
-### 4. Spawn both sub-agents in parallel
+### 4. Spawn sub-agent ทั้งสองตัวขนานกัน
 
-Send a single message with two `Agent` tool calls. Use the `general-purpose` subagent for both.
+ส่งข้อความเดียวที่มี `Agent` tool call สองครั้ง ใช้ subagent แบบ `general-purpose` ทั้งคู่
 
-**Standards sub-agent prompt** — include:
+**Prompt ของ Standards sub-agent** — ใส่:
 
-- The full diff command and commit list.
-- The list of standards-source files you found in step 3, **plus the smell baseline from step 3** pasted in full — the sub-agent has no other access to it.
-- The brief: "Report — per file/hunk where relevant — (a) every place the diff violates a documented standard: cite the standard (file + the rule); and (b) any baseline smell you spot: name it and quote the hunk. Distinguish hard violations from judgement calls — documented-standard breaches can be hard, but baseline smells are always judgement calls, and a documented repo standard overrides the baseline. Skip anything tooling enforces. Under 400 words."
+- คำสั่ง diff เต็ม ๆ และรายการ commit
+- รายการไฟล์แหล่ง standards ที่เจอในขั้นที่ 3 **บวก smell baseline จากขั้นที่ 3** แปะมาทั้งก้อน — sub-agent ไม่มีช่องทางอื่นในการเข้าถึงมัน
+- โจทย์: "รายงาน — แยกตามไฟล์/hunk ตรงจุดที่เกี่ยว — (a) ทุกจุดที่ diff ละเมิด standard ที่บันทึกไว้: อ้างอิง standard (ไฟล์ + ตัวกติกา) และ (b) baseline smell ใดก็ตามที่เจอ: ระบุชื่อและ quote ตัว hunk แยกให้ชัดระหว่างการละเมิดแบบฟันธงกับ judgement call — การละเมิด standard ที่บันทึกไว้ฟันธงได้ แต่ baseline smell เป็น judgement call เสมอ และ standard ที่ repo บันทึกไว้ชนะ baseline ทุกครั้ง ข้ามอะไรก็ตามที่ tooling บังคับให้อยู่แล้ว ไม่เกิน 400 คำ"
 
-**Spec sub-agent prompt** — include:
+**Prompt ของ Spec sub-agent** — ใส่:
 
-- The diff command and commit list.
-- The path or fetched contents of the spec.
-- The brief: "Report: (a) requirements the spec asked for that are missing or partial; (b) behaviour in the diff that wasn't asked for (scope creep); (c) requirements that look implemented but where the implementation looks wrong. Quote the spec line for each finding. Under 400 words."
+- คำสั่ง diff และรายการ commit
+- path หรือเนื้อหาของ spec ที่ดึงมา
+- โจทย์: "รายงาน: (a) requirement ที่ spec ขอแต่ยังขาดหรือทำไม่ครบ (b) พฤติกรรมใน diff ที่ไม่มีใครขอ (scope creep) (c) requirement ที่ดูเหมือน implement แล้วแต่ implementation ดูผิด quote บรรทัดของ spec ประกอบทุกข้อที่เจอ ไม่เกิน 400 คำ"
 
-If the spec is missing, skip the Spec sub-agent and note this in the final report.
+ถ้าไม่มี spec ให้ข้าม Spec sub-agent แล้วระบุไว้ในรายงานสุดท้าย
 
-### 5. Aggregate
+### 5. รวมผล
 
-Present the two reports under `## Standards` and `## Spec` headings, verbatim or lightly cleaned. Do **not** merge or rerank findings — the two axes are deliberately separate (see _Why two axes_).
+นำเสนอรายงานทั้งสองใต้หัวข้อ `## Standards` และ `## Spec` แบบคำต่อคำหรือเกลาเบา ๆ **ห้าม** merge หรือจัดอันดับผลใหม่ — สองแกนนี้ตั้งใจแยกจากกัน (ดู _ทำไมต้องสองแกน_)
 
-End with a one-line summary: total findings per axis, and the worst issue _within each axis_ (if any). Don't pick a single winner across axes — that's the reranking the separation exists to prevent.
+จบด้วยสรุปบรรทัดเดียว: จำนวนสิ่งที่เจอต่อแกน และปัญหาที่หนักสุด _ภายในแต่ละแกน_ (ถ้ามี) อย่าเลือกผู้ชนะตัวเดียวข้ามแกน — นั่นแหละคือการจัดอันดับใหม่ที่การแยกแกนมีไว้ป้องกัน
 
-## Why two axes
+## ทำไมต้องสองแกน
 
-A change can pass one axis and fail the other:
+การเปลี่ยนแปลงหนึ่งอาจผ่านแกนหนึ่งแต่ตกอีกแกน:
 
-- Code that follows every standard but implements the wrong thing → **Standards pass, Spec fail.**
-- Code that does exactly what the issue asked but breaks the project's conventions → **Spec pass, Standards fail.**
+- code ที่ทำตามทุก standard แต่ implement ผิดเรื่อง → **Standards ผ่าน, Spec ตก**
+- code ที่ทำตรงตามที่ issue ขอเป๊ะแต่แหก convention ของโปรเจกต์ → **Spec ผ่าน, Standards ตก**
 
-Reporting them separately stops one axis from masking the other.
+การรายงานแยกกันทำให้แกนหนึ่งไม่บดบังอีกแกน

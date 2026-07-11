@@ -1,33 +1,33 @@
 ---
 name: migrate-to-shoehorn
-description: Migrate test files from `as` type assertions to @total-typescript/shoehorn. Use when user mentions shoehorn, wants to replace `as` in tests, or needs partial test data.
+description: ย้าย test file จาก type assertion แบบ `as` ไปใช้ @total-typescript/shoehorn ใช้เมื่อ user พูดถึง shoehorn อยากเลิกใช้ `as` ใน test หรือต้องการส่ง test data แบบ partial
 ---
 
-# Migrate to Shoehorn
+# ย้ายไปใช้ Shoehorn
 
-## Why shoehorn?
+## ทำไมต้อง shoehorn?
 
-`shoehorn` lets you pass partial data in tests while keeping TypeScript happy. It replaces `as` assertions with type-safe alternatives.
+`shoehorn` ช่วยให้ส่ง data แบบ partial ใน test ได้โดยที่ TypeScript ยังแฮปปี้ มันมาแทน assertion แบบ `as` ด้วยทางเลือกที่ type-safe
 
-**Test code only.** Never use shoehorn in production code.
+**ใช้ใน test code เท่านั้น** ห้ามใช้ shoehorn ใน production code เด็ดขาด
 
-Problems with `as` in tests:
+ปัญหาของ `as` ใน test:
 
-- Trained not to use it
-- Must manually specify target type
-- Double-as (`as unknown as Type`) for intentionally wrong data
+- โมเดลถูก train มาไม่ให้ใช้มัน
+- ต้องระบุ type ปลายทางเองทุกครั้ง
+- ต้องใช้ double-as (`as unknown as Type`) เวลาตั้งใจส่ง data ผิด type
 
-## Install
+## ติดตั้ง
 
 ```bash
 npm i @total-typescript/shoehorn
 ```
 
-## Migration patterns
+## รูปแบบการ migrate
 
-### Large objects with few needed properties
+### object ใหญ่แต่ใช้จริงแค่ไม่กี่ property
 
-Before:
+ก่อน:
 
 ```ts
 type Request = {
@@ -48,7 +48,7 @@ it("gets user by id", () => {
 });
 ```
 
-After:
+หลัง:
 
 ```ts
 import { fromPartial } from "@total-typescript/shoehorn";
@@ -64,13 +64,13 @@ it("gets user by id", () => {
 
 ### `as Type` → `fromPartial()`
 
-Before:
+ก่อน:
 
 ```ts
 getUser({ body: { id: "123" } } as Request);
 ```
 
-After:
+หลัง:
 
 ```ts
 import { fromPartial } from "@total-typescript/shoehorn";
@@ -80,13 +80,13 @@ getUser(fromPartial({ body: { id: "123" } }));
 
 ### `as unknown as Type` → `fromAny()`
 
-Before:
+ก่อน:
 
 ```ts
 getUser({ body: { id: 123 } } as unknown as Request); // wrong type on purpose
 ```
 
-After:
+หลัง:
 
 ```ts
 import { fromAny } from "@total-typescript/shoehorn";
@@ -94,25 +94,25 @@ import { fromAny } from "@total-typescript/shoehorn";
 getUser(fromAny({ body: { id: 123 } }));
 ```
 
-## When to use each
+## เลือกใช้ตัวไหนเมื่อไหร่
 
-| Function        | Use case                                           |
+| ฟังก์ชัน        | กรณีใช้งาน                                          |
 | --------------- | -------------------------------------------------- |
-| `fromPartial()` | Pass partial data that still type-checks           |
-| `fromAny()`     | Pass intentionally wrong data (keeps autocomplete) |
-| `fromExact()`   | Force full object (swap with fromPartial later)    |
+| `fromPartial()` | ส่ง data แบบ partial ที่ยังผ่าน type check          |
+| `fromAny()`     | ส่ง data ที่ตั้งใจให้ผิด type (ยังได้ autocomplete) |
+| `fromExact()`   | บังคับ object แบบเต็ม (ค่อยสลับเป็น fromPartial ทีหลัง) |
 
-## Workflow
+## ขั้นตอนการทำงาน
 
-1. **Gather requirements** - ask user:
-   - What test files have `as` assertions causing problems?
-   - Are they dealing with large objects where only some properties matter?
-   - Do they need to pass intentionally wrong data for error testing?
+1. **เก็บ requirement** - ถาม user:
+   - test file ไหนบ้างที่มี assertion แบบ `as` แล้วสร้างปัญหา?
+   - กำลังเจอ object ใหญ่ ๆ ที่สนใจจริงแค่บาง property หรือเปล่า?
+   - ต้องส่ง data ที่ตั้งใจให้ผิด type สำหรับ test เคส error ไหม?
 
-2. **Install and migrate**:
-   - [ ] Install: `npm i @total-typescript/shoehorn`
-   - [ ] Find test files with `as` assertions: `grep -r " as [A-Z]" --include="*.test.ts" --include="*.spec.ts"`
-   - [ ] Replace `as Type` with `fromPartial()`
-   - [ ] Replace `as unknown as Type` with `fromAny()`
-   - [ ] Add imports from `@total-typescript/shoehorn`
-   - [ ] Run type check to verify
+2. **ติดตั้งแล้ว migrate**:
+   - [ ] ติดตั้ง: `npm i @total-typescript/shoehorn`
+   - [ ] หา test file ที่มี assertion แบบ `as`: `grep -r " as [A-Z]" --include="*.test.ts" --include="*.spec.ts"`
+   - [ ] แทนที่ `as Type` ด้วย `fromPartial()`
+   - [ ] แทนที่ `as unknown as Type` ด้วย `fromAny()`
+   - [ ] เพิ่ม import จาก `@total-typescript/shoehorn`
+   - [ ] รัน type check เพื่อยืนยันว่าผ่าน

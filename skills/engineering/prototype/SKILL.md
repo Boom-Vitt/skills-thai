@@ -1,26 +1,26 @@
 ---
 name: prototype
-description: Build a throwaway prototype to answer a design question. Use when the user wants to sanity-check whether a state model or logic feels right, or explore what a UI should look like.
+description: สร้าง prototype แบบใช้แล้วทิ้งเพื่อตอบคำถามด้านการออกแบบ ใช้เมื่อ user อยาก sanity-check ว่า state model หรือ logic ที่คิดไว้เวิร์คไหม หรืออยากลองสำรวจว่า UI ควรหน้าตาเป็นยังไง
 ---
 
 # Prototype
 
-A prototype is **throwaway code that answers a question**. The question decides the shape.
+prototype คือ **code ใช้แล้วทิ้งที่มีไว้ตอบคำถาม** ตัวคำถามคือสิ่งที่กำหนดรูปร่างของมัน
 
-## Pick a branch
+## เลือก branch
 
-Identify which question is being answered — from the user's prompt, the surrounding code, or by asking if the user is around:
+ระบุก่อนว่ากำลังตอบคำถามไหน — จาก prompt ของ user, จาก code รอบ ๆ, หรือถามตรง ๆ ถ้า user อยู่แถวนั้น:
 
-- **"Does this logic / state model feel right?"** → [LOGIC.md](LOGIC.md). Build a tiny interactive terminal app that pushes the state machine through cases that are hard to reason about on paper.
-- **"What should this look like?"** → [UI.md](UI.md). Generate several radically different UI variations on a single route, switchable via a URL search param and a floating bottom bar.
+- **"logic / state model แบบนี้เวิร์คไหม?"** → [LOGIC.md](LOGIC.md) สร้าง terminal app เล็ก ๆ แบบ interactive ที่ดัน state machine ผ่าน case ที่คิดตามบนกระดาษได้ยาก
+- **"หน้าตาควรเป็นยังไง?"** → [UI.md](UI.md) สร้าง UI หลาย variation ที่ต่างกันแบบสุดขั้วบน route เดียว สลับได้ผ่าน URL search param และแถบลอยด้านล่างจอ
 
-The two branches produce very different artifacts — getting this wrong wastes the whole prototype. If the question is genuinely ambiguous and the user isn't reachable, default to whichever branch better matches the surrounding code (a backend module → logic; a page or component → UI) and state the assumption at the top of the prototype.
+สอง branch นี้ให้ผลลัพธ์ที่ต่างกันมาก — เลือกผิดเท่ากับเสีย prototype ทั้งตัวไปเปล่า ๆ ถ้าคำถามกำกวมจริง ๆ และติดต่อ user ไม่ได้ ให้ default ไปที่ branch ที่เข้ากับ code รอบ ๆ มากกว่า (module ฝั่ง backend → logic; page หรือ component → UI) แล้วระบุสมมติฐานนั้นไว้ที่ด้านบนสุดของ prototype
 
-## Rules that apply to both
+## กติกาที่ใช้กับทั้งสอง branch
 
-1. **Throwaway from day one, and clearly marked as such.** Locate the prototype code close to where it will actually be used (next to the module or page it's prototyping for) so context is obvious — but name it so a casual reader can see it's a prototype, not production. For throwaway UI routes, obey whatever routing convention the project already uses; don't invent a new top-level structure.
-2. **One command to run.** Whatever the project's existing task runner supports — `pnpm <name>`, `python <path>`, `bun <path>`, etc. The user must be able to start it without thinking.
-3. **No persistence by default.** State lives in memory. Persistence is the thing the prototype is _checking_, not something it should depend on. If the question explicitly involves a database, hit a scratch DB or a local file with a clear "PROTOTYPE — wipe me" name.
-4. **Skip the polish.** No tests, no error handling beyond what makes the prototype _runnable_, no abstractions. The point is to learn something fast.
-5. **Surface the state.** After every action (logic) or on every variant switch (UI), print or render the full relevant state so the user can see what changed.
-6. **Capture it when done.** Fold any validated decision into the real code, then capture the prototype itself as a **primary source**: commit it to a throwaway branch, out of main, and leave a context pointer to that branch on the implementation issue. Capture the answer too — the verdict and the question it settled — in the issue or a commit. The main branch keeps only the validated decision.
+1. **ใช้แล้วทิ้งตั้งแต่วันแรก และทำเครื่องหมายให้ชัดว่าเป็นแบบนั้น** วาง code ของ prototype ไว้ใกล้จุดที่มันจะถูกใช้จริง (ข้าง ๆ module หรือ page ที่กำลัง prototype ให้) เพื่อให้ context ชัดเจน — แต่ตั้งชื่อให้คนที่เปิดผ่านมาเห็นก็รู้ทันทีว่านี่คือ prototype ไม่ใช่ production สำหรับ UI route แบบใช้แล้วทิ้ง ให้ทำตาม routing convention ที่โปรเจกต์ใช้อยู่แล้ว อย่าคิดโครงสร้าง top-level ใหม่ขึ้นมาเอง
+2. **รันได้ด้วยคำสั่งเดียว** ใช้อะไรก็ได้ที่ task runner เดิมของโปรเจกต์รองรับ — `pnpm <name>`, `python <path>`, `bun <path>` ฯลฯ user ต้องเริ่มมันได้โดยไม่ต้องคิดเลย
+3. **ไม่มี persistence โดย default** state อยู่ใน memory เท่านั้น persistence คือสิ่งที่ prototype กำลัง _ตรวจสอบ_ ไม่ใช่สิ่งที่มันควรพึ่งพา ถ้าคำถามเกี่ยวข้องกับ database โดยตรง ให้ใช้ scratch DB หรือ local file ที่ตั้งชื่อบอกชัด ๆ ทำนอง "PROTOTYPE — ลบทิ้งได้"
+4. **ข้ามความเนี้ยบไปเลย** ไม่ต้องมี test ไม่ต้องมี error handling เกินกว่าที่ทำให้ prototype _รันได้_ ไม่ต้องมี abstraction ประเด็นคือเรียนรู้อะไรบางอย่างให้เร็ว
+5. **โชว์ state ออกมา** หลังทุก action (ฝั่ง logic) หรือทุกครั้งที่สลับ variant (ฝั่ง UI) ให้ print หรือ render state ที่เกี่ยวข้องทั้งหมดออกมา เพื่อให้ user เห็นว่าอะไรเปลี่ยนไป
+6. **เก็บผลเมื่อเสร็จ** เอาการตัดสินใจที่ผ่านการพิสูจน์แล้วไปใส่ใน code จริง แล้วเก็บตัว prototype ไว้เป็น **primary source**: commit มันลง branch ใช้แล้วทิ้ง นอก main และทิ้ง context pointer ชี้ไปที่ branch นั้นไว้บน issue ของงาน implement เก็บคำตอบไว้ด้วย — ข้อสรุปและคำถามที่มันช่วยตอบ — ใน issue หรือใน commit ส่วน branch main เก็บไว้แค่การตัดสินใจที่ผ่านการพิสูจน์แล้วเท่านั้น

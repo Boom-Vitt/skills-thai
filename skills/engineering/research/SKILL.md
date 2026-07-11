@@ -1,12 +1,12 @@
 ---
 name: research
-description: Investigate a question against high-trust primary sources and capture the findings as a Markdown file in the repo. Use when the user wants a topic researched, docs or API facts gathered, or reading legwork delegated to a background agent.
+description: สืบค้นคำถามกับ primary sources ที่เชื่อถือได้สูง แล้วบันทึกสิ่งที่พบเป็นไฟล์ Markdown ใน repo ใช้เมื่อ user อยากให้ค้นคว้าหัวข้อหนึ่ง รวบรวมข้อเท็จจริงจาก docs หรือ API หรืออยากมอบงานอ่านให้ background agent ทำแทน
 ---
 
-Spin up a **background agent** to do the research, so you keep working while it reads.
+สร้าง **background agent** ขึ้นมาทำ research เพื่อให้คุณทำงานต่อได้ระหว่างที่มันอ่าน
 
-Its job:
+หน้าที่ของมัน:
 
-1. Investigate the question against **primary sources** — official docs, source code, specs, first-party APIs — not a secondary write-up of them. Follow every claim back to the source that owns it.
-2. Write the findings to a single Markdown file, citing each claim's source.
-3. Save it where the repo already keeps such notes; match the existing convention, and if there is none, put it somewhere sensible and say where.
+1. สืบค้นคำถามกับ **primary sources** — official docs, source code, spec, first-party API — ไม่ใช่บทความมือสองที่เขียนถึงของพวกนั้น ไล่ทุก claim กลับไปถึงแหล่งที่เป็นเจ้าของมันจริง ๆ
+2. เขียนสิ่งที่พบลงไฟล์ Markdown ไฟล์เดียว พร้อมอ้างอิงแหล่งที่มาของแต่ละ claim
+3. บันทึกไว้ในที่ที่ repo เก็บโน้ตแบบนี้อยู่แล้ว ทำตามธรรมเนียมเดิม และถ้าไม่มี ให้วางไว้ในที่ที่สมเหตุสมผลแล้วบอกว่าวางไว้ที่ไหน

@@ -1,16 +1,16 @@
 ---
 name: setup-ts-deep-modules
-description: Wire dependency-cruiser into a TypeScript repo so each package is a deep module — implementation hidden in subfolders, reachable only through its entry-point files. User-invoked.
+description: ติดตั้ง dependency-cruiser เข้า repo TypeScript เพื่อให้แต่ละ package เป็น deep module — implementation ถูกซ่อนไว้ใน subfolder เข้าถึงได้ผ่านไฟล์ entry point เท่านั้น สำหรับให้ user เรียกใช้เอง
 disable-model-invocation: true
 ---
 
 # Setup TS Deep Modules
 
-Make every package in this repo a **deep module**: a lot of behaviour behind a small interface. A package's public surface is its **entry points** — the files at the package root — and everything in its subfolders is hidden. This skill installs [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) and the rules that make the entry points the only way in, then proves the rules bite.
+ทำให้ทุก package ใน repo นี้เป็น **deep module** (module ที่มีพฤติกรรมเยอะแต่ interface เล็ก): พฤติกรรมจำนวนมากอยู่หลัง interface ที่เล็ก พื้นผิว public ของ package คือ **entry points** ของมัน — ไฟล์ที่อยู่ที่ root ของ package — และทุกอย่างใน subfolder ถูกซ่อนไว้ skill นี้ติดตั้ง [dependency-cruiser](https://github.com/sverweij/dependency-cruiser) พร้อมกฎที่ทำให้ entry points เป็นทางเข้าเดียว แล้วพิสูจน์ว่ากฎกัดจริง
 
-For the vocabulary (deep module, interface, seam, depth), run the `/codebase-design` skill — use its language throughout.
+สำหรับ vocabulary (deep module, interface, seam, depth) ให้รัน skill `/codebase-design` — และใช้ภาษาของมันตลอดทั้งงาน
 
-## The shape this enforces
+## รูปทรงที่กฎนี้บังคับ
 
 ```
 src/packages/
@@ -21,82 +21,82 @@ src/packages/
     tests/          ← co-located tests + fixtures (a subfolder, so private).
 ```
 
-The public surface is the package's **root files** — not one designated `index.ts`. By convention implementation lives in `lib/` and tests in `tests/`, giving every package the same two-folder shape. The rule itself is general, though: *anything* in *any* subfolder is private, so you never extend the config to add a folder.
+พื้นผิว public คือ**ไฟล์ที่ root** ของ package — ไม่ใช่ `index.ts` ตัวใดตัวหนึ่งที่ถูกกำหนดไว้ ตามธรรมเนียมแล้ว implementation อยู่ใน `lib/` และ test อยู่ใน `tests/` ทำให้ทุก package มีรูปทรงสองโฟลเดอร์เหมือนกันหมด แต่ตัวกฎเองเป็นกฎทั่วไป: *อะไรก็ตาม*ใน subfolder *ไหนก็ตาม*ถือเป็น private ดังนั้นคุณไม่ต้องไปขยาย config เพื่อเพิ่มโฟลเดอร์เลย
 
-Four rules, all `error`:
+กฎสี่ข้อ ทั้งหมดเป็นระดับ `error`:
 
-1. **Entry-point boundary** — code outside a package (app code or another package) may import only that package's entry points (its root files), never anything in its subfolders.
-2. **Intra-package freedom** — a package's own files import each other freely.
-3. **Tests through the entry points** — files under `<pkg>/tests/` may import any package's entry points and their own `tests/` fixtures, but never any package's subfolder internals (not even their own). Integration tests across packages are fine; deep imports are not.
-4. **No cycles** — no dependency cycles.
+1. **Entry-point boundary** — code ที่อยู่นอก package (app code หรือ package อื่น) import ได้เฉพาะ entry points ของ package นั้น (ไฟล์ที่ root) ห้ามแตะอะไรใน subfolder เด็ดขาด
+2. **Intra-package freedom** — ไฟล์ภายใน package เดียวกัน import กันเองได้อย่างอิสระ
+3. **Tests through the entry points** — ไฟล์ใต้ `<pkg>/tests/` import ได้เฉพาะ entry points ของ package ใด ๆ กับ fixture ใน `tests/` ของตัวเอง แต่ห้าม import internals ใน subfolder ของ package ไหนทั้งนั้น (แม้แต่ของตัวเอง) integration test ข้าม package ทำได้ แต่ deep import ทำไม่ได้
+4. **No cycles** — ห้ามมี dependency cycle
 
-**Entry points, not a barrel.** Because the public surface is *every* root file, a package can expose several small entry points (`index.ts`, `client.ts`, `server.ts`) instead of funnelling everything through one giant `index.ts`. Barrel files that re-export a whole subtree are discouraged — keep entry points small and hide implementation in subfolders.
+**Entry points ไม่ใช่ barrel** เพราะพื้นผิว public คือไฟล์ root *ทุกไฟล์* package หนึ่งจึงเปิด entry point เล็ก ๆ ได้หลายตัว (`index.ts`, `client.ts`, `server.ts`) แทนที่จะบีบทุกอย่างผ่าน `index.ts` ยักษ์ตัวเดียว barrel file ที่ re-export ทั้ง subtree เป็นสิ่งที่ไม่แนะนำ — ทำ entry point ให้เล็กและซ่อน implementation ไว้ใน subfolder
 
-Layering (which packages may depend on which) is a *different* concern and is left as a commented stub in the config for this repo to fill in.
+ส่วนเรื่อง layering (package ไหนพึ่ง package ไหนได้บ้าง) เป็น*คนละ*ประเด็น และถูกทิ้งไว้เป็น stub แบบ comment ใน config ให้ repo นี้เติมเอง
 
-## Steps
+## ขั้นตอน
 
-### 1. Detect the environment
+### 1. ตรวจสภาพแวดล้อม
 
-- **Package manager** — `pnpm-lock.yaml` → pnpm, `yarn.lock` → yarn, `bun.lockb` → bun, else npm. Use it for every command below (`pnpm`/`yarn`/`npm run`/`bunx`).
-- **Packages root** — if `src/` exists use `src/packages`, else `packages`. Confirm the choice with the user if the repo already has a different obvious convention.
-- **Existing config** — check for a `.dependency-cruiser.*` file. If one exists, do **not** overwrite it: merge the four rules and the options in, and tell the user what you added.
+- **Package manager** — `pnpm-lock.yaml` → pnpm, `yarn.lock` → yarn, `bun.lockb` → bun, นอกนั้นคือ npm ใช้ตัวที่ตรวจพบกับทุกคำสั่งด้านล่าง (`pnpm`/`yarn`/`npm run`/`bunx`)
+- **Packages root** — ถ้ามี `src/` ให้ใช้ `src/packages` ไม่งั้นใช้ `packages` ถ้า repo มีธรรมเนียมอื่นที่ชัดเจนอยู่แล้ว ให้ยืนยันตัวเลือกกับ user ก่อน
+- **Config เดิม** — เช็คว่ามีไฟล์ `.dependency-cruiser.*` อยู่ไหม ถ้ามี **ห้าม**เขียนทับ: ให้ merge กฎสี่ข้อกับ options เข้าไป แล้วบอก user ว่าเพิ่มอะไรไปบ้าง
 
-**Done when:** package manager, packages root, and existing-config status are all known.
+**เสร็จเมื่อ:** รู้ครบทั้ง package manager, packages root และสถานะของ config เดิม
 
-### 2. Install dependency-cruiser
+### 2. ติดตั้ง dependency-cruiser
 
-Install `dependency-cruiser` as a devDependency with the detected package manager.
+ติดตั้ง `dependency-cruiser` เป็น devDependency ด้วย package manager ที่ตรวจพบ
 
-**Done when:** `dependency-cruiser` is in `devDependencies`.
+**เสร็จเมื่อ:** `dependency-cruiser` อยู่ใน `devDependencies`
 
-### 3. Write the config
+### 3. เขียน config
 
-Copy [`dependency-cruiser.config.cjs`](./dependency-cruiser.config.cjs) to the repo root as `.dependency-cruiser.cjs`. Set `PACKAGES_ROOT` to the root detected in step 1. The rules are path-depth based and extension-agnostic, so nothing else needs adapting.
+คัดลอก [`dependency-cruiser.config.cjs`](./dependency-cruiser.config.cjs) ไปไว้ที่ root ของ repo ในชื่อ `.dependency-cruiser.cjs` ตั้ง `PACKAGES_ROOT` เป็น root ที่ตรวจพบในขั้น 1 ตัวกฎอิงจากความลึกของ path และไม่ผูกกับนามสกุลไฟล์ จึงไม่ต้องปรับอะไรอย่างอื่นอีก
 
-**Done when:** `.dependency-cruiser.cjs` exists with the correct `PACKAGES_ROOT`, and the four forbidden rules are present.
+**เสร็จเมื่อ:** `.dependency-cruiser.cjs` มีอยู่จริงพร้อม `PACKAGES_ROOT` ที่ถูกต้อง และมีกฎ forbidden ครบทั้งสี่ข้อ
 
-### 4. Wire it into the checks
+### 4. ต่อเข้ากับชุด check
 
-- Add a `lint:boundaries` script: `depcruise <packages-root>` (or `depcruise src`).
-- Fold it into the repo's umbrella check command — the one that already runs typecheck (e.g. a `check` / `ci` / `validate` script). Do **not** touch `tsconfig` or add path aliases.
-- If there is no umbrella script, add `lint:boundaries` and tell the user to include it in CI.
+- เพิ่ม script `lint:boundaries`: `depcruise <packages-root>` (หรือ `depcruise src`)
+- พับมันเข้าไปในคำสั่ง check รวมของ repo — ตัวที่รัน typecheck อยู่แล้ว (เช่น script `check` / `ci` / `validate`) **ห้าม**แตะ `tsconfig` หรือเพิ่ม path alias
+- ถ้าไม่มี script รวม ให้เพิ่ม `lint:boundaries` แล้วบอก user ให้เอาไปใส่ใน CI
 
-**Done when:** `lint:boundaries` exists and runs as part of the same command as typecheck.
+**เสร็จเมื่อ:** `lint:boundaries` มีอยู่และรันเป็นส่วนหนึ่งของคำสั่งเดียวกับ typecheck
 
-### 5. Scaffold the example package
+### 5. Scaffold package ตัวอย่าง
 
-Create a committed `<packages-root>/example/` as a copy-me template:
+สร้าง `<packages-root>/example/` แบบ commit เข้า repo เป็น template ให้คัดลอกไปใช้:
 
-- `index.ts` — an entry point. Export one function that delegates to an internal file (so the package is visibly *deep*, not a pass-through).
-- `lib/impl.ts` — an internal file in a **subfolder**, imported by `index.ts`, not reachable from outside.
-- `tests/example.test.ts` — imports **only** `../index` (an entry point), and asserts against the public function.
+- `index.ts` — entry point ตัวหนึ่ง export ฟังก์ชันหนึ่งตัวที่ delegate ไปยังไฟล์ภายใน (เพื่อให้เห็นชัดว่า package นี้ *deep* จริง ไม่ใช่แค่ pass-through)
+- `lib/impl.ts` — ไฟล์ภายในที่อยู่ใน **subfolder** ถูก import โดย `index.ts` และเข้าถึงจากภายนอกไม่ได้
+- `tests/example.test.ts` — import **เฉพาะ** `../index` (entry point) และ assert กับฟังก์ชัน public
 
-Tell the user this is a starter template to copy or delete.
+บอก user ว่านี่คือ template ตั้งต้นไว้คัดลอกหรือลบทิ้งก็ได้
 
-**Done when:** the example package exists, exposes its behaviour through a root entry point, and hides `impl` in a subfolder.
+**เสร็จเมื่อ:** package ตัวอย่างมีอยู่จริง เปิดพฤติกรรมผ่าน entry point ที่ root และซ่อน `impl` ไว้ใน subfolder
 
-### 6. Prove the rules bite
+### 6. พิสูจน์ว่ากฎกัดจริง
 
-This is the completion criterion for the whole skill — a config that doesn't fail on a violation is worthless.
+นี่คือเกณฑ์ความสำเร็จของ skill ทั้งตัว — config ที่ไม่ fail ตอนมีการละเมิดคือของไร้ค่า
 
-1. Run `lint:boundaries`. It must **pass** on the clean example.
-2. Temporarily add a deep import to `tests/example.test.ts` (e.g. `import { thing } from "../lib/impl"`). Run `lint:boundaries` again — it must **fail** with `tests-through-entrypoints`.
-3. Revert the deep import. Run once more — it must **pass**.
+1. รัน `lint:boundaries` มันต้อง**ผ่าน**บน example ที่สะอาด
+2. เพิ่ม deep import ชั่วคราวเข้าไปใน `tests/example.test.ts` (เช่น `import { thing } from "../lib/impl"`) แล้วรัน `lint:boundaries` อีกครั้ง — มันต้อง **fail** ด้วยกฎ `tests-through-entrypoints`
+3. เอา deep import ออก รันอีกรอบ — มันต้อง**ผ่าน**
 
-**Done when:** you have observed a pass, then a fail on the deep import, then a pass again. If step 2 does not fail, the rules are not wired correctly — fix before finishing.
+**เสร็จเมื่อ:** คุณเห็นด้วยตาว่าผ่าน แล้ว fail บน deep import แล้วกลับมาผ่านอีกครั้ง ถ้าขั้น 2 ไม่ fail แปลว่ากฎยังต่อไม่ถูก — แก้ให้เสร็จก่อนจบงาน
 
-### 7. Document the convention
+### 7. บันทึกธรรมเนียมเป็นเอกสาร
 
-Write a `README.md` **in the packages folder** (`<packages-root>/README.md`) — next to the packages it governs — covering: the `src/packages/<name>/` layout (entry points at the root, `lib/` for implementation, `tests/` for tests), "import only through a package's entry points (its root files)", and how to run `lint:boundaries`. **Discourage barrel files** explicitly — expose several small entry points instead of re-exporting a whole subtree through one index. Keep it to the copy-me snippet plus the four rules in one paragraph each.
+เขียน `README.md` **ในโฟลเดอร์ packages** (`<packages-root>/README.md`) — วางไว้ข้าง ๆ packages ที่มันกำกับ — ครอบคลุม: layout แบบ `src/packages/<name>/` (entry points ที่ root, `lib/` สำหรับ implementation, `tests/` สำหรับ test), กติกา "import ผ่าน entry points ของ package (ไฟล์ที่ root) เท่านั้น" และวิธีรัน `lint:boundaries` **ระบุชัด ๆ ว่าไม่แนะนำ barrel file** — ให้เปิด entry point เล็ก ๆ หลายตัวแทนการ re-export ทั้ง subtree ผ่าน index ตัวเดียว เขียนให้กระชับ: snippet ให้คัดลอก บวกกฎสี่ข้อ ข้อละหนึ่งย่อหน้า
 
-Then add a **context pointer** to it from the repo's agent-instructions file — `CLAUDE.md` if present, else `AGENTS.md` (create `AGENTS.md` if neither exists). One line is enough, e.g. `Packages are deep modules — see [src/packages/README.md](./src/packages/README.md) before adding or importing one.` This is what makes an agent discover the boundary rule instead of tripping over it.
+จากนั้นเพิ่ม **context pointer** ชี้ไปหามันจากไฟล์ agent-instructions ของ repo — `CLAUDE.md` ถ้ามี ไม่งั้นใช้ `AGENTS.md` (สร้าง `AGENTS.md` ถ้าไม่มีทั้งคู่) บรรทัดเดียวก็พอ เช่น `Packages are deep modules — see [src/packages/README.md](./src/packages/README.md) before adding or importing one.` นี่แหละคือสิ่งที่ทำให้ agent ค้นพบกฎ boundary เอง แทนที่จะเดินสะดุดมัน
 
-**Done when:** `<packages-root>/README.md` exists and discourages barrels, and the repo's `CLAUDE.md`/`AGENTS.md` links to it.
+**เสร็จเมื่อ:** `<packages-root>/README.md` มีอยู่จริงและไม่แนะนำ barrel และ `CLAUDE.md`/`AGENTS.md` ของ repo มีลิงก์ไปหามัน
 
-## Notes
+## หมายเหตุ
 
-- The config's `$1` back-references (dependency-cruiser's group matching) are what let a package reach its own internals while outsiders can't — don't flatten them into separate per-package rules.
-- Public vs private is decided by **depth**: a package's root files are entry points; anything in a subfolder is private. The conventional subfolders are `lib/` (implementation) and `tests/`, but the rule doesn't hardcode them — any subfolder is private, so a new folder never needs a config change. Adding an entry point is just adding a root file — no barrel.
-- Packages are **flat**: one tier of immediate children under the root. A package's internals may nest as deep as you like; a package may not contain another package.
-- Use `.cjs` (not `.js`) so the config's `module.exports` works even in `"type": "module"` repos.
+- back-reference `$1` ใน config (การ match แบบ group ของ dependency-cruiser) คือสิ่งที่ทำให้ package เข้าถึง internals ของตัวเองได้ในขณะที่คนนอกทำไม่ได้ — อย่าคลี่มันออกเป็นกฎแยกรายต่อ package
+- public กับ private ตัดสินด้วย**ความลึก**: ไฟล์ที่ root ของ package คือ entry points ส่วนอะไรก็ตามใน subfolder คือ private โฟลเดอร์ตามธรรมเนียมคือ `lib/` (implementation) กับ `tests/` แต่กฎไม่ได้ hardcode ชื่อพวกนี้ — subfolder ไหนก็ private หมด ดังนั้นเพิ่มโฟลเดอร์ใหม่ก็ไม่ต้องแก้ config เลย ส่วนการเพิ่ม entry point ก็แค่เพิ่มไฟล์ที่ root — ไม่ต้องมี barrel
+- Packages เป็นแบบ**แบน**: มีลูกชั้นเดียวใต้ root โดยตรง internals ของ package จะซ้อนลึกแค่ไหนก็ได้ แต่ package ห้ามมี package อื่นซ้อนอยู่ข้างใน
+- ใช้ `.cjs` (ไม่ใช่ `.js`) เพื่อให้ `module.exports` ของ config ทำงานได้แม้ใน repo ที่เป็น `"type": "module"`

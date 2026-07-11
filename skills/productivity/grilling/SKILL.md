@@ -1,12 +1,12 @@
 ---
 name: grilling
-description: Grill the user relentlessly about a plan or design. Use when the user wants to stress-test a plan before building, or uses any 'grill' trigger phrases.
+description: ซักถาม user อย่างไม่ปรานีเกี่ยวกับแผนหรือ design ใช้เมื่อ user อยาก stress-test แผนก่อนลงมือสร้าง หรือใช้ trigger phrase ใด ๆ ที่มีคำว่า 'grill'
 ---
 
-Interview me relentlessly about every aspect of this plan until we reach a shared understanding. Walk down each branch of the design tree, resolving dependencies between decisions one-by-one. For each question, provide your recommended answer.
+สัมภาษณ์ฉันอย่างไม่ปรานีในทุกแง่มุมของแผนนี้ จนกว่าเราจะเข้าใจตรงกัน เดินลงไปทีละกิ่งของ decision tree ของ design แก้ dependency ระหว่างการตัดสินใจไปทีละข้อ และสำหรับแต่ละคำถาม ให้เสนอคำตอบที่คุณแนะนำมาด้วย
 
-Ask the questions one at a time, waiting for feedback on each question before continuing. Asking multiple questions at once is bewildering.
+ถามทีละคำถาม รอ feedback ของแต่ละข้อก่อนค่อยไปต่อ การถามหลายคำถามพร้อมกันทำให้งง
 
-If a *fact* can be found by exploring the codebase, look it up rather than asking me. The *decisions*, though, are mine — put each one to me and wait for my answer.
+ถ้า*ข้อเท็จจริง*ไหนหาได้จากการสำรวจ codebase ให้ไปหาเองแทนที่จะถามฉัน แต่*การตัดสินใจ*เป็นของฉัน — ยื่นแต่ละข้อมาให้ฉันแล้วรอคำตอบ
 
-Do not enact the plan until I confirm we have reached a shared understanding.
+อย่าลงมือทำตามแผนจนกว่าฉันจะยืนยันว่าเราเข้าใจตรงกันแล้ว

@@ -1,58 +1,58 @@
 ---
 name: qa
-description: Interactive QA session where user reports bugs or issues conversationally, and the agent files GitHub issues. Explores the codebase in the background for context and domain language. Use when user wants to report bugs, do QA, file issues conversationally, or mentions "QA session".
+description: QA session แบบ interactive ที่ผู้ใช้เล่าบั๊กหรือปัญหาแบบคุยกันธรรมดา แล้ว agent เปิด GitHub issue ให้ พร้อมสำรวจ codebase เบื้องหลังเพื่อเก็บ context และภาษา domain ใช้เมื่อผู้ใช้อยากรายงานบั๊ก ทำ QA เปิด issue แบบคุยกัน หรือพูดถึง "QA session"
 ---
 
 # QA Session
 
-Run an interactive QA session. The user describes problems they're encountering. You clarify, explore the codebase for context, and file GitHub issues that are durable, user-focused, and use the project's domain language.
+รัน QA session แบบ interactive ผู้ใช้เล่าปัญหาที่เจอ คุณช่วยถามให้ชัด สำรวจ codebase เพื่อเก็บ context แล้วเปิด GitHub issue ที่คงทน เน้นมุมมองผู้ใช้ และใช้ภาษา domain ของโปรเจกต์
 
-## For each issue the user raises
+## สำหรับแต่ละ issue ที่ผู้ใช้ยกขึ้นมา
 
-### 1. Listen and lightly clarify
+### 1. ฟังก่อน แล้วถามให้ชัดแบบพอดี ๆ
 
-Let the user describe the problem in their own words. Ask **at most 2-3 short clarifying questions** focused on:
+ให้ผู้ใช้เล่าปัญหาด้วยคำพูดของเขาเอง ถามคำถามสั้น ๆ **ไม่เกิน 2-3 ข้อ** โฟกัสที่:
 
-- What they expected vs what actually happened
-- Steps to reproduce (if not obvious)
-- Whether it's consistent or intermittent
+- เขาคาดหวังอะไร vs เกิดอะไรขึ้นจริง
+- ขั้นตอน reproduce (ถ้ายังไม่ชัด)
+- เกิดทุกครั้งหรือเป็น ๆ หาย ๆ
 
-Do NOT over-interview. If the description is clear enough to file, move on.
+อย่าสัมภาษณ์ยืดเยื้อ ถ้าคำอธิบายชัดพอจะเปิด issue ได้แล้ว ไปต่อเลย
 
-### 2. Explore the codebase in the background
+### 2. สำรวจ codebase เบื้องหลัง
 
-While talking to the user, kick off an Agent (subagent_type=Explore) in the background to understand the relevant area. The goal is NOT to find a fix — it's to:
+ระหว่างคุยกับผู้ใช้ ให้ยิง Agent (subagent_type=Explore) ทำงานเบื้องหลังเพื่อทำความเข้าใจบริเวณที่เกี่ยวข้อง เป้าหมายไม่ใช่การหาวิธีแก้ — แต่เพื่อ:
 
-- Learn the domain language used in that area (check UBIQUITOUS_LANGUAGE.md)
-- Understand what the feature is supposed to do
-- Identify the user-facing behavior boundary
+- เรียนรู้ภาษา domain ที่ใช้ในบริเวณนั้น (เช็ก UBIQUITOUS_LANGUAGE.md)
+- เข้าใจว่า feature นั้นควรทำอะไร
+- ระบุขอบเขตพฤติกรรมฝั่งที่ผู้ใช้มองเห็น
 
-This context helps you write a better issue — but the issue itself should NOT reference specific files, line numbers, or internal implementation details.
+context นี้ช่วยให้เขียน issue ได้ดีขึ้น — แต่ตัว issue เองต้องไม่อ้างถึงไฟล์ เลขบรรทัด หรือรายละเอียด implementation ภายใน
 
-### 3. Assess scope: single issue or breakdown?
+### 3. ประเมิน scope: issue เดียวหรือต้องแตกย่อย?
 
-Before filing, decide whether this is a **single issue** or needs to be **broken down** into multiple issues.
+ก่อนเปิด issue ตัดสินใจว่านี่คือ **issue เดียว** หรือควร **แตกย่อย** เป็นหลาย issue
 
-Break down when:
+แตกย่อยเมื่อ:
 
-- The fix spans multiple independent areas (e.g. "the form validation is wrong AND the success message is missing AND the redirect is broken")
-- There are clearly separable concerns that different people could work on in parallel
-- The user describes something that has multiple distinct failure modes or symptoms
+- การแก้กินพื้นที่หลายบริเวณที่เป็นอิสระต่อกัน (เช่น "validation ของ form ผิด แล้วก็ไม่มี success message แล้วก็ redirect พัง")
+- มีประเด็นที่แยกจากกันชัดเจนจนคนละคนหยิบไปทำขนานกันได้
+- ผู้ใช้เล่าอะไรที่มี failure mode หรืออาการหลายแบบที่แยกจากกัน
 
-Keep as a single issue when:
+คงเป็น issue เดียวเมื่อ:
 
-- It's one behavior that's wrong in one place
-- The symptoms are all caused by the same root behavior
+- เป็นพฤติกรรมเดียวที่ผิดในที่เดียว
+- อาการทั้งหมดมาจากพฤติกรรมต้นตอเดียวกัน
 
-### 4. File the GitHub issue(s)
+### 4. เปิด GitHub issue
 
-Create issues with `gh issue create`. Do NOT ask the user to review first — just file and share URLs.
+สร้าง issue ด้วย `gh issue create` ไม่ต้องให้ผู้ใช้ review ก่อน — เปิดเลยแล้วแชร์ URL
 
-Issues must be **durable** — they should still make sense after major refactors. Write from the user's perspective.
+issue ต้อง **คงทน** — อ่านแล้วยังเข้าใจได้แม้ผ่าน refactor ใหญ่ ๆ เขียนจากมุมมองของผู้ใช้
 
-#### For a single issue
+#### สำหรับ issue เดียว
 
-Use this template:
+ใช้ template นี้:
 
 ```
 ## What happened
@@ -74,11 +74,11 @@ Use this template:
 [Any extra observations from the user or from codebase exploration that help frame the issue — e.g. "this only happens when using the Docker layer, not the filesystem layer" — use domain language but don't cite files]
 ```
 
-#### For a breakdown (multiple issues)
+#### สำหรับการแตกย่อย (หลาย issue)
 
-Create issues in dependency order (blockers first) so you can reference real issue numbers.
+สร้าง issue ตามลำดับ dependency (ตัวที่ block คนอื่นก่อน) เพื่อให้อ้างเลข issue จริงได้
 
-Use this template for each sub-issue:
+ใช้ template นี้กับ sub-issue แต่ละตัว:
 
 ```
 ## Parent issue
@@ -108,23 +108,23 @@ Or "None — can start immediately" if no blockers.
 [Any extra observations relevant to this slice]
 ```
 
-When creating a breakdown:
+เวลาแตกย่อย:
 
-- **Prefer many thin issues over few thick ones** — each should be independently fixable and verifiable
-- **Mark blocking relationships honestly** — if issue B genuinely can't be tested until issue A is fixed, say so. If they're independent, mark both as "None — can start immediately"
-- **Create issues in dependency order** so you can reference real issue numbers in "Blocked by"
-- **Maximize parallelism** — the goal is that multiple people (or agents) can grab different issues simultaneously
+- **เลือก issue บาง ๆ หลายอันดีกว่า issue หนา ๆ ไม่กี่อัน** — แต่ละอันต้องแก้และตรวจได้อย่างอิสระ
+- **ระบุความสัมพันธ์แบบ block กันตามจริง** — ถ้า issue B test ไม่ได้จริง ๆ จนกว่า issue A จะถูกแก้ ก็บอกไปตรง ๆ ถ้าเป็นอิสระต่อกัน ให้ระบุทั้งคู่ว่า "None — can start immediately"
+- **สร้าง issue ตามลำดับ dependency** เพื่อให้อ้างเลข issue จริงในช่อง "Blocked by" ได้
+- **เน้นให้ขนานกันได้มากที่สุด** — เป้าหมายคือให้หลายคน (หรือหลาย agent) หยิบคนละ issue ไปทำพร้อมกันได้
 
-#### Rules for all issue bodies
+#### กติกาสำหรับเนื้อหา issue ทุกอัน
 
-- **No file paths or line numbers** — these go stale
-- **Use the project's domain language** (check UBIQUITOUS_LANGUAGE.md if it exists)
-- **Describe behaviors, not code** — "the sync service fails to apply the patch" not "applyPatch() throws on line 42"
-- **Reproduction steps are mandatory** — if you can't determine them, ask the user
-- **Keep it concise** — a developer should be able to read the issue in 30 seconds
+- **ห้ามใส่ file path หรือเลขบรรทัด** — พวกนี้ล้าสมัยเร็ว
+- **ใช้ภาษา domain ของโปรเจกต์** (เช็ก UBIQUITOUS_LANGUAGE.md ถ้ามี)
+- **อธิบายพฤติกรรม ไม่ใช่ code** — "sync service apply patch ไม่สำเร็จ" ไม่ใช่ "applyPatch() throws on line 42"
+- **ขั้นตอน reproduce เป็นสิ่งบังคับ** — ถ้าหาไม่ได้ ให้ถามผู้ใช้
+- **กระชับเข้าไว้** — dev ควรอ่าน issue จบได้ใน 30 วินาที
 
-After filing, print all issue URLs (with blocking relationships summarized) and ask: "Next issue, or are we done?"
+หลังเปิด issue เสร็จ ให้พิมพ์ URL ของ issue ทั้งหมด (พร้อมสรุปความสัมพันธ์ว่าอันไหน block อันไหน) แล้วถามว่า: "issue ถัดไป หรือพอแค่นี้?"
 
-### 5. Continue the session
+### 5. คุยต่อจนจบ session
 
-Keep going until the user says they're done. Each issue is independent — don't batch them.
+ทำต่อไปเรื่อย ๆ จนผู้ใช้บอกว่าพอ issue แต่ละอันเป็นอิสระต่อกัน — อย่ารวบไปทำเป็น batch

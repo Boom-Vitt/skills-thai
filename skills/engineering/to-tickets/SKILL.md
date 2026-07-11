@@ -1,83 +1,83 @@
 ---
 name: to-tickets
-description: Break a plan, spec, or the current conversation into a set of tracer-bullet tickets, each declaring its blocking edges, published to the configured tracker — edges as text in one file per ticket locally, or native blocking links on a real tracker.
+description: แตก plan, spec หรือบทสนทนาปัจจุบันออกเป็นชุด ticket แบบ tracer bullet โดยแต่ละใบประกาศ blocking edges ของตัวเอง แล้ว publish ไปยัง tracker ที่ config ไว้ — edges เป็นข้อความในไฟล์แยกหนึ่งไฟล์ต่อ ticket ถ้าเก็บ local หรือเป็น blocking link แบบ native บน tracker จริง
 disable-model-invocation: true
 ---
 
 # To Tickets
 
-Break a plan, spec, or conversation into a set of **tickets** — tracer-bullet vertical slices, each declaring the tickets that **block** it.
+แตก plan, spec หรือบทสนทนาออกเป็นชุด **ticket** — vertical slice แบบ tracer bullet (กระสุนส่องวิถี: เส้นทางแคบ ๆ ที่ทะลุครบทุก layer) โดยแต่ละใบประกาศว่ามี ticket ไหน **block** มันอยู่บ้าง
 
-The issue tracker and triage label vocabulary should have been provided to you — run `/setup-matt-pocock-skills` if not.
+issue tracker และชุดคำศัพท์ label สำหรับ triage ควรถูกส่งมาให้แล้ว — ถ้ายังไม่มี ให้รัน `/setup-matt-pocock-skills`
 
-## Process
+## ขั้นตอน
 
-### 1. Gather context
+### 1. รวบรวม context
 
-Work from whatever is already in the conversation context. If the user passes a reference (a spec path, an issue number or URL) as an argument, fetch it and read its full body and comments.
+ทำงานจากสิ่งที่อยู่ใน context ของบทสนทนาอยู่แล้ว ถ้า user ส่ง reference มาเป็น argument (path ของ spec, เลข issue หรือ URL) ให้ fetch มาแล้วอ่านทั้ง body และ comment ให้ครบ
 
-### 2. Explore the codebase (optional)
+### 2. สำรวจ codebase (optional)
 
-If you have not already explored the codebase, do so to understand the current state of the code. Ticket titles and descriptions should use the project's domain glossary vocabulary, and respect ADRs in the area you're touching.
+ถ้ายังไม่ได้สำรวจ codebase ให้สำรวจก่อนเพื่อเข้าใจสถานะปัจจุบันของ code ชื่อและคำอธิบายของ ticket ควรใช้คำศัพท์จาก domain glossary ของโปรเจกต์ และเคารพ ADR ในบริเวณที่กำลังจะไปแตะ
 
-Look for opportunities to prefactor the code to make the implementation easier. "Make the change easy, then make the easy change."
+มองหาโอกาส prefactor code เพื่อให้การ implement ง่ายขึ้น "ทำให้การเปลี่ยนแปลงเป็นเรื่องง่ายก่อน แล้วค่อยลงมือเปลี่ยนแบบง่าย ๆ"
 
-### 3. Draft vertical slices
+### 3. ร่าง vertical slice
 
-Break the work into **tracer bullet** tickets.
+แตกงานออกเป็น ticket แบบ **tracer bullet**
 
 <vertical-slice-rules>
 
-- Each slice cuts a narrow but COMPLETE path through every layer (schema, API, UI, tests) — vertical, NOT a horizontal slice of one layer
-- A completed slice is demoable or verifiable on its own
-- Each slice is sized to fit in a single fresh context window
-- Any prefactoring should be done first
+- แต่ละ slice ตัดเส้นทางที่แคบแต่ครบทุก layer (schema, API, UI, tests) — เป็นแนวตั้ง ไม่ใช่ slice แนวนอนของ layer เดียว
+- slice ที่เสร็จแล้วต้อง demo หรือ verify ได้ด้วยตัวมันเอง
+- แต่ละ slice มีขนาดพอดีกับ context window ใหม่หนึ่งอัน
+- ถ้ามี prefactoring อะไร ให้ทำก่อนเป็นอย่างแรก
 
 </vertical-slice-rules>
 
-Give each ticket its **blocking edges** — the other tickets that must complete before it can start. A ticket with no blockers can start immediately.
+ให้แต่ละ ticket มี **blocking edges** ของมัน — ticket อื่นที่ต้องเสร็จก่อนใบนี้ถึงจะเริ่มได้ ticket ที่ไม่มีตัว block เริ่มได้ทันที
 
-**Wide refactors are the exception to vertical slicing.** A **wide refactor** is one mechanical change — rename a column, retype a shared symbol — whose **blast radius** fans across the whole codebase, so a single edit breaks thousands of call sites at once and no vertical slice can land green. Don't force it into a tracer bullet; sequence it as **expand–contract**. First expand: add the new form beside the old so nothing breaks. Then migrate the call sites over in batches sized by blast radius (per package, per directory), each batch its own ticket blocked by the expand, keeping CI green batch to batch because the old form still exists. Finally contract: delete the old form once no caller remains, in a ticket blocked by every migrate batch. When even the batches can't stay green alone, keep the sequence but let them share an integration branch that all block a final integrate-and-verify ticket — green is promised only there.
+**Wide refactor คือข้อยกเว้นของ vertical slicing** **wide refactor** คือการเปลี่ยนแบบ mechanical หนึ่งอย่าง — rename column, เปลี่ยน type ของ symbol ที่ใช้ร่วมกัน — ที่ **blast radius** (รัศมีความเสียหาย) กวาดไปทั่วทั้ง codebase จนการแก้จุดเดียวพังจุดเรียกใช้เป็นพัน ๆ ที่พร้อมกัน และไม่มี vertical slice ไหน land แบบเขียวได้ อย่าฝืนยัดมันให้เป็น tracer bullet ให้เรียงลำดับเป็น **expand–contract** แทน ขั้นแรก expand: เพิ่มรูปแบบใหม่ไว้ข้าง ๆ ของเก่าเพื่อไม่ให้อะไรพัง จากนั้น migrate จุดเรียกใช้ทีละ batch โดยกำหนดขนาด batch ตาม blast radius (ต่อ package, ต่อ directory) แต่ละ batch เป็น ticket ของตัวเองที่ถูก block โดย ticket expand และ CI จะยังเขียวจาก batch หนึ่งไปอีก batch เพราะรูปแบบเก่ายังอยู่ สุดท้าย contract: ลบรูปแบบเก่าทิ้งเมื่อไม่เหลือ caller แล้ว ใน ticket ที่ถูก block โดย migrate batch ทุกอัน ถ้าแม้แต่ batch เดี่ยว ๆ ก็ยังเขียวไม่ได้ ให้คงลำดับเดิมไว้แต่ให้พวกมันแชร์ integration branch เดียวกัน โดยทุกอัน block ticket integrate-and-verify ตัวสุดท้าย — ความเขียวถูกสัญญาไว้ที่ ticket นั้นที่เดียว
 
-### 4. Quiz the user
+### 4. ซักถาม user
 
-Present the proposed breakdown as a numbered list. For each ticket, show:
+เสนอ breakdown ที่ร่างไว้เป็น numbered list สำหรับแต่ละ ticket ให้โชว์:
 
-- **Title**: short descriptive name
-- **Blocked by**: which other tickets (if any) must complete first
-- **What it delivers**: the end-to-end behaviour this ticket makes work
+- **Title**: ชื่อสั้น ๆ ที่สื่อความ
+- **Blocked by**: มี ticket ไหนบ้าง (ถ้ามี) ที่ต้องเสร็จก่อน
+- **What it delivers**: พฤติกรรม end-to-end ที่ ticket นี้ทำให้ใช้งานได้จริง
 
-Ask the user:
+ถาม user ว่า:
 
-- Does the granularity feel right? (too coarse / too fine)
-- Are the blocking edges correct — does each ticket only depend on tickets that genuinely gate it?
-- Should any tickets be merged or split further?
+- granularity กำลังดีไหม? (หยาบไป / ละเอียดไป)
+- blocking edges ถูกต้องหรือเปล่า — แต่ละ ticket depend เฉพาะ ticket ที่ gate มันจริง ๆ ใช่ไหม?
+- มี ticket ไหนควรถูก merge รวมกัน หรือควร split ให้ย่อยกว่านี้ไหม?
 
-Iterate until the user approves the breakdown.
+วนปรับไปเรื่อย ๆ จนกว่า user จะ approve breakdown
 
-### 5. Publish the tickets to the configured tracker
+### 5. Publish ticket ไปยัง tracker ที่ config ไว้
 
-Publish the approved tickets. **How** depends on the tracker `/setup-matt-pocock-skills` configured — the tickets are the same either way, only the shape of the blocking edges changes:
+publish ticket ที่ approve แล้ว **วิธีการ**ขึ้นอยู่กับ tracker ที่ `/setup-matt-pocock-skills` config ไว้ — ตัว ticket เหมือนกันทั้งสองแบบ ต่างกันแค่รูปร่างของ blocking edges:
 
-- **Local files** → write one file per ticket under `.scratch/<feature-slug>/issues/<NN>-<slug>.md`, numbered from `01` in dependency order (blockers first). Each file's "Blocked by" lists the numbers/titles it depends on. Use the per-ticket file template below — one ticket per file, never a single combined file.
-- **A real issue tracker (GitHub, Linear, …)** → publish one issue per ticket in dependency order (blockers first) so each ticket's blocking edges can reference real identifiers. Use the platform's native blocking / sub-issue relationship where it has one; otherwise set each ticket's "Blocked by" to the blocking issues. Apply the `ready-for-agent` triage label unless instructed otherwise — the tickets are agent-grabbable by construction.
+- **ไฟล์ local** → เขียนหนึ่งไฟล์ต่อหนึ่ง ticket ไว้ที่ `.scratch/<feature-slug>/issues/<NN>-<slug>.md` รันเลขเริ่มจาก `01` ตามลำดับ dependency (ตัว block มาก่อน) ช่อง "Blocked by" ของแต่ละไฟล์ list เลข/ชื่อของ ticket ที่มัน depend ใช้ template ต่อ ticket ด้านล่าง — หนึ่ง ticket ต่อหนึ่งไฟล์ ห้ามรวมทุกอย่างเป็นไฟล์เดียว
+- **Issue tracker จริง (GitHub, Linear, …)** → publish หนึ่ง issue ต่อหนึ่ง ticket ตามลำดับ dependency (ตัว block มาก่อน) เพื่อให้ blocking edges ของแต่ละ ticket อ้างถึง identifier จริงได้ ใช้ความสัมพันธ์ blocking / sub-issue แบบ native ของ platform ถ้ามี ไม่งั้นตั้ง "Blocked by" ของแต่ละ ticket เป็น issue ที่ block มัน ติด label triage `ready-for-agent` เว้นแต่จะถูกสั่งเป็นอย่างอื่น — ticket พวกนี้ถูกออกแบบมาให้ agent หยิบไปทำได้อยู่แล้วโดย construction
 
-Work the **frontier**: any ticket whose blockers are all done. For a purely linear chain that means top to bottom.
+ทำงานที่ **frontier**: ticket ใดก็ตามที่ตัว block ของมันเสร็จครบแล้ว ถ้าเป็น chain แบบเส้นตรงล้วน ๆ ก็คือไล่จากบนลงล่าง
 
-Do NOT close or modify any parent issue.
+ห้ามปิดหรือแก้ parent issue ใด ๆ
 
 <local-ticket-template>
 
 # <NN> — <Ticket title>
 
-**What to build:** the end-to-end behaviour this ticket makes work, from the user's perspective — not a layer-by-layer implementation list.
+**What to build:** พฤติกรรม end-to-end ที่ ticket นี้ทำให้ใช้งานได้จริง จากมุมมองของ user — ไม่ใช่ list ขั้นตอน implement ทีละ layer
 
-**Blocked by:** the numbers/titles of the tickets that gate this one, or "None — can start immediately".
+**Blocked by:** เลข/ชื่อของ ticket ที่ gate ใบนี้ หรือ "None — can start immediately"
 
 **Status:** ready-for-agent
 
-- [ ] Acceptance criterion 1
-- [ ] Acceptance criterion 2
+- [ ] เกณฑ์ acceptance ข้อ 1
+- [ ] เกณฑ์ acceptance ข้อ 2
 
 </local-ticket-template>
 
@@ -85,23 +85,23 @@ Do NOT close or modify any parent issue.
 
 ## Parent
 
-A reference to the parent issue on the tracker (if the source was an existing issue, otherwise omit this section).
+reference ไปยัง parent issue บน tracker (ใส่เมื่อ source เป็น issue ที่มีอยู่แล้ว ไม่งั้นตัด section นี้ทิ้ง)
 
 ## What to build
 
-The end-to-end behaviour this ticket makes work, from the user's perspective — not layer-by-layer implementation.
+พฤติกรรม end-to-end ที่ ticket นี้ทำให้ใช้งานได้จริง จากมุมมองของ user — ไม่ใช่การ implement ทีละ layer
 
 ## Acceptance criteria
 
-- [ ] Criterion 1
-- [ ] Criterion 2
+- [ ] เกณฑ์ข้อ 1
+- [ ] เกณฑ์ข้อ 2
 
 ## Blocked by
 
-- A reference to each blocking ticket, or "None — can start immediately".
+- reference ไปยัง ticket แต่ละใบที่ block ใบนี้ หรือ "None — can start immediately"
 
 </issue-template>
 
-In either form, avoid specific file paths or code snippets — they go stale fast. Exception: if a prototype produced a snippet that encodes a decision more precisely than prose can (state machine, reducer, schema, type shape), inline it and note briefly that it came from a prototype. Trim to the decision-rich parts — not a working demo, just the important bits.
+ไม่ว่าจะรูปแบบไหน ให้เลี่ยง file path หรือ code snippet แบบเจาะจง — ของพวกนี้เก่าเร็วมาก ข้อยกเว้น: ถ้า prototype ผลิต snippet ที่ encode การตัดสินใจได้แม่นยำกว่าที่ prose ทำได้ (state machine, reducer, schema, รูปทรงของ type) ให้แปะ inline แล้ว note สั้น ๆ ว่ามันมาจาก prototype ตัดให้เหลือเฉพาะส่วนที่อัดแน่นด้วยการตัดสินใจ — ไม่ใช่ demo ที่รันได้ เอาแค่ส่วนที่สำคัญ
 
-Work the frontier one ticket at a time with `/implement`, clearing context between tickets.
+ทำงานที่ frontier ทีละ ticket ด้วย `/implement` โดยเคลียร์ context ระหว่าง ticket

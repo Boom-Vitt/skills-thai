@@ -1,37 +1,37 @@
 ---
 name: scaffold-exercises
-description: Create exercise directory structures with sections, problems, solutions, and explainers that pass linting. Use when user wants to scaffold exercises, create exercise stubs, or set up a new course section.
+description: สร้างโครงสร้าง directory ของ exercise พร้อม section, problem, solution และ explainer ให้ผ่าน linting ใช้เมื่อ user อยาก scaffold exercises, สร้าง exercise stub หรือตั้ง section ใหม่ของคอร์ส
 ---
 
 # Scaffold Exercises
 
-Create exercise directory structures that pass `pnpm ai-hero-cli internal lint`, then commit with `git commit`.
+สร้างโครงสร้าง directory ของ exercise ให้ผ่าน `pnpm ai-hero-cli internal lint` แล้ว commit ด้วย `git commit`
 
-## Directory naming
+## การตั้งชื่อ directory
 
-- **Sections**: `XX-section-name/` inside `exercises/` (e.g., `01-retrieval-skill-building`)
-- **Exercises**: `XX.YY-exercise-name/` inside a section (e.g., `01.03-retrieval-with-bm25`)
-- Section number = `XX`, exercise number = `XX.YY`
-- Names are dash-case (lowercase, hyphens)
+- **Section**: `XX-section-name/` อยู่ใน `exercises/` (เช่น `01-retrieval-skill-building`)
+- **Exercise**: `XX.YY-exercise-name/` อยู่ในแต่ละ section (เช่น `01.03-retrieval-with-bm25`)
+- เลข section = `XX`, เลข exercise = `XX.YY`
+- ชื่อเป็น dash-case (ตัวพิมพ์เล็ก คั่นด้วย hyphen)
 
-## Exercise variants
+## Variant ของ exercise
 
-Each exercise needs at least one of these subfolders:
+แต่ละ exercise ต้องมี subfolder อย่างน้อยหนึ่งแบบจากรายการนี้:
 
-- `problem/` - student workspace with TODOs
-- `solution/` - reference implementation
-- `explainer/` - conceptual material, no TODOs
+- `problem/` - พื้นที่ทำงานของผู้เรียน มี TODO ให้ทำ
+- `solution/` - implementation อ้างอิง
+- `explainer/` - เนื้อหาเชิงแนวคิด ไม่มี TODO
 
-When stubbing, default to `explainer/` unless the plan specifies otherwise.
+ตอน stub ให้ default เป็น `explainer/` ยกเว้นแผนระบุไว้เป็นอย่างอื่น
 
-## Required files
+## ไฟล์ที่ต้องมี
 
-Each subfolder (`problem/`, `solution/`, `explainer/`) needs a `readme.md` that:
+แต่ละ subfolder (`problem/`, `solution/`, `explainer/`) ต้องมี `readme.md` ที่:
 
-- Is **not empty** (must have real content, even a single title line works)
-- Has no broken links
+- **ไม่ว่างเปล่า** (ต้องมีเนื้อหาจริง แค่บรรทัด title บรรทัดเดียวก็ใช้ได้)
+- ไม่มีลิงก์เสีย
 
-When stubbing, create a minimal readme with a title and a description:
+ตอน stub ให้สร้าง readme แบบ minimal ที่มี title กับคำอธิบาย:
 
 ```md
 # Exercise Title
@@ -39,46 +39,46 @@ When stubbing, create a minimal readme with a title and a description:
 Description here
 ```
 
-If the subfolder has code, it also needs a `main.ts` (>1 line). But for stubs, a readme-only exercise is fine.
+ถ้า subfolder มี code ก็ต้องมี `main.ts` ด้วย (>1 บรรทัด) แต่สำหรับ stub มีแค่ readme อย่างเดียวก็พอ
 
 ## Workflow
 
-1. **Parse the plan** - extract section names, exercise names, and variant types
-2. **Create directories** - `mkdir -p` for each path
-3. **Create stub readmes** - one `readme.md` per variant folder with a title
-4. **Run lint** - `pnpm ai-hero-cli internal lint` to validate
-5. **Fix any errors** - iterate until lint passes
+1. **Parse แผน** - ดึงชื่อ section, ชื่อ exercise และประเภท variant ออกมา
+2. **สร้าง directory** - `mkdir -p` สำหรับแต่ละ path
+3. **สร้าง readme stub** - `readme.md` หนึ่งไฟล์ต่อหนึ่ง variant folder พร้อม title
+4. **รัน lint** - `pnpm ai-hero-cli internal lint` เพื่อ validate
+5. **แก้ error ที่เจอ** - วนแก้จนกว่า lint จะผ่าน
 
-## Lint rules summary
+## สรุปกฎของ lint
 
-The linter (`pnpm ai-hero-cli internal lint`) checks:
+ตัว linter (`pnpm ai-hero-cli internal lint`) เช็คว่า:
 
-- Each exercise has subfolders (`problem/`, `solution/`, `explainer/`)
-- At least one of `problem/`, `explainer/`, or `explainer.1/` exists
-- `readme.md` exists and is non-empty in the primary subfolder
-- No `.gitkeep` files
-- No `speaker-notes.md` files
-- No broken links in readmes
-- No `pnpm run exercise` commands in readmes
-- `main.ts` required per subfolder unless it's readme-only
+- แต่ละ exercise มี subfolder (`problem/`, `solution/`, `explainer/`)
+- มี `problem/`, `explainer/` หรือ `explainer.1/` อย่างน้อยหนึ่งอัน
+- `readme.md` มีอยู่และไม่ว่างเปล่าใน subfolder หลัก
+- ไม่มีไฟล์ `.gitkeep`
+- ไม่มีไฟล์ `speaker-notes.md`
+- ไม่มีลิงก์เสียใน readme
+- ไม่มีคำสั่ง `pnpm run exercise` ใน readme
+- ต้องมี `main.ts` ในแต่ละ subfolder ยกเว้นเป็นแบบ readme อย่างเดียว
 
-## Moving/renaming exercises
+## การย้าย/เปลี่ยนชื่อ exercise
 
-When renumbering or moving exercises:
+เวลาเปลี่ยนเลขหรือย้าย exercise:
 
-1. Use `git mv` (not `mv`) to rename directories - preserves git history
-2. Update the numeric prefix to maintain order
-3. Re-run lint after moves
+1. ใช้ `git mv` (ไม่ใช่ `mv`) เพื่อ rename directory - เก็บ history ของ git ไว้
+2. อัปเดต prefix ตัวเลขให้ลำดับยังถูกต้อง
+3. รัน lint ใหม่หลังย้ายเสร็จ
 
-Example:
+ตัวอย่าง:
 
 ```bash
 git mv exercises/01-retrieval/01.03-embeddings exercises/01-retrieval/01.04-embeddings
 ```
 
-## Example: stubbing from a plan
+## ตัวอย่าง: stub จากแผน
 
-Given a plan like:
+สมมติได้แผนแบบนี้มา:
 
 ```
 Section 05: Memory Skill Building
@@ -87,7 +87,7 @@ Section 05: Memory Skill Building
 - 05.03 Long-term Memory
 ```
 
-Create:
+ให้สร้าง:
 
 ```bash
 mkdir -p exercises/05-memory-skill-building/05.01-introduction-to-memory/explainer
@@ -95,7 +95,7 @@ mkdir -p exercises/05-memory-skill-building/05.02-short-term-memory/{explainer,p
 mkdir -p exercises/05-memory-skill-building/05.03-long-term-memory/explainer
 ```
 
-Then create readme stubs:
+แล้วสร้าง readme stub:
 
 ```
 exercises/05-memory-skill-building/05.01-introduction-to-memory/explainer/readme.md -> "# Introduction to Memory"

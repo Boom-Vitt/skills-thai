@@ -1,27 +1,27 @@
 ---
 name: ubiquitous-language
-description: Extract a DDD-style ubiquitous language glossary from the current conversation, flagging ambiguities and proposing canonical terms. Saves to UBIQUITOUS_LANGUAGE.md. Use when user wants to define domain terms, build a glossary, harden terminology, create a ubiquitous language, or mentions "domain model" or "DDD".
+description: สกัด glossary ภาษากลางสไตล์ DDD จากบทสนทนาปัจจุบัน พร้อมชี้จุดกำกวมและเสนอ term มาตรฐาน เซฟลง UBIQUITOUS_LANGUAGE.md ใช้เมื่อผู้ใช้อยากนิยามศัพท์ domain สร้าง glossary ทำ terminology ให้แน่น สร้าง ubiquitous language หรือพูดถึง "domain model" หรือ "DDD"
 disable-model-invocation: true
 ---
 
 # Ubiquitous Language
 
-Extract and formalize domain terminology from the current conversation into a consistent glossary, saved to a local file.
+สกัดและจัดระเบียบศัพท์ domain จากบทสนทนาปัจจุบันให้เป็น glossary ที่สอดคล้องกัน แล้วเซฟลงไฟล์ในเครื่อง
 
-## Process
+## ขั้นตอนการทำงาน
 
-1. **Scan the conversation** for domain-relevant nouns, verbs, and concepts
-2. **Identify problems**:
-   - Same word used for different concepts (ambiguity)
-   - Different words used for the same concept (synonyms)
-   - Vague or overloaded terms
-3. **Propose a canonical glossary** with opinionated term choices
-4. **Write to `UBIQUITOUS_LANGUAGE.md`** in the working directory using the format below
-5. **Output a summary** inline in the conversation
+1. **สแกนบทสนทนา** หาคำนาม คำกริยา และ concept ที่เกี่ยวกับ domain
+2. **ระบุปัญหา**:
+   - คำเดียวกันถูกใช้กับคนละ concept (ความกำกวม)
+   - คนละคำถูกใช้กับ concept เดียวกัน (คำพ้อง)
+   - term ที่คลุมเครือหรือแบกความหมายหลายอย่าง
+3. **เสนอ glossary มาตรฐาน** โดยฟันธงเลือก term ให้ชัด
+4. **เขียนลง `UBIQUITOUS_LANGUAGE.md`** ใน working directory ตาม format ด้านล่าง
+5. **สรุปผล** inline ในบทสนทนา
 
-## Output Format
+## รูปแบบ output
 
-Write a `UBIQUITOUS_LANGUAGE.md` file with this structure:
+เขียนไฟล์ `UBIQUITOUS_LANGUAGE.md` ด้วยโครงสร้างนี้:
 
 ```md
 # Ubiquitous Language
@@ -57,37 +57,37 @@ Write a `UBIQUITOUS_LANGUAGE.md` file with this structure:
 - "account" was used to mean both **Customer** and **User** — these are distinct concepts: a **Customer** places orders, while a **User** is an authentication identity that may or may not represent a **Customer**.
 ```
 
-## Rules
+## กติกา
 
-- **Be opinionated.** When multiple words exist for the same concept, pick the best one and list the others as aliases to avoid.
-- **Flag conflicts explicitly.** If a term is used ambiguously in the conversation, call it out in the "Flagged ambiguities" section with a clear recommendation.
-- **Only include terms relevant for domain experts.** Skip the names of modules or classes unless they have meaning in the domain language.
-- **Keep definitions tight.** One sentence max. Define what it IS, not what it does.
-- **Show relationships.** Use bold term names and express cardinality where obvious.
-- **Only include domain terms.** Skip generic programming concepts (array, function, endpoint) unless they have domain-specific meaning.
-- **Group terms into multiple tables** when natural clusters emerge (e.g. by subdomain, lifecycle, or actor). Each group gets its own heading and table. If all terms belong to a single cohesive domain, one table is fine — don't force groupings.
-- **Write an example dialogue.** A short conversation (3-5 exchanges) between a dev and a domain expert that demonstrates how the terms interact naturally. The dialogue should clarify boundaries between related concepts and show terms being used precisely.
+- **ฟันธง** เมื่อมีหลายคำสำหรับ concept เดียวกัน เลือกคำที่ดีที่สุดแล้วลิสต์คำอื่นเป็น alias ที่ควรเลี่ยง
+- **ชี้จุดขัดแย้งให้ชัด** ถ้า term ไหนถูกใช้อย่างกำกวมในบทสนทนา ให้เรียกออกมาในหัวข้อ "Flagged ambiguities" พร้อมคำแนะนำที่ชัดเจน
+- **ใส่เฉพาะ term ที่มีความหมายสำหรับ domain expert** ข้ามชื่อ module หรือ class เว้นแต่มันมีความหมายในภาษา domain
+- **นิยามให้กระชับ** ไม่เกินหนึ่งประโยค นิยามว่ามันคืออะไร ไม่ใช่มันทำอะไร
+- **แสดงความสัมพันธ์** ใช้ชื่อ term ตัวหนา และระบุ cardinality เมื่อเห็นได้ชัด
+- **ใส่เฉพาะ term ของ domain** ข้าม concept การเขียนโปรแกรมทั่วไป (array, function, endpoint) เว้นแต่มันมีความหมายเฉพาะใน domain นั้น
+- **จัดกลุ่ม term เป็นหลายตาราง** เมื่อเห็นกลุ่มก้อนตามธรรมชาติ (เช่น ตาม subdomain, lifecycle, หรือ actor) แต่ละกลุ่มมี heading และตารางของตัวเอง ถ้า term ทั้งหมดอยู่ใน domain เดียวที่กลมกลืนกัน ตารางเดียวก็พอ — อย่าฝืนจัดกลุ่ม
+- **เขียน example dialogue** บทสนทนาสั้น ๆ (โต้ตอบกัน 3-5 รอบ) ระหว่าง dev กับ domain expert ที่แสดงให้เห็นว่า term เหล่านี้ทำงานร่วมกันอย่างเป็นธรรมชาติอย่างไร บทสนทนาควรทำให้เส้นแบ่งระหว่าง concept ที่ใกล้กันชัดขึ้น และโชว์การใช้ term อย่างแม่นยำ
 
 <example>
 
 ## Example dialogue
 
-> **Dev:** "How do I test the **sync service** without Docker?"
+> **Dev:** "จะ test **sync service** โดยไม่ใช้ Docker ได้ยังไง?"
 
-> **Domain expert:** "Provide the **filesystem layer** instead of the **Docker layer**. It implements the same **Sandbox service** interface but uses a local directory as the **sandbox**."
+> **Domain expert:** "ส่ง **filesystem layer** เข้าไปแทน **Docker layer** มัน implement interface **Sandbox service** ตัวเดียวกัน แต่ใช้ local directory เป็น **sandbox**"
 
-> **Dev:** "So **sync-in** still creates a **bundle** and unpacks it?"
+> **Dev:** "แสดงว่า **sync-in** ยังสร้าง **bundle** แล้วแตกมันเหมือนเดิม?"
 
-> **Domain expert:** "Exactly. The **sync service** doesn't know which layer it's talking to. It calls `exec` and `copyIn` — the **filesystem layer** just runs those as local shell commands."
+> **Domain expert:** "ใช่เลย **sync service** ไม่รู้ว่ากำลังคุยกับ layer ไหน มันเรียก `exec` กับ `copyIn` — **filesystem layer** ก็แค่รันคำสั่งพวกนั้นเป็น shell command ในเครื่อง"
 
 </example>
 
-## Re-running
+## การรันซ้ำ
 
-When invoked again in the same conversation:
+เมื่อถูกเรียกอีกครั้งในบทสนทนาเดิม:
 
-1. Read the existing `UBIQUITOUS_LANGUAGE.md`
-2. Incorporate any new terms from subsequent discussion
-3. Update definitions if understanding has evolved
-4. Re-flag any new ambiguities
-5. Rewrite the example dialogue to incorporate new terms
+1. อ่าน `UBIQUITOUS_LANGUAGE.md` ที่มีอยู่
+2. เพิ่ม term ใหม่จากการคุยกันหลังจากนั้น
+3. อัปเดตนิยามถ้าความเข้าใจเปลี่ยนไป
+4. ชี้จุดกำกวมใหม่ ๆ ที่เจอ
+5. เขียน example dialogue ใหม่ให้ครอบคลุม term ที่เพิ่มเข้ามา

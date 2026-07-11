@@ -1,29 +1,29 @@
 ---
 name: design-an-interface
-description: Generate multiple radically different interface designs for a module using parallel sub-agents. Use when user wants to design an API, explore interface options, compare module shapes, or mentions "design it twice".
+description: สร้าง interface design หลายแบบที่ต่างกันสุดขั้วสำหรับ module หนึ่ง โดยใช้ sub-agent แบบ parallel ใช้เมื่อ user อยากออกแบบ API, สำรวจตัวเลือกของ interface, เปรียบเทียบรูปทรงของ module หรือพูดถึง "design it twice"
 ---
 
 # Design an Interface
 
-Based on "Design It Twice" from "A Philosophy of Software Design": your first idea is unlikely to be the best. Generate multiple radically different designs, then compare.
+อิงจากแนวคิด "Design It Twice" ในหนังสือ "A Philosophy of Software Design": ไอเดียแรกของคุณแทบไม่เคยเป็นไอเดียที่ดีที่สุด สร้าง design หลายแบบที่ต่างกันสุดขั้ว แล้วค่อยเปรียบเทียบ
 
 ## Workflow
 
-### 1. Gather Requirements
+### 1. เก็บ Requirements
 
-Before designing, understand:
+ก่อนออกแบบ ต้องเข้าใจก่อนว่า:
 
-- [ ] What problem does this module solve?
-- [ ] Who are the callers? (other modules, external users, tests)
-- [ ] What are the key operations?
-- [ ] Any constraints? (performance, compatibility, existing patterns)
-- [ ] What should be hidden inside vs exposed?
+- [ ] module นี้แก้ปัญหาอะไร?
+- [ ] ใครคือ caller? (module อื่น, ผู้ใช้ภายนอก, test)
+- [ ] operation หลักคืออะไรบ้าง?
+- [ ] มี constraint อะไรไหม? (performance, compatibility, pattern ที่มีอยู่แล้ว)
+- [ ] อะไรควรซ่อนไว้ข้างใน อะไรควร expose ออกมา?
 
-Ask: "What does this module need to do? Who will use it?"
+ถามว่า: "module นี้ต้องทำอะไรได้บ้าง? ใครจะเป็นคนใช้?"
 
-### 2. Generate Designs (Parallel Sub-Agents)
+### 2. สร้าง Design (Sub-Agent แบบ Parallel)
 
-Spawn 3+ sub-agents simultaneously using Task tool. Each must produce a **radically different** approach.
+spawn sub-agent 3 ตัวขึ้นไปพร้อมกันด้วย Task tool แต่ละตัวต้อง produce แนวทางที่**ต่างกันสุดขั้ว**
 
 ```
 Prompt template for each sub-agent:
@@ -45,50 +45,50 @@ Output format:
 4. Trade-offs of this approach
 ```
 
-### 3. Present Designs
+### 3. นำเสนอ Design
 
-Show each design with:
+โชว์แต่ละ design พร้อม:
 
 1. **Interface signature** - types, methods, params
-2. **Usage examples** - how callers actually use it in practice
-3. **What it hides** - complexity kept internal
+2. **ตัวอย่างการใช้งาน** - caller ใช้มันจริง ๆ ยังไงในทางปฏิบัติ
+3. **มันซ่อนอะไรไว้** - ความซับซ้อนที่เก็บไว้ข้างใน
 
-Present designs sequentially so user can absorb each approach before comparison.
+นำเสนอทีละ design เพื่อให้ user ซึมซับแต่ละแนวทางได้ก่อนถึงขั้นเปรียบเทียบ
 
-### 4. Compare Designs
+### 4. เปรียบเทียบ Design
 
-After showing all designs, compare them on:
+หลังโชว์ครบทุก design แล้ว เปรียบเทียบกันในแง่:
 
-- **Interface simplicity**: fewer methods, simpler params
-- **General-purpose vs specialized**: flexibility vs focus
-- **Implementation efficiency**: does shape allow efficient internals?
-- **Depth**: small interface hiding significant complexity (good) vs large interface with thin implementation (bad)
-- **Ease of correct use** vs **ease of misuse**
+- **ความเรียบง่ายของ interface**: method น้อยกว่า, params เรียบง่ายกว่า
+- **General-purpose vs specialized**: ความยืดหยุ่น vs ความโฟกัส
+- **ประสิทธิภาพของ implementation**: รูปทรงนี้เปิดทางให้ internals ทำงานได้มีประสิทธิภาพไหม?
+- **ความลึก (depth)**: interface เล็กที่ซ่อนความซับซ้อนไว้เยอะ (ดี) vs interface ใหญ่แต่ implementation บาง (แย่)
+- **ใช้ให้ถูกได้ง่าย** vs **ใช้ผิดได้ง่าย**
 
-Discuss trade-offs in prose, not tables. Highlight where designs diverge most.
+อภิปราย trade-off เป็นร้อยแก้ว ไม่ใช่ตาราง เน้นจุดที่ design แตกต่างกันมากที่สุด
 
-### 5. Synthesize
+### 5. สังเคราะห์
 
-Often the best design combines insights from multiple options. Ask:
+บ่อยครั้ง design ที่ดีที่สุดเกิดจากการรวม insight จากหลายตัวเลือกเข้าด้วยกัน ถามว่า:
 
-- "Which design best fits your primary use case?"
-- "Any elements from other designs worth incorporating?"
+- "design ไหนเข้ากับ use case หลักของคุณที่สุด?"
+- "มีชิ้นส่วนจาก design อื่นที่ควรหยิบมาผสมไหม?"
 
-## Evaluation Criteria
+## เกณฑ์การประเมิน
 
-From "A Philosophy of Software Design":
+จากหนังสือ "A Philosophy of Software Design":
 
-**Interface simplicity**: Fewer methods, simpler params = easier to learn and use correctly.
+**ความเรียบง่ายของ interface**: method น้อยกว่า params เรียบง่ายกว่า = เรียนรู้ง่ายและใช้ถูกต้องได้ง่ายกว่า
 
-**General-purpose**: Can handle future use cases without changes. But beware over-generalization.
+**General-purpose**: รองรับ use case ในอนาคตได้โดยไม่ต้องแก้ แต่ระวังการ generalize เกินจำเป็น
 
-**Implementation efficiency**: Does interface shape allow efficient implementation? Or force awkward internals?
+**ประสิทธิภาพของ implementation**: รูปทรงของ interface เปิดทางให้ implement ได้มีประสิทธิภาพไหม? หรือบังคับให้ internals ต้องเขียนแบบฝืน ๆ?
 
-**Depth**: Small interface hiding significant complexity = deep module (good). Large interface with thin implementation = shallow module (avoid).
+**ความลึก (depth)**: interface เล็กที่ซ่อนความซับซ้อนไว้เยอะ = deep module (ดี) interface ใหญ่แต่ implementation บาง = shallow module (เลี่ยง)
 
 ## Anti-Patterns
 
-- Don't let sub-agents produce similar designs - enforce radical difference
-- Don't skip comparison - the value is in contrast
-- Don't implement - this is purely about interface shape
-- Don't evaluate based on implementation effort
+- อย่าปล่อยให้ sub-agent produce design ที่คล้ายกัน - ต้องบังคับให้ต่างกันสุดขั้ว
+- อย่าข้ามขั้นเปรียบเทียบ - คุณค่าอยู่ที่ contrast
+- อย่าลงมือ implement - นี่เป็นเรื่องรูปทรงของ interface ล้วน ๆ
+- อย่าประเมินจากความยาก-ง่ายของการ implement

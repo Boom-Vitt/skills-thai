@@ -1,32 +1,32 @@
 ---
 name: loop-me
-description: Grill me about specs for the workflows I want to build, within this workspace.
+description: ซักฉันเรื่อง spec ของ workflow ที่ฉันอยากสร้าง ภายใน workspace นี้
 disable-model-invocation: true
-argument-hint: "A workflow to design, or nothing to go find one"
+argument-hint: "workflow ที่จะออกแบบ หรือเว้นว่างเพื่อให้ไปหามาเอง"
 ---
 
-Run a stateful `/grilling` session whose only output is **workflow** specs. Use the grilling discipline — relentless, one question at a time, a recommended answer attached to each — aimed at the vocabulary and goal below. Create, edit, and delete specs as the grilling resolves things.
+รัน session `/grilling` แบบ stateful ที่ output อย่างเดียวของมันคือ spec ของ **workflow** ใช้วินัยของการ grill (ซักถามไม่ลดละ) — ถามทีละคำถาม พร้อมแนบคำตอบที่แนะนำไว้กับทุกคำถาม — โดยเล็งไปที่ชุดคำศัพท์และเป้าหมายด้านล่าง สร้าง แก้ไข และลบ spec ไปเรื่อย ๆ ตามที่การ grill เคาะข้อสรุปแต่ละเรื่องได้
 
-## The loop lens
+## เลนส์ของ loop
 
-A **loop** is a recurring pattern in the user's life: their career, their week, their morning, a single repeated activity. Picturing a life as loops within loops reveals how predictable its activities really are — which is what makes them worth **delegating**. Use the lens to find loops worth specifying, and propose ones the user hasn't noticed.
+**loop** คือ pattern ที่วนซ้ำในชีวิตของ user: อาชีพของเขา สัปดาห์ของเขา ตอนเช้าของเขา หรือกิจกรรมเดียวที่ทำซ้ำ ๆ การมองชีวิตเป็น loop ซ้อนอยู่ใน loop ทำให้เห็นว่าจริง ๆ แล้วกิจกรรมพวกนั้นคาดเดาได้แค่ไหน — ซึ่งนั่นแหละคือสิ่งที่ทำให้มันคุ้มค่าแก่การ **มอบหมายต่อ** ใช้เลนส์นี้หา loop ที่ควรค่าแก่การเขียน spec และเสนอ loop ที่ user เองยังไม่ทันสังเกตด้วย
 
-A **workflow** is the spec of one loop, made real. You run a workflow on a loop — the loop is its running instantiation. Workflows live in `workflows/*.md` and are the source of truth.
+**workflow** คือ spec ของ loop หนึ่งตัว ที่ถูกทำให้เป็นจริง เรารัน workflow บน loop — ตัว loop คือ instance ที่กำลังรันอยู่ของมัน workflow อยู่ใน `workflows/*.md` และเป็น source of truth
 
-## Vocabulary
+## คำศัพท์
 
-A shared language, reached for only when a workflow calls for it — never a checklist. **Mandate nothing structural**: a workflow needs no AI, no checkpoint, and no schedule unless the grilling shows it does.
+ภาษากลางที่หยิบมาใช้เฉพาะเมื่อ workflow ต้องการเท่านั้น — ไม่ใช่ checklist **ห้ามบังคับโครงสร้างใด ๆ ทั้งสิ้น**: workflow ไม่จำเป็นต้องมี AI ไม่ต้องมี checkpoint และไม่ต้องมี schedule เว้นแต่การ grill จะแสดงให้เห็นว่ามันต้องมี
 
-- **Trigger** — what fires each run: an **event** (a new email, a new issue) or a **schedule** (every morning). Event-triggering is usually the more efficient.
-- **Checkpoint** — a human-in-the-loop point where the user is asked to verify or decide. Some workflows have none and run autonomously; some use no AI at all.
-- **Push right** — defer the checkpoint as far as it will go. Do maximal work before involving the human, so they are asked once, late, with everything prepared.
-- **Brief** — what a checkpoint presents: a tight, decision-ready summary — what was produced, why, and a link down to the asset itself — never the raw output. The user reads a brief, not a draft. Speed of review is imperative.
+- **Trigger** — สิ่งที่จุดชนวนการรันแต่ละครั้ง: **event** (email ใหม่เข้า, issue ใหม่ถูกเปิด) หรือ **schedule** (ทุกเช้า) การ trigger ด้วย event มักมีประสิทธิภาพมากกว่า
+- **Checkpoint** — จุด human-in-the-loop ที่ user ถูกขอให้ตรวจสอบหรือตัดสินใจ บาง workflow ไม่มีเลยและรันแบบอัตโนมัติทั้งหมด บางตัวไม่ใช้ AI เลยด้วยซ้ำ
+- **Push right** — เลื่อน checkpoint ออกไปให้ไกลที่สุดเท่าที่จะไกลได้ ทำงานให้มากที่สุดก่อนดึงมนุษย์เข้ามา เพื่อให้เขาถูกถามครั้งเดียว ตอนท้าย ๆ พร้อมทุกอย่างที่เตรียมไว้ให้แล้ว
+- **Brief** — สิ่งที่ checkpoint นำเสนอ: สรุปที่กระชับและพร้อมให้ตัดสินใจ — ผลิตอะไรออกมา ทำไม พร้อม link ลงไปที่ตัว asset — ไม่ใช่ output ดิบ ๆ เด็ดขาด user อ่าน brief ไม่ใช่อ่าน draft ความเร็วในการรีวิวเป็นเรื่องสำคัญที่สุด
 
-## Definition of done
+## นิยามของคำว่าเสร็จ
 
-A workflow spec is done when an implementer agent could build it without asking a single question. Grill until then; nothing is done while a question remains.
+workflow spec ถือว่าเสร็จเมื่อ agent ที่มา implement สามารถสร้างมันได้โดยไม่ต้องถามอะไรเลยสักคำถาม grill ไปจนถึงจุดนั้น — ตราบใดที่ยังมีคำถามค้างอยู่ ยังไม่มีอะไรเสร็จ
 
-## The workspace
+## Workspace
 
-- `workflows/*.md` — one spec per workflow.
-- `NOTES.md` — raw notes on the user's world: the tools they use, the channels they process, and their own terminology for both. When it is empty or thin, interview them about their world before specifying anything. Sharpen fuzzy terms into canonical ones as they surface, and record them here.
+- `workflows/*.md` — หนึ่งไฟล์ spec ต่อหนึ่ง workflow
+- `NOTES.md` — โน้ตดิบเกี่ยวกับโลกของ user: เครื่องมือที่เขาใช้ ช่องทางที่เขาต้องจัดการ และคำเรียกของเขาเองสำหรับทั้งสองอย่าง ถ้าไฟล์นี้ว่างหรือเนื้อหาบางเกินไป ให้สัมภาษณ์เขาเรื่องโลกของเขาก่อนจะเขียน spec ใด ๆ เมื่อเจอคำที่ยังคลุมเครือ ให้เกลาให้เป็นคำ canonical ทันทีที่มันโผล่มา แล้วบันทึกไว้ที่นี่

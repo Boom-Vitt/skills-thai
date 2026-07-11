@@ -1,76 +1,76 @@
 ---
 name: ask-matt
-description: Ask which skill or flow fits your situation. A router over the skills in this repo.
+description: ถามว่า skill หรือ flow ไหนเหมาะกับสถานการณ์ของคุณ เป็น router ที่ครอบ skill ทั้งหมดใน repo นี้
 disable-model-invocation: true
 ---
 
 # Ask Matt
 
-You don't remember every skill, so ask.
+คุณไม่จำเป็นต้องจำ skill ทุกตัว — ถามเอา
 
-A **flow** is a path through the skills. Most paths run along one **main flow**, and two **on-ramps** merge onto it. Everything else is standalone, or a vocabulary layer that runs underneath.
+**flow** คือเส้นทางที่เดินผ่าน skill ต่าง ๆ งานส่วนใหญ่วิ่งอยู่บน **main flow** เส้นเดียว และมี **on-ramp** (ทางเชื่อมเข้า) สองทางที่มาบรรจบกับมัน ที่เหลือเป็นของ standalone หรือเป็นชั้น vocabulary ที่รองรับอยู่ข้างใต้
 
-## The main flow: idea → ship
+## Main flow: จากไอเดีย → ship
 
-The route most work travels. You have an idea and want it built.
+เส้นทางที่งานส่วนใหญ่ใช้เดิน คุณมีไอเดียและอยากให้มันถูกสร้างขึ้นมา
 
-1. **`/grill-with-docs`** — sharpen the idea by interview. Start here when you **have a codebase**: it's stateful, retaining what it learns in `CONTEXT.md` and ADRs. (No codebase? Use `/grill-me` — see Standalone. Both run the same `/grilling` primitive; `grill-with-docs` is the one that leaves a paper trail.)
-2. **Branch — can you settle every question in conversation?** If a question needs a runnable answer (state, business logic, a UI you have to see), detour through a prototype, bridged by **`/handoff`** in both directions (see Crossing sessions):
-   - **`/handoff`** out, then open a fresh session against that file,
-   - **`/prototype`** to answer the question with throwaway code,
-   - **`/handoff`** back what you learned, and reference it from the original idea thread.
-3. **Branch — is this a multi-session build?**
-   - **Yes** → **`/to-spec`** (turn the thread into a spec), then **`/to-tickets`** to split it into tracer-bullet tickets, each declaring its **blocking edges**. On a local tracker that's one file per ticket under `.scratch/<feature>/issues/`, worked blockers-first by hand; on a real tracker the edges become native blocking links, so any ticket whose blockers are done can be grabbed — kick off **`/implement`** per ticket, **clearing context between each one**.
-   - **No** → **`/implement`** right here, in the same context window.
+1. **`/grill-with-docs`** — ลับไอเดียให้คมด้วยการสัมภาษณ์ เริ่มที่นี่เมื่อคุณ**มี codebase อยู่แล้ว**: มันเป็นแบบ stateful เก็บสิ่งที่เรียนรู้ไว้ใน `CONTEXT.md` และ ADR (ไม่มี codebase? ใช้ `/grill-me` — ดูหัวข้อ Standalone ทั้งคู่รันบน primitive ตัวเดียวกันคือ `/grilling` แต่ `grill-with-docs` คือตัวที่ทิ้งหลักฐานเป็นเอกสารไว้)
+2. **ทางแยก — ทุกคำถามตอบได้ในบทสนทนาไหม?** ถ้าคำถามไหนต้องการคำตอบที่รันได้จริง (state, business logic, หรือ UI ที่ต้องเห็นกับตา) ให้แวะไปทาง prototype โดยมี **`/handoff`** เป็นสะพานทั้งขาไปและขากลับ (ดูหัวข้อ "ข้าม session"):
+   - **`/handoff`** ออกไปก่อน แล้วเปิด session ใหม่โดยอ้างอิงไฟล์นั้น
+   - **`/prototype`** เพื่อตอบคำถามด้วย code แบบใช้แล้วทิ้ง
+   - **`/handoff`** สิ่งที่เรียนรู้กลับมา แล้วอ้างอิงมันจาก thread ไอเดียเดิม
+3. **ทางแยก — งานนี้ต้องสร้างข้ามหลาย session ไหม?**
+   - **ใช่** → **`/to-spec`** (เปลี่ยน thread ให้เป็น spec) แล้วต่อด้วย **`/to-tickets`** เพื่อแตกเป็น ticket แบบ tracer bullet (ticket ที่เจาะทะลุทุกชั้นของระบบแบบบาง ๆ) โดยแต่ละใบประกาศ **blocking edges** ของตัวเอง ถ้าใช้ tracker แบบ local ก็คือหนึ่งไฟล์ต่อหนึ่ง ticket ใต้ `.scratch/<feature>/issues/` แล้วไล่ทำตัวที่เป็น blocker ก่อนด้วยมือ ส่วนบน tracker จริง edge เหล่านั้นจะกลายเป็น blocking link แบบ native ดังนั้น ticket ไหนที่ blocker เสร็จหมดแล้วก็หยิบได้เลย — สั่ง **`/implement`** ทีละ ticket โดย**เคลียร์ context ระหว่างแต่ละใบ**
+   - **ไม่** → **`/implement`** ตรงนี้เลย ใน context window เดิม
 
-   Either way, **`/implement`** builds each issue by driving **`/tdd`** internally — one red-green slice at a time — then closes out by running **`/code-review`**, a two-axis review (Standards + Spec) of the diff, before committing. Reach for **`/tdd`** on its own when you just want to build a concrete behaviour test-first without a full spec, and **`/code-review`** on its own whenever you want to review a branch or PR against a fixed point.
+   ไม่ว่าทางไหน **`/implement`** จะสร้างแต่ละ issue โดยขับ **`/tdd`** อยู่ภายใน — ทีละ slice แบบ red-green — แล้วปิดงานด้วยการรัน **`/code-review`** ซึ่งเป็นการ review สองแกน (Standards + Spec) ของ diff ก่อน commit หยิบ **`/tdd`** มาใช้เดี่ยว ๆ เมื่ออยากสร้างพฤติกรรมที่จับต้องได้แบบ test-first โดยไม่ต้องมี spec เต็มรูปแบบ และหยิบ **`/code-review`** เดี่ยว ๆ เมื่อไหร่ก็ตามที่อยาก review branch หรือ PR เทียบกับจุดอ้างอิงที่ตายตัว
 
-### Context hygiene
+### สุขอนามัยของ context
 
-Keep steps 1–3 in **one unbroken context window** — don't compact or clear until after `/to-tickets` — so the grilling, spec, and tickets all build on the same thinking. Each `/implement` then starts fresh, working from the ticket.
+คุมขั้น 1–3 ให้อยู่ใน **context window เดียวต่อเนื่องไม่ขาดตอน** — อย่า compact หรือ clear จนกว่าจะผ่าน `/to-tickets` — เพื่อให้การ grill, spec และ ticket ทั้งหมดต่อยอดจากความคิดชุดเดียวกัน จากนั้นแต่ละ `/implement` ค่อยเริ่มสดใหม่ โดยทำงานจาก ticket
 
-The limit on this is the **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**: the window (~120k tokens on state-of-the-art models) within which the model still reasons sharply. If a session approaches it before `/to-tickets`, don't push on degraded — `/handoff` and continue in a fresh thread.
+ขีดจำกัดของเรื่องนี้คือ **[smart zone](https://www.aihero.dev/ai-coding-dictionary/smart-zone)**: ช่วงหน้าต่าง (~120k token บนโมเดลระดับ state-of-the-art) ที่โมเดลยังคิดได้คมอยู่ ถ้า session เข้าใกล้ขีดนี้ก่อนถึง `/to-tickets` อย่าฝืนลุยต่อทั้งที่คุณภาพตกแล้ว — `/handoff` แล้วไปต่อใน thread ใหม่
 
 ## On-ramps
 
-A starting situation that generates work, then merges onto the main flow.
+สถานการณ์ตั้งต้นที่ก่อให้เกิดงาน แล้วไหลมารวมกับ main flow
 
-- **Bugs and requests piling up** → **`/triage`**. It moves issues through triage roles and produces agent-ready issues, which **`/implement`** later picks up.
+- **บั๊กกับ request กองพะเนิน** → **`/triage`** มันพา issue ผ่านบทบาทต่าง ๆ ของการ triage แล้วผลิต issue ที่พร้อมให้ agent ทำงาน ซึ่ง **`/implement`** จะหยิบไปทำทีหลัง
 
-  Triage is only for issues **you didn't create** — bug reports, incoming feature requests, anything that arrives raw. Tickets that `/to-tickets` produced are already agent-ready, so **don't triage them**.
+  triage มีไว้สำหรับ issue **ที่คุณไม่ได้สร้างเอง**เท่านั้น — bug report, feature request ที่เข้ามา, อะไรก็ตามที่มาถึงแบบดิบ ๆ ส่วน ticket ที่ `/to-tickets` ผลิตออกมานั้นพร้อมให้ agent ทำอยู่แล้ว ดังนั้น**อย่าเอาไป triage ซ้ำ**
 
-- **Something's broken** → **`/diagnosing-bugs`**. For the hard ones: the bug that resists a first glance, the intermittent flake, the regression that crept in between two known-good states. It refuses to theorise until it has a **tight feedback loop** — one command that already goes red on *this* bug — then fixes with a regression test. Its post-mortem hands off to **`/improve-codebase-architecture`** when the real finding is that there's no good seam to lock the bug down.
+- **มีอะไรบางอย่างพัง** → **`/diagnosing-bugs`** สำหรับเคสยาก ๆ: บั๊กที่มองแวบแรกแล้วไม่เจอ, flake ที่เป็น ๆ หาย ๆ, regression ที่แอบเล็ดลอดเข้ามาระหว่างสอง state ที่รู้ว่าดี มันจะปฏิเสธการตั้งทฤษฎีจนกว่าจะมี **feedback loop ที่แน่น** — คำสั่งเดียวที่แดงอยู่แล้วบนบั๊ก*ตัวนี้* — แล้วค่อยแก้พร้อม regression test ส่วน post-mortem ของมันจะส่งไม้ต่อให้ **`/improve-codebase-architecture`** เมื่อสิ่งที่ค้นพบจริง ๆ คือไม่มี seam (จุดต่อสาธารณะที่ใช้ test พฤติกรรมได้) ดี ๆ ให้ล็อกบั๊กนั้นไว้
 
-- **A huge, foggy effort — a greenfield project or a huge feature build, too big for one session** → **`/wayfinder`**. When the way from here to the destination isn't visible yet, it charts a **shared map** of investigation tickets on the issue tracker and resolves them one at a time — producing **decisions, not deliverables** — until the fog is pushed back and the way is clear. Then it merges onto the main flow at **`/to-spec`** (or, if the effort turned out small enough, straight to **`/implement`**). Where **`/grill-with-docs`** sharpens an idea you can hold in one session, wayfinder is for the idea you can't.
+- **งานก้อนมหึมาที่ยังมองไม่เห็นทาง — โปรเจกต์ greenfield หรือ feature ใหญ่เกินกว่าจะจบใน session เดียว** → **`/wayfinder`** เมื่อเส้นทางจากตรงนี้ไปถึงปลายทางยังมองไม่เห็น มันจะร่าง **แผนที่ที่ใช้ร่วมกัน** เป็น ticket สำหรับการสืบสวนบน issue tracker แล้วไล่แก้ทีละใบ — ผลลัพธ์คือ **การตัดสินใจ ไม่ใช่ deliverable** — จนหมอกถูกผลักออกไปและเส้นทางชัดเจน จากนั้นมันจะมารวมกับ main flow ที่ **`/to-spec`** (หรือถ้างานกลายเป็นเล็กพอ ก็ตรงไป **`/implement`** เลย) ขณะที่ **`/grill-with-docs`** ลับไอเดียที่ถือไว้ได้ใน session เดียว wayfinder มีไว้สำหรับไอเดียที่ถือไม่ไหว
 
-## Codebase health
+## สุขภาพของ codebase
 
-Not feature work — upkeep.
+ไม่ใช่งาน feature — เป็นงานบำรุงรักษา
 
-- **`/improve-codebase-architecture`** — run whenever you have a spare moment to keep the codebase good for agents to operate in. It surfaces **deepening opportunities**; picking one _generates an idea_ you can take into the main flow at `/grill-with-docs`. It's the survey that finds the candidates; **`/codebase-design`** (below) is the bench you design the chosen one on.
+- **`/improve-codebase-architecture`** — รันเมื่อไหร่ก็ได้ที่มีเวลาว่าง เพื่อรักษา codebase ให้เป็นที่ที่ agent ทำงานได้ดี มันจะขุด **โอกาสทำให้ module ลึกขึ้น** ออกมา การเลือกสักอัน _ก่อให้เกิดไอเดีย_ ที่พาเข้า main flow ที่ `/grill-with-docs` ได้ มันคือการสำรวจที่หาตัวเลือกมาให้ ส่วน **`/codebase-design`** (ด้านล่าง) คือโต๊ะทำงานที่ใช้ออกแบบตัวที่เลือกแล้ว
 
-## Vocabulary underneath
+## Vocabulary ที่อยู่ข้างใต้
 
-Two model-invoked references that run *beneath* the other skills — each the single source of truth for its vocabulary. Reach for them directly when the **words**, not the process, are the problem; or let the skills above pull them in.
+reference แบบ model-invoked สองตัวที่ทำงานอยู่ *ใต้* skill ตัวอื่น — แต่ละตัวเป็น single source of truth ของ vocabulary ของตัวเอง หยิบมาใช้ตรง ๆ เมื่อปัญหาอยู่ที่ **คำศัพท์** ไม่ใช่กระบวนการ หรือจะปล่อยให้ skill ข้างบนดึงมันเข้ามาเองก็ได้
 
-- **`/domain-modeling`** — sharpen the project's *domain* language: challenge a fuzzy term, resolve an overloaded word ("account" doing three jobs), record a hard-to-reverse decision as an ADR. It's the active discipline `/grill-with-docs` drives to keep `CONTEXT.md` a clean glossary.
-- **`/codebase-design`** — the deep-module vocabulary (module, interface, depth, seam, adapter, leverage, locality) for designing a module's *shape*: a lot of behaviour behind a small interface at a clean seam. `/tdd` and `/improve-codebase-architecture` both speak it.
+- **`/domain-modeling`** — ลับภาษา *domain* ของโปรเจกต์ให้คม: ท้าทายคำที่คลุมเครือ, คลี่คำที่แบกหลายความหมาย ("account" ที่ทำสามหน้าที่พร้อมกัน), บันทึกการตัดสินใจที่ย้อนกลับยากเป็น ADR มันคือวินัยเชิงรุกที่ `/grill-with-docs` ใช้ขับเคลื่อนเพื่อรักษา `CONTEXT.md` ให้เป็น glossary ที่สะอาด
+- **`/codebase-design`** — vocabulary ของ deep module (module, interface, depth, seam, adapter, leverage, locality) สำหรับออกแบบ *รูปทรง* ของ module: พฤติกรรมเยอะ ๆ อยู่หลัง interface เล็ก ๆ ที่ seam สะอาด ๆ ทั้ง `/tdd` และ `/improve-codebase-architecture` พูดภาษานี้
 
-## Crossing sessions
+## ข้าม session
 
-- **`/handoff`** — when a thread is full or you need to branch off (e.g. into a `/prototype` session), this compacts the conversation into a markdown file. You don't continue in place — you **open a new session and reference that file** to carry the context across. It's the bridge between context windows, in either direction. Use it when you want a **fresh session** but need the **current conversation preserved**.
-- **`/compact`** (built-in) — stay in the **same conversation**, letting the earlier turns be summarized. Use it at **intentional breaks between phases**, when you don't mind losing the verbatim history. Don't compact mid-phase — the agent can lose its way. `/handoff` forks; `/compact` continues.
+- **`/handoff`** — เมื่อ thread เต็มหรือคุณต้องแตกสาขาออกไป (เช่น ไปเปิด session `/prototype`) ตัวนี้จะบีบอัดบทสนทนาเป็นไฟล์ markdown คุณไม่ได้ทำงานต่อที่เดิม — คุณ**เปิด session ใหม่แล้วอ้างอิงไฟล์นั้น**เพื่อพา context ข้ามไป มันคือสะพานระหว่าง context window ใช้ได้ทั้งสองทิศทาง ใช้เมื่ออยากได้ **session ใหม่สด ๆ** แต่ต้องเก็บ**บทสนทนาปัจจุบัน**เอาไว้
+- **`/compact`** (built-in) — อยู่ใน**บทสนทนาเดิม** โดยยอมให้ turn ก่อนหน้าถูกสรุปย่อ ใช้ตอน**หยุดพักอย่างตั้งใจระหว่างเฟส** เมื่อไม่ซีเรียสว่าประวัติแบบคำต่อคำจะหายไป อย่า compact กลางเฟส — agent อาจหลงทางได้ `/handoff` คือแยกสาย ส่วน `/compact` คือไปต่อ
 
 ## Standalone
 
-Off the main flow entirely.
+อยู่นอก main flow โดยสิ้นเชิง
 
-- **`/grill-me`** — the same relentless interview as `/grill-with-docs`, but for when you have **no codebase**. Stateless: it saves nothing locally, builds no `CONTEXT.md`. Reach for it to sharpen any plan or design that doesn't live in a repo.
-- **`/prototype`** — a small, throwaway program that answers one design question: does this state model feel right, or what should this UI look like. Throwaway from day one — keep the answer, delete the code. It's the detour in step 2 of the main flow, but reach for it any time a design question is hard to settle on paper.
-- **`/research`** — delegate reading legwork to a **background agent**: it investigates a question against **primary sources**, then leaves a cited Markdown file in the repo. Keep working while it reads. The file it produces is something to take *into* the main flow at `/grill-with-docs` — research feeds the thinking, it doesn't replace it.
-- **`/teach`** — learn a concept over multiple sessions, using the current directory as a stateful workspace.
-- **`/writing-great-skills`** — reference for writing and editing skills well.
+- **`/grill-me`** — การสัมภาษณ์แบบไม่ปรานีเหมือน `/grill-with-docs` แต่สำหรับตอนที่**ไม่มี codebase** เป็นแบบ stateless: ไม่บันทึกอะไรลง local ไม่สร้าง `CONTEXT.md` หยิบมาใช้ลับแผนหรือ design อะไรก็ได้ที่ไม่ได้อยู่ใน repo
+- **`/prototype`** — โปรแกรมเล็ก ๆ แบบใช้แล้วทิ้งที่ตอบคำถาม design หนึ่งข้อ: state model แบบนี้รู้สึกใช่ไหม หรือ UI นี้ควรหน้าตาเป็นยังไง ทิ้งตั้งแต่วันแรก — เก็บคำตอบไว้ ลบ code ทิ้ง มันคือทางแวะในขั้น 2 ของ main flow แต่หยิบมาใช้ได้ทุกครั้งที่คำถาม design ตัดสินบนกระดาษได้ยาก
+- **`/research`** — มอบงานอ่านให้ **background agent**: มันจะสืบคำถามกับ **primary sources** แล้วทิ้งไฟล์ Markdown พร้อม citation ไว้ใน repo คุณทำงานต่อได้ระหว่างที่มันอ่าน ไฟล์ที่ได้คือของที่เอา*เข้า* main flow ที่ `/grill-with-docs` — research ป้อนความคิด ไม่ได้มาแทนความคิด
+- **`/teach`** — เรียนรู้ concept ข้ามหลาย session โดยใช้ directory ปัจจุบันเป็น workspace แบบ stateful
+- **`/writing-great-skills`** — reference สำหรับเขียนและแก้ skill ให้ดี
 
-## Precondition
+## เงื่อนไขตั้งต้น
 
-**`/setup-matt-pocock-skills`** — run before your first engineering flow to configure the issue tracker, triage labels, and doc layout the other skills assume. Custom issue trackers also work.
+**`/setup-matt-pocock-skills`** — รันก่อนเริ่ม engineering flow ครั้งแรก เพื่อตั้งค่า issue tracker, label สำหรับ triage และ layout ของเอกสารที่ skill ตัวอื่นคาดหวังไว้ ใช้ issue tracker แบบ custom ก็ได้เช่นกัน

@@ -1,15 +1,15 @@
 ---
 name: edit-article
-description: Edit and improve articles by restructuring sections, improving clarity, and tightening prose. Use when user wants to edit, revise, or improve an article draft.
+description: แก้ไขและปรับปรุงบทความด้วยการจัดโครงสร้าง section ใหม่ เพิ่มความชัดเจน และเขียน prose ให้กระชับ ใช้เมื่อ user ต้องการ edit, revise หรือปรับปรุง draft ของบทความ
 disable-model-invocation: true
 ---
 
-1. First, divide the article into sections based on its headings. Think about the main points you want to make during those sections.
+1. ขั้นแรก แบ่งบทความออกเป็น section ตาม heading ของมัน คิดถึงประเด็นหลักที่อยากสื่อในแต่ละ section เหล่านั้น
 
-Consider that information is a directed acyclic graph, and that pieces of information can depend on other pieces of information. Make sure that the order of the sections and their contents respects these dependencies.
+มองว่าข้อมูลคือ directed acyclic graph (กราฟมีทิศทางที่ไม่มีวงวน) และข้อมูลแต่ละชิ้นอาจพึ่งพาข้อมูลชิ้นอื่นได้ ตรวจให้แน่ใจว่าลำดับของ section และเนื้อหาข้างในเคารพ dependency เหล่านี้
 
-Confirm the sections with the user.
+ยืนยัน section กับ user ก่อน
 
-2. For each section:
+2. สำหรับแต่ละ section:
 
-2a. Rewrite the section to improve clarity, coherence, and flow. Use maximum 240 characters per paragraph.
+2a. เขียน section นั้นใหม่เพื่อเพิ่มความชัดเจน ความเชื่อมโยง และความลื่นไหล ใช้ได้สูงสุด 240 ตัวอักษรต่อหนึ่งย่อหน้า

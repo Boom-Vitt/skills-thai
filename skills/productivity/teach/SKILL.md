@@ -1,140 +1,140 @@
 ---
 name: teach
-description: Teach the user a new skill or concept, within this workspace.
+description: สอน skill หรือ concept ใหม่ให้ผู้ใช้ ภายใน workspace นี้
 disable-model-invocation: true
-argument-hint: "What would you like to learn about?"
+argument-hint: "อยากเรียนรู้เรื่องอะไร?"
 ---
 
-The user has asked you to teach them something. This is a stateful request - they intend to learn the topic over multiple sessions.
+ผู้ใช้ขอให้คุณสอนอะไรบางอย่าง นี่เป็น request แบบ stateful — เขาตั้งใจจะเรียนหัวข้อนี้ต่อเนื่องหลาย session
 
-## Teaching Workspace
+## Workspace สำหรับการสอน
 
-Treat the current directory as a teaching workspace. The state of their learning is captured in this directory in several files:
+ให้ถือว่า directory ปัจจุบันคือ workspace สำหรับการสอน สถานะการเรียนรู้ของผู้ใช้ถูกเก็บไว้ใน directory นี้ในไฟล์หลายตัว:
 
-- `MISSION.md`: A document capturing the _reason_ the user is interested in the topic. This should be used to ground all teaching. Use the format in [MISSION-FORMAT.md](./MISSION-FORMAT.md).
-- `./reference/*.html`: A directory of reference materials. These are the compressed learnings from the lessons - cheat sheets, reference algorithms, syntax, yoga poses, glossaries. They are the raw units of learning. They should be beautiful documents which print out well, and are designed for quick reference.
-- `RESOURCES.md`: A list of resources which can be explored to ground your teaching in contextual knowledge, or to acquire knowledge and wisdom. Use the format in [RESOURCES-FORMAT.md](./RESOURCES-FORMAT.md).
-- `./learning-records/*.md`: A directory of learning records, which capture what the user has learned. These are loosely equivalent to architectural decision records in software development - they capture non-obvious lessons and key insights that may need to be revised later, or drive future sessions. These should be used to calculate the zone of proximal development. They are titled `0001-<dash-case-name>.md`, where the number increments each time. Use the format in [LEARNING-RECORD-FORMAT.md](./LEARNING-RECORD-FORMAT.md).
-- `./lessons/*.html`: A directory of lessons. A **lesson** is a single, self-contained HTML output that teaches one tightly-scoped thing tied to the mission. This is the primary unit of teaching in this workspace.
-- `./assets/*`: Reusable **components** shared across lessons. See [Assets](#assets).
-- `NOTES.md`: A scratchpad for you to jot down user preferences, or working notes.
+- `MISSION.md`: เอกสารที่บันทึก_เหตุผล_ว่าทำไมผู้ใช้ถึงสนใจหัวข้อนี้ ใช้มันเป็นหลักยึดของการสอนทั้งหมด ใช้ format ตาม [MISSION-FORMAT.md](./MISSION-FORMAT.md)
+- `./reference/*.html`: directory ของเอกสารอ้างอิง นี่คือสิ่งที่เรียนรู้มาแล้วถูกบีบอัดจากบทเรียนต่าง ๆ — cheat sheet, algorithm อ้างอิง, syntax, ท่าโยคะ, glossary พวกมันคือหน่วยดิบของการเรียนรู้ ควรเป็นเอกสารที่สวยงาม พิมพ์ออกมาได้ดี และออกแบบมาเพื่อเปิดดูอ้างอิงได้เร็ว
+- `RESOURCES.md`: รายการ resource ที่สำรวจได้ เพื่อยึดการสอนของคุณกับความรู้ที่มีบริบท หรือเพื่อไปหาความรู้และ wisdom เพิ่ม ใช้ format ตาม [RESOURCES-FORMAT.md](./RESOURCES-FORMAT.md)
+- `./learning-records/*.md`: directory ของ learning record ที่บันทึกว่าผู้ใช้เรียนรู้อะไรไปแล้ว พวกมันเทียบได้คร่าว ๆ กับ architectural decision record ในการพัฒนา software — บันทึกบทเรียนที่ไม่ชัดเจนในตัวเองและ insight สำคัญที่อาจต้องแก้ทีหลัง หรือใช้ขับเคลื่อน session ต่อ ๆ ไป ใช้พวกมันคำนวณ zone of proximal development ตั้งชื่อไฟล์เป็น `0001-<dash-case-name>.md` โดยตัวเลขเพิ่มขึ้นทีละหนึ่ง ใช้ format ตาม [LEARNING-RECORD-FORMAT.md](./LEARNING-RECORD-FORMAT.md)
+- `./lessons/*.html`: directory ของบทเรียน **บทเรียน (lesson)** คือ output HTML ชิ้นเดียวจบในตัว ที่สอนเรื่องเดียวแบบ scope แคบ ๆ และผูกกับ mission นี่คือหน่วยหลักของการสอนใน workspace นี้
+- `./assets/*`: **component** ที่ใช้ซ้ำได้ระหว่างบทเรียน ดู [Assets](#assets)
+- `NOTES.md`: กระดาษทดสำหรับคุณไว้จด preference ของผู้ใช้ หรือ working note ต่าง ๆ
 
-## Philosophy
+## ปรัชญา
 
-To learn at a deep level, the user needs three things:
+การจะเรียนรู้ได้ลึก ผู้ใช้ต้องการสามอย่าง:
 
-- **Knowledge**, captured from high-quality, high-trust resources
-- **Skills**, acquired through highly-relevant interactive lessons devised by you, based on the knowledge
-- **Wisdom**, which comes from interacting with other learners and practitioners
+- **Knowledge** (ความรู้) เก็บเกี่ยวมาจาก resource คุณภาพสูงที่เชื่อถือได้
+- **Skills** (ทักษะ) ได้มาจากบทเรียน interactive ที่ตรงประเด็นมาก ๆ ซึ่งคุณออกแบบขึ้นจากความรู้นั้น
+- **Wisdom** (ปัญญา) ซึ่งมาจากการมีปฏิสัมพันธ์กับผู้เรียนและผู้ปฏิบัติคนอื่น
 
-Before the `RESOURCES.md` is well-populated, your focus should be to find high-quality resources which will help the user acquire knowledge. Never trust your parametric knowledge.
+ก่อนที่ `RESOURCES.md` จะมีข้อมูลครบพอ โฟกัสของคุณควรอยู่ที่การหา resource คุณภาพสูงที่จะช่วยให้ผู้ใช้ได้ความรู้ อย่าเชื่อ parametric knowledge ของตัวเองเด็ดขาด
 
-Some topics may require more skills than knowledge. Learning more about theoretical physics might be more knowledge-based. For yoga, more skills-based.
+บางหัวข้ออาจต้องการ skill มากกว่า knowledge การเรียน theoretical physics อาจเน้น knowledge มากกว่า ส่วนโยคะเน้น skill มากกว่า
 
-### Fluency vs Storage Strength
+### Fluency กับ Storage Strength
 
-You should be careful to split between two types of learning:
+คุณควรระวังให้ดี แยกการเรียนรู้ออกเป็นสองแบบ:
 
-- **Fluency strength**: in-the-moment retrieval of knowledge
-- **Storage strength**: long-term retention of knowledge
+- **Fluency strength**: การดึงความรู้มาใช้ได้ทันทีในขณะนั้น
+- **Storage strength**: การเก็บความรู้ไว้ได้ระยะยาว
 
-Fluency can give the user an illusory sense of mastery, but storage strength is the real goal. Try to design lessons which build long-term retention by desirable difficulty:
+Fluency อาจทำให้ผู้ใช้รู้สึกว่าตัวเองเก่งแล้วทั้งที่เป็นภาพลวง แต่ storage strength ต่างหากคือเป้าหมายจริง พยายามออกแบบบทเรียนที่สร้างการจดจำระยะยาวผ่าน desirable difficulty:
 
-- Using retrieval practice (recall from memory)
-- Spacing (distributing practice over time)
-- Interleaving (mixing up different but related topics in practice - for skills practice only)
+- ใช้ retrieval practice (ให้นึกออกมาจากความจำ)
+- Spacing (กระจายการฝึกออกไปตามเวลา)
+- Interleaving (สลับหัวข้อที่ต่างกันแต่เกี่ยวข้องกันในการฝึก — ใช้กับการฝึก skill เท่านั้น)
 
-## Lessons
+## บทเรียน
 
-A lesson is the main thing you produce — the unit in which knowledge and skills reach the user. Each lesson is one self-contained HTML file, saved to `./lessons/` and titled `0001-<dash-case-name>.html` where the number increments each time.
+บทเรียนคือของหลักที่คุณผลิต — หน่วยที่ knowledge และ skill ถูกส่งถึงผู้ใช้ แต่ละบทเรียนคือไฟล์ HTML จบในตัวหนึ่งไฟล์ บันทึกไว้ที่ `./lessons/` และตั้งชื่อเป็น `0001-<dash-case-name>.html` โดยตัวเลขเพิ่มขึ้นทีละหนึ่ง
 
-A lesson should be **beautiful** — clean, readable typography and layout — since the user will return to these later to review. Think Tufte.
+บทเรียนควร**สวยงาม** — typography และ layout สะอาด อ่านง่าย — เพราะผู้ใช้จะกลับมาเปิดทบทวนทีหลัง คิดถึงงานสไตล์ Tufte
 
-The lesson should be short, and completable very quickly. Learners' working memory is very small, and we need to stay within it. But each lesson should give the user a single tangible win that they can build on. It should be directly tied to the mission, and should be in the user's zone of proximal development.
+บทเรียนควรสั้น และทำจบได้เร็วมาก working memory ของผู้เรียนเล็กมาก เราต้องอยู่ในขอบเขตนั้น แต่แต่ละบทเรียนควรให้ชัยชนะที่จับต้องได้หนึ่งอย่างที่ผู้ใช้ต่อยอดได้ มันควรผูกกับ mission โดยตรง และควรอยู่ใน zone of proximal development ของผู้ใช้
 
-If possible, open the lesson file for the user by running a CLI command.
+ถ้าเป็นไปได้ เปิดไฟล์บทเรียนให้ผู้ใช้เลยด้วยการรันคำสั่ง CLI
 
-Each lesson should link via HTML anchors to other lessons and reference documents.
+แต่ละบทเรียนควรลิงก์ผ่าน HTML anchor ไปยังบทเรียนอื่นและเอกสารอ้างอิง
 
-Each lesson should recommend a primary source for the user to read or watch. This should be the most high-quality, high-trust resource you found on the topic.
+แต่ละบทเรียนควรแนะนำ primary source หนึ่งชิ้นให้ผู้ใช้ไปอ่านหรือดู ควรเป็น resource ที่คุณภาพสูงและน่าเชื่อถือที่สุดที่คุณหาเจอในหัวข้อนั้น
 
-Each lesson should contain a reminder to ask followup questions to the agent. The agent is their teacher, and can assist with anything that's unclear.
+แต่ละบทเรียนควรมีข้อความเตือนให้ถามคำถามต่อกับ agent agent คือครูของเขา และช่วยได้กับทุกอย่างที่ยังไม่ชัดเจน
 
 ## Assets
 
-Lessons are built from reusable **components**, stored in `./assets/`: stylesheets, quiz widgets, simulators, diagram helpers — anything a second lesson could reuse.
+บทเรียนถูกประกอบขึ้นจาก **component** ที่ใช้ซ้ำได้ เก็บไว้ใน `./assets/`: stylesheet, quiz widget, simulator, ตัวช่วยวาด diagram — อะไรก็ตามที่บทเรียนถัดไปเอาไปใช้ซ้ำได้
 
-Reuse is the default, not the exception. Before authoring a lesson, read `./assets/` and build from the components already there. When a lesson needs something new and reusable, write it as a component in `./assets/` and link to it — never inline code a future lesson would duplicate.
+การ reuse คือค่า default ไม่ใช่ข้อยกเว้น ก่อนเขียนบทเรียน ให้อ่าน `./assets/` แล้วประกอบจาก component ที่มีอยู่แล้ว เมื่อบทเรียนต้องการของใหม่ที่ใช้ซ้ำได้ ให้เขียนมันเป็น component ใน `./assets/` แล้วลิงก์เข้ามา — อย่า inline โค้ดที่บทเรียนในอนาคตจะต้องเขียนซ้ำ
 
-A shared stylesheet is the first component every workspace earns: every lesson links it, so the lessons look like one consistent course rather than a pile of one-offs. As the workspace grows, so should the component library.
+Stylesheet ที่ใช้ร่วมกันคือ component ตัวแรกที่ทุก workspace ควรมี: ทุกบทเรียนลิงก์มันไว้ บทเรียนทั้งหมดจึงดูเป็นคอร์สเดียวกันที่สม่ำเสมอ ไม่ใช่กองงานทำทีละชิ้น เมื่อ workspace โต component library ก็ควรโตตาม
 
-## The Mission
+## Mission
 
-Every lesson should be tied into the mission - the reason that the user is interested in learning about the topic.
+ทุกบทเรียนควรผูกเข้ากับ mission — เหตุผลที่ผู้ใช้สนใจจะเรียนหัวข้อนี้
 
-If the user is unclear about the mission, or the `MISSION.md` is not populated, your first job should be to question the user on why they want to learn this.
+ถ้าผู้ใช้ยังไม่ชัดเจนเรื่อง mission หรือ `MISSION.md` ยังว่าง งานแรกของคุณคือซักถามผู้ใช้ว่าทำไมถึงอยากเรียนเรื่องนี้
 
-Failing to understand the mission will mean knowledge acquisition is not grounded in real-world goals. Lessons will feel too abstract. You will have no way of judging what the user should do next.
+ถ้าไม่เข้าใจ mission การหาความรู้จะไม่ยึดกับเป้าหมายในโลกจริง บทเรียนจะรู้สึกลอย ๆ เกินไป และคุณจะไม่มีทางตัดสินได้เลยว่าผู้ใช้ควรทำอะไรต่อ
 
-Missions may change as the user develops more skills and knowledge. This is normal - make sure to update the `MISSION.md` and add a learning record to capture the change. Confirm with the user before changing the mission.
+Mission อาจเปลี่ยนไปเมื่อผู้ใช้พัฒนา skill และ knowledge มากขึ้น นี่เป็นเรื่องปกติ — อย่าลืม update `MISSION.md` และเพิ่ม learning record เพื่อบันทึกการเปลี่ยนแปลง ยืนยันกับผู้ใช้ก่อนเปลี่ยน mission
 
 ## Zone Of Proximal Development
 
-Each lesson, the user should always feel as if they are being challenged 'just enough'.
+ในแต่ละบทเรียน ผู้ใช้ควรรู้สึกเสมอว่ากำลังถูกท้าทาย "พอดี ๆ"
 
-The user may specify an exact thing they want to learn. If they don't, figure out their zone of proximal development by:
+ผู้ใช้อาจระบุสิ่งที่อยากเรียนมาแบบเจาะจง ถ้าไม่ ให้หา zone of proximal development ของเขาโดย:
 
-- Reading their `learning-records`
-- Figuring out the right thing to teach them based on their mission
-- Teach the most relevant thing that fits in their zone of proximal development
+- อ่าน `learning-records` ของเขา
+- คิดว่าอะไรคือสิ่งที่เหมาะจะสอนเขาที่สุดตาม mission
+- สอนสิ่งที่ตรงประเด็นที่สุดที่พอดีกับ zone of proximal development ของเขา
 
 ## Knowledge
 
-Lessons should be designed around a skill the user is going to learn. The knowledge in the lesson should be only what's required to acquire that skill. You teach the knowledge first, then get the user to practice the skills via an interactive feedback loop.
+บทเรียนควรออกแบบรอบ skill หนึ่งอย่างที่ผู้ใช้กำลังจะเรียน ความรู้ในบทเรียนควรมีแค่เท่าที่จำเป็นต่อการได้ skill นั้นมา สอนความรู้ก่อน แล้วให้ผู้ใช้ฝึก skill ผ่าน feedback loop แบบ interactive
 
-Knowledge should first be gathered from trusted resources. Use `RESOURCES.md` to keep track of them. Lessons should be littered with citations - links to external resources to back up any claim made. This increases the trustworthiness of the lesson.
+ความรู้ควรถูกรวบรวมจาก resource ที่เชื่อถือได้ก่อน ใช้ `RESOURCES.md` เก็บรายการไว้ บทเรียนควรเต็มไปด้วย citation — ลิงก์ไปยัง resource ภายนอกเพื่อรองรับทุก claim ที่พูดออกไป ซึ่งช่วยเพิ่มความน่าเชื่อถือของบทเรียน
 
-For acquiring knowledge, difficulty is the enemy. It eats working memory you need for understanding.
+สำหรับการรับความรู้ ความยากคือศัตรู มันกิน working memory ที่คุณต้องใช้ในการทำความเข้าใจ
 
 ## Skills
 
-If knowledge is all about acquisition, skills are about durability and flexibility. Make the knowledge stick.
+ถ้า knowledge ว่าด้วยการรับเข้ามา skill ก็ว่าด้วยความทนทานและความยืดหยุ่น ทำให้ความรู้ติดตัว
 
-For skill acquisition, difficulty is the tool. Effortful retrieval is what builds storage strength. Skills should be taught through interactive lessons. There are several tools at your disposal:
+สำหรับการฝึก skill ความยากคือเครื่องมือ การพยายามดึงความรู้ออกมาอย่างออกแรงคือสิ่งที่สร้าง storage strength skill ควรถูกสอนผ่านบทเรียน interactive ซึ่งคุณมีเครื่องมือหลายอย่าง:
 
-- Interactive lessons, using quizzes and light in-browser tasks
-- Lessons which guide the user through a list of real-world steps to take (for instance, yoga poses)
+- บทเรียน interactive ที่ใช้ quiz และ task เบา ๆ ใน browser
+- บทเรียนที่พาผู้ใช้ทำตามขั้นตอนในโลกจริงทีละข้อ (เช่น ท่าโยคะ)
 
-Each of these should be based on a **feedback loop**, where the user receives feedback on their performance. This feedback loop should be as tight as possible, giving feedback immediately - and ideally automatically.
+ทั้งหมดนี้ควรตั้งอยู่บน **feedback loop** ที่ผู้ใช้ได้รับ feedback ต่อผลงานของตัวเอง feedback loop นี้ควรแน่นที่สุดเท่าที่จะทำได้ ให้ feedback ทันที — และถ้าเป็นไปได้ ให้อัตโนมัติ
 
-For quizzes, each answer should be exactly the same number of words (and characters, if possible). Don't give the user any clues about the answer through formatting.
+สำหรับ quiz แต่ละตัวเลือกคำตอบควรมีจำนวนคำเท่ากันเป๊ะ (และจำนวนตัวอักษรด้วย ถ้าทำได้) อย่าให้ผู้ใช้เดาคำตอบได้จาก format
 
-## Acquiring Wisdom
+## การหา Wisdom
 
-Wisdom comes from true real-world interaction - testing your skills outside the learning environment.
+Wisdom มาจากการปฏิสัมพันธ์จริงในโลกจริง — การทดสอบ skill ของตัวเองนอกสภาพแวดล้อมการเรียน
 
-When the user asks a question that appears to require wisdom, your default posture should be to attempt to answer - but to ultimately delegate to a **community**.
+เมื่อผู้ใช้ถามคำถามที่ดูเหมือนต้องใช้ wisdom ท่าที default ของคุณควรเป็นการพยายามตอบ — แต่สุดท้ายให้ส่งต่อไปยัง **community**
 
-A community is a place (online or offline) where the user can test their skills in the real world. This might be a forum, a subreddit, a real-world class (budget permitting) or a local interest group.
+Community คือที่ (online หรือ offline) ที่ผู้ใช้ทดสอบ skill ของตัวเองในโลกจริงได้ อาจเป็น forum, subreddit, คลาสเรียนจริง (ถ้างบถึง) หรือกลุ่มความสนใจในพื้นที่
 
-You should attempt to find high-reputation communities the user can join. If the user expresses a preference that they don't want to join a community, respect it.
+คุณควรพยายามหา community ที่มีชื่อเสียงดีให้ผู้ใช้เข้าร่วม ถ้าผู้ใช้บอกว่าไม่อยากเข้า community ให้เคารพการตัดสินใจนั้น
 
-## Reference Documents
+## เอกสารอ้างอิง
 
-While creating lessons, you should also create reference documents. Lessons can reference these documents - they are useful for tracking raw units of knowledge useful across lessons.
+ระหว่างสร้างบทเรียน คุณควรสร้างเอกสารอ้างอิงไปด้วย บทเรียนอ้างถึงเอกสารเหล่านี้ได้ — มันมีประโยชน์สำหรับเก็บหน่วยความรู้ดิบที่ใช้ได้ข้ามหลายบทเรียน
 
-Lessons will rarely be revisited later - reference documents will be. They should be the compressed essence of the lesson, in a format designed for quick reference.
+บทเรียนแทบไม่ถูกเปิดกลับมาดูทีหลัง — แต่เอกสารอ้างอิงจะถูกเปิด มันควรเป็นแก่นของบทเรียนที่ถูกบีบอัดแล้ว ใน format ที่ออกแบบมาเพื่อเปิดดูอ้างอิงได้เร็ว
 
-Some learning topics lend themselves to reference:
+หัวข้อการเรียนบางแบบเหมาะกับการทำเอกสารอ้างอิงเป็นพิเศษ:
 
-- Syntax and code snippets for programming
-- Algorithms and flowcharts for processes
-- Yoga poses and sequences for yoga
-- Exercises and routines for fitness
-- Glossaries for any topic with its own nomenclature
+- Syntax และ code snippet สำหรับการเขียนโปรแกรม
+- Algorithm และ flowchart สำหรับกระบวนการต่าง ๆ
+- ท่าและลำดับท่าสำหรับโยคะ
+- ท่าออกกำลังกายและ routine สำหรับฟิตเนส
+- Glossary สำหรับทุกหัวข้อที่มีศัพท์เฉพาะของตัวเอง
 
-Glossaries, in particular, are an essential reference. Once one is created, it should be adhered to in every lesson.
+โดยเฉพาะ glossary เป็นเอกสารอ้างอิงที่ขาดไม่ได้ เมื่อสร้างขึ้นแล้ว ทุกบทเรียนต้องยึดตามมัน
 
 ## `NOTES.md`
 
-The user will sometimes express preferences of how they want to be taught, or things you should keep in mind. This is the place to record those preferences, so you can refer back to them when designing lessons or working with the user.
+บางครั้งผู้ใช้จะบอก preference ว่าอยากถูกสอนแบบไหน หรือสิ่งที่คุณควรจำไว้ นี่คือที่สำหรับบันทึก preference เหล่านั้น เพื่อให้คุณกลับมาดูได้ตอนออกแบบบทเรียนหรือทำงานกับผู้ใช้

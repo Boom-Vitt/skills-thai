@@ -1,15 +1,15 @@
 ---
 name: implement
-description: "Implement a piece of work based on a spec or set of tickets."
+description: "ลงมือ implement งานชิ้นหนึ่งตาม spec หรือชุดของ ticket"
 disable-model-invocation: true
 ---
 
-Implement the work described by the user in the spec or tickets.
+implement งานที่ user อธิบายไว้ใน spec หรือ ticket
 
-Use /tdd where possible, at pre-agreed seams.
+ใช้ /tdd ทุกจุดที่เป็นไปได้ ที่ seam (จุดต่อที่เราใช้ test พฤติกรรม) ซึ่งตกลงกันไว้ล่วงหน้า
 
-Run typechecking regularly, single test files regularly, and the full test suite once at the end.
+รัน typecheck เป็นระยะ รัน test ทีละไฟล์เป็นระยะ และรัน test suite เต็มชุดหนึ่งครั้งตอนท้าย
 
-Once done, use /code-review to review the work.
+พอเสร็จแล้ว ใช้ /code-review เพื่อ review งานที่ทำ
 
-Commit your work to the current branch.
+commit งานลง branch ปัจจุบัน

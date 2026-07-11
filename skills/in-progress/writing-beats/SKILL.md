@@ -1,22 +1,22 @@
 ---
 name: writing-beats
-description: Writing, exploit — assemble raw material into a journey of beats, grounding each term before a beat leans on it.
+description: งานเขียน โหมด exploit — ประกอบวัตถุดิบดิบให้เป็น journey ของ beat โดย ground แต่ละ term ก่อนที่ beat จะพิงมัน
 disable-model-invocation: true
 ---
 
 <what-to-do>
 
-The user has passed (or will pass) a markdown file of raw material. This is **exploit**: the exploring is done, the pile is fixed — commit to a path through it and mine the pile to fill each beat.
+ผู้ใช้ได้ส่ง (หรือกำลังจะส่ง) ไฟล์ markdown ที่เป็นวัตถุดิบดิบมาให้ นี่คือโหมด **exploit**: ช่วงสำรวจจบแล้ว กองวัตถุดิบนิ่งแล้ว — ตัดสินใจเลือกเส้นทางผ่านมัน แล้วขุดจากกองนั้นมาเติมแต่ละ beat
 
-If the user did not say where to save the article, ask once and remember the path.
+ถ้าผู้ใช้ไม่ได้บอกว่าจะเซฟบทความไว้ที่ไหน ถามครั้งเดียวแล้วจำ path นั้นไว้
 
-Then run a beat-by-beat journey, choose-your-own-adventure style:
+จากนั้นเดิน journey ทีละ beat สไตล์ choose-your-own-adventure:
 
-1. **Establish the prerequisites.** Before any beats, settle with the user what the audience already knows walking in — the concepts that are **grounded** from the start. Everything else must be grounded by a beat before a later beat can use it. See [Grounding](#grounding).
-2. Write 2–3 candidate **starting beats**, drawn from the raw material. Each is a different entry point into the article. Each may only lean on grounded concepts; note what new concepts each one grounds. Show the user the beats before writing to the article file. The user picks one. Preview what beats that pick unlocks — as if the user is seeing a little way down the path.
-3. Once the user picks a starting beat, write **only that beat** to the article file. A beat may be one sentence or several paragraphs — whatever that beat naturally is. Stop there.
-4. Re-read the article file from disk. Then offer 2–3 candidate **next beats** — different directions the journey could pivot to from where the article now stands. Each must be reachable from the current grounded set; note what each one grounds.
-5. Loop steps 3–5 until the article reaches a natural end.
+1. **ตั้ง prerequisite ก่อน** ก่อนเริ่ม beat ใด ๆ ตกลงกับผู้ใช้ว่าคนอ่านรู้อะไรมาก่อนแล้วบ้าง — นั่นคือ concept ที่ **grounded** ตั้งแต่ต้น ที่เหลือทั้งหมดต้องถูก ground โดย beat ใด beat หนึ่งก่อนที่ beat ถัด ๆ ไปจะใช้มันได้ ดู [Grounding](#grounding)
+2. เขียน **starting beat** ตัวเลือก 2–3 อัน ดึงมาจากวัตถุดิบดิบ แต่ละอันคือทางเข้าบทความคนละแบบ แต่ละอันพิงได้เฉพาะ concept ที่ grounded แล้ว และให้ระบุว่าแต่ละอัน ground concept ใหม่อะไรบ้าง โชว์ beat ให้ผู้ใช้ดูก่อนเขียนลงไฟล์บทความ ผู้ใช้เลือกหนึ่งอัน แล้ว preview ว่าตัวเลือกนั้นปลดล็อก beat อะไรต่อ — เหมือนให้ผู้ใช้มองเห็นเส้นทางข้างหน้านิดหน่อย
+3. พอผู้ใช้เลือก starting beat แล้ว เขียน **เฉพาะ beat นั้น** ลงไฟล์บทความ beat หนึ่งอาจยาวแค่ประโยคเดียวหรือหลายย่อหน้า — แล้วแต่ว่า beat นั้นโดยธรรมชาติเป็นแบบไหน แล้วหยุดตรงนั้น
+4. อ่านไฟล์บทความจาก disk ใหม่ จากนั้นเสนอ **next beat** ตัวเลือก 2–3 อัน — ทิศทางต่าง ๆ ที่ journey จะหักเลี้ยวไปได้จากจุดที่บทความยืนอยู่ตอนนี้ แต่ละอันต้องไปถึงได้จากเซ็ต concept ที่ grounded อยู่ปัจจุบัน และระบุว่าแต่ละอัน ground อะไรเพิ่ม
+5. วนขั้น 3–5 จนบทความไปถึงจุดจบตามธรรมชาติ
 
 </what-to-do>
 
@@ -24,44 +24,44 @@ Then run a beat-by-beat journey, choose-your-own-adventure style:
 
 ## Grounding
 
-Every **concept** has to be **grounded** before a beat can lean on it: the audience either walked in knowing it or met it in an earlier beat. A beat that reaches for an ungrounded concept loses the reader — that is the one move the journey can't make. The unit is the concept, not the word for it: a beat can lean on an idea the reader lacks even with no jargon in sight. Where a concept has a name — a **term** — grounding it means landing the idea and the term together.
+ทุก **concept** ต้องถูก **ground** ก่อนที่ beat จะพิงมันได้: คนอ่านต้องรู้มันมาก่อนตั้งแต่ต้น หรือได้เจอมันใน beat ก่อนหน้า beat ที่เอื้อมไปหา concept ที่ยังไม่ grounded จะทำให้คนอ่านหลุด — นั่นคือท่าเดียวที่ journey นี้ห้ามทำ หน่วยที่นับคือ concept ไม่ใช่คำที่ใช้เรียกมัน: beat อาจพิงไอเดียที่คนอ่านไม่มี ทั้งที่ไม่มีศัพท์เทคนิคโผล่มาเลยสักคำ และเมื่อ concept มีชื่อเรียก — มี **term** — การ ground มันหมายถึงส่งทั้งไอเดียและ term ให้ถึงพร้อมกัน
 
-A concept gets grounded one of two ways:
+concept ถูก ground ได้สองทาง:
 
-- **Prerequisite** — grounded before the first beat. The audience brings it. Fixed at the start.
-- **Introduced** — a beat establishes it, and from then on it's grounded for every later beat.
+- **Prerequisite** — grounded ก่อน beat แรก คนอ่านพกมาเอง ตายตัวตั้งแต่เริ่ม
+- **Introduced** — มี beat หนึ่งสถาปนามันขึ้นมา และหลังจากนั้นมันก็ grounded สำหรับทุก beat ที่ตามมา
 
-So each beat does two jobs: it **requires** concepts that are already grounded, and it **grounds** new ones. Keep a running list of what's grounded so far, and update it each time a beat lands.
+ดังนั้น beat แต่ละอันทำสองงาน: มัน **require** concept ที่ grounded แล้ว และมัน **ground** concept ใหม่ เก็บ running list ว่าอะไร grounded แล้วบ้าง และอัปเดตทุกครั้งที่ beat หนึ่งลงจอด
 
-This is what shapes the choose-your-own-adventure. A candidate beat is only reachable if everything it requires is already grounded; picking a beat that grounds concept X unlocks every beat that was waiting on X. When you offer next beats, they must all be reachable from the current grounded set — and say what each one grounds, so the user can see which paths it opens.
+นี่แหละคือสิ่งที่กำหนดรูปทรงของ choose-your-own-adventure: candidate beat จะไปถึงได้ก็ต่อเมื่อทุกอย่างที่มัน require ถูก ground แล้ว การเลือก beat ที่ ground concept X จะปลดล็อกทุก beat ที่รอ X อยู่ เวลาเสนอ next beat ทุกตัวเลือกต้องไปถึงได้จากเซ็ตที่ grounded อยู่ปัจจุบัน — และบอกด้วยว่าแต่ละอัน ground อะไร เพื่อให้ผู้ใช้เห็นว่ามันเปิดเส้นทางไหนบ้าง
 
-The big lever is what you make a prerequisite versus what you ground inside the piece. Demand too much up front and you shut out readers who don't have it; ground too much inside and the early beats drown in definitions. Settle this with the user when you establish prerequisites, and revisit it whenever a tempting beat turns out to require a concept nothing has grounded yet — the fix is either a grounding beat before it, or promoting the concept to a prerequisite.
+คันโยกใหญ่คือการเลือกว่าอะไรเป็น prerequisite กับอะไรที่จะ ground ภายในตัวบทความ เรียกร้องความรู้ล่วงหน้ามากไปก็กันคนอ่านที่ไม่มีมันออกไป ground ในบทความมากไป beat ช่วงต้นก็จมอยู่กับคำนิยาม ตกลงเรื่องนี้กับผู้ใช้ตอนตั้ง prerequisite และหยิบกลับมาคุยใหม่ทุกครั้งที่ beat ที่น่าหยิบดันต้องใช้ concept ที่ยังไม่มีอะไร ground มันเลย — ทางแก้คือใส่ beat สำหรับ ground ก่อนหน้ามัน หรือเลื่อนขั้น concept นั้นเป็น prerequisite
 
-## What is a beat
+## Beat คืออะไร
 
-A beat is one move in the journey. It does one thing — sets a scene, lands a point, asks a question, drops an aside, twists the angle. Then it stops, leaving the reader at a place where the next beat can pivot.
+beat คือหนึ่งการเคลื่อนไหวใน journey มันทำหนึ่งอย่าง — เปิดฉาก ตอกประเด็น ตั้งคำถาม แทรกเกร็ดเล็ก ๆ หรือบิดมุมมอง แล้วมันก็หยุด ทิ้งคนอ่านไว้ที่จุดที่ beat ถัดไปหักเลี้ยวต่อได้
 
-A beat is sized by what it needs:
+ขนาดของ beat ขึ้นกับสิ่งที่มันต้องการ:
 
-- A single sentence if that's all the move is ("And then nothing happened for three weeks.").
-- A short paragraph if the move needs setup.
-- Multiple paragraphs if the beat is a self-contained vignette, argument, or example.
+- ประโยคเดียว ถ้าการเคลื่อนไหวนั้นมีแค่นั้น ("แล้วก็ไม่มีอะไรเกิดขึ้นเลยสามสัปดาห์")
+- ย่อหน้าสั้น ๆ ถ้าการเคลื่อนไหวต้องการการปูพื้น
+- หลายย่อหน้า ถ้า beat นั้นเป็น vignette, ข้อโต้แย้ง หรือตัวอย่างที่จบในตัว
 
-If a "beat" needs five paragraphs and three subheadings, it's not a beat — it's two beats glued together. Split it.
+ถ้า "beat" หนึ่งต้องใช้ห้าย่อหน้ากับสามหัวข้อย่อย มันไม่ใช่ beat — มันคือสอง beat ที่ถูกกาวติดกัน แยกมันซะ
 
-## Pulling from the pile
+## ขุดจากกอง
 
-Pull material from the raw pile to populate each beat. You can paraphrase, split, recombine, or quote. The pile is a quarry.
+ดึงวัตถุดิบจากกองดิบมาเติมแต่ละ beat จะ paraphrase แยกส่วน ประกอบใหม่ หรือ quote ก็ได้ กองวัตถุดิบคือเหมืองหิน
 
-## Ending the journey
+## จบ journey
 
-The article ends when the journey is complete — not when the pile is empty. Most piles will have leftover fragments that don't make it in. That is fine; that is the point of having more raw material than you need.
+บทความจบเมื่อ journey ครบถ้วน — ไม่ใช่เมื่อกองวัตถุดิบหมด กองส่วนใหญ่จะมีเศษที่ไม่ได้ถูกใช้เหลืออยู่ ไม่เป็นไร นั่นแหละคือประเด็นของการมีวัตถุดิบดิบมากกว่าที่ต้องใช้
 
-## Writing rhythm
+## จังหวะการเขียน
 
-- Append one beat at a time. Never write ahead.
-- Re-read the article file from disk before every write. Preserve user edits absolutely.
-- If the user edits a previous beat substantially, let it change what comes next.
-- If the user says "rewrite that beat" or "go back and try a different beat 3", do it — edit in place, leave the rest alone.
+- ต่อท้ายทีละ beat ห้ามเขียนล่วงหน้าเด็ดขาด
+- อ่านไฟล์บทความจาก disk ใหม่ก่อนเขียนทุกครั้ง รักษาการแก้ไขของผู้ใช้ไว้อย่างเคร่งครัด
+- ถ้าผู้ใช้แก้ beat ก่อนหน้าอย่างมีนัยสำคัญ ให้มันส่งผลต่อสิ่งที่จะมาต่อ
+- ถ้าผู้ใช้บอก "rewrite beat นั้น" หรือ "ย้อนกลับไปลอง beat 3 แบบอื่น" ก็ทำเลย — แก้ตรงที่เดิม ส่วนที่เหลือไม่ต้องแตะ
 
 </supporting-info>

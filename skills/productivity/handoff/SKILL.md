@@ -1,16 +1,16 @@
 ---
 name: handoff
-description: Compact the current conversation into a handoff document for another agent to pick up.
-argument-hint: "What will the next session be used for?"
+description: บีบอัดบทสนทนาปัจจุบันให้เป็นเอกสาร handoff สำหรับให้ agent ตัวอื่นรับช่วงต่อ
+argument-hint: "จะใช้ session ถัดไปทำอะไร?"
 disable-model-invocation: true
 ---
 
-Write a handoff document summarising the current conversation so a fresh agent can continue the work. Save to the temporary directory of the user's OS - not the current workspace.
+เขียนเอกสาร handoff ที่สรุปบทสนทนาปัจจุบัน เพื่อให้ agent ตัวใหม่ทำงานต่อได้ บันทึกลง temporary directory ของ OS ของ user — ไม่ใช่ใน workspace ปัจจุบัน
 
-Include a "suggested skills" section in the document, which suggests skills that the agent should invoke.
+ใส่หัวข้อ "suggested skills" ไว้ในเอกสารด้วย เพื่อแนะนำ skill ที่ agent ตัวถัดไปควรเรียกใช้
 
-Do not duplicate content already captured in other artifacts (specs, plans, ADRs, issues, commits, diffs). Reference them by path or URL instead.
+อย่าเขียนซ้ำเนื้อหาที่ถูกบันทึกไว้ใน artifact อื่นอยู่แล้ว (spec, plan, ADR, issue, commit, diff) ให้อ้างอิงด้วย path หรือ URL แทน
 
-Redact any sensitive information, such as API keys, passwords, or personally identifiable information.
+ปกปิด (redact) ข้อมูลอ่อนไหวทั้งหมด เช่น API key, รหัสผ่าน หรือข้อมูลส่วนบุคคลที่ระบุตัวตนได้
 
-If the user passed arguments, treat them as a description of what the next session will focus on and tailor the doc accordingly.
+ถ้า user ส่ง argument มา ให้ถือว่ามันคือคำอธิบายว่า session ถัดไปจะโฟกัสเรื่องอะไร แล้วปรับเนื้อหาเอกสารให้เข้ากับมัน

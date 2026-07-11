@@ -1,66 +1,66 @@
 ---
 name: improve-codebase-architecture
-description: Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
+description: สแกน codebase หาโอกาส deepening แล้วนำเสนอเป็น HTML report แบบ visual จากนั้น grill เจาะลึกตัวที่คุณเลือก
 disable-model-invocation: true
 ---
 
 # Improve Codebase Architecture
 
-Surface architectural friction and propose **deepening opportunities** — refactors that turn shallow modules into deep ones. The aim is testability and AI-navigability.
+ขุดหาจุดฝืดเชิงสถาปัตยกรรม แล้วเสนอ **โอกาส deepening** — refactor ที่เปลี่ยน module ตื้น ๆ ให้กลายเป็น deep module เป้าหมายคือให้ test ได้ง่ายและให้ AI นำทางใน codebase ได้สะดวก
 
-This command is _informed_ by the project's domain model and built on a shared design vocabulary:
+คำสั่งนี้_อิง_ domain model ของโปรเจกต์ และสร้างบนคลังคำศัพท์ด้าน design ที่ใช้ร่วมกัน:
 
-- Run the `/codebase-design` skill for the architecture vocabulary (**module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**) and its principles (the deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real"). Use these terms exactly in every suggestion — don't drift into "component," "service," "API," or "boundary."
-- The domain language in `CONTEXT.md` gives names to good seams; ADRs in `docs/adr/` record decisions this command should not re-litigate.
+- รัน skill `/codebase-design` เพื่อโหลดคำศัพท์ด้านสถาปัตยกรรม (**module**, **interface**, **depth**, **seam**, **adapter**, **leverage**, **locality**) และหลักการของมัน (deletion test, "the interface is the test surface", "one adapter = hypothetical seam, two = real") ใช้คำเหล่านี้ให้ตรงเป๊ะในทุกข้อเสนอ — อย่าเผลอไปใช้คำอย่าง "component," "service," "API," หรือ "boundary"
+- ภาษา domain ใน `CONTEXT.md` ช่วยตั้งชื่อให้ seam ที่ดี ส่วน ADR ใน `docs/adr/` บันทึกการตัดสินใจที่คำสั่งนี้ไม่ควรหยิบมาถกใหม่
 
-## Process
+## ขั้นตอนการทำงาน
 
 ### 1. Explore
 
-Read the project's domain glossary (`CONTEXT.md`) and any ADRs in the area you're touching first.
+อ่าน domain glossary ของโปรเจกต์ (`CONTEXT.md`) และ ADR ในบริเวณที่กำลังจะแตะก่อน
 
-Then use the Agent tool with `subagent_type=Explore` to walk the codebase. Don't follow rigid heuristics — explore organically and note where you experience friction:
+จากนั้นใช้ Agent tool แบบ `subagent_type=Explore` เดินสำรวจ codebase อย่ายึด heuristic ตายตัว — สำรวจแบบเป็นธรรมชาติ แล้วจดจุดที่รู้สึกฝืด:
 
-- Where does understanding one concept require bouncing between many small modules?
-- Where are modules **shallow** — interface nearly as complex as the implementation?
-- Where have pure functions been extracted just for testability, but the real bugs hide in how they're called (no **locality**)?
-- Where do tightly-coupled modules leak across their seams?
-- Which parts of the codebase are untested, or hard to test through their current interface?
+- ตรงไหนที่การทำความเข้าใจ concept เดียวต้องกระโดดไปมาระหว่าง module เล็ก ๆ หลายตัว?
+- ตรงไหนที่ module **ตื้น** — interface ซับซ้อนแทบเท่าตัว implementation เอง?
+- ตรงไหนที่แยก pure function ออกมาเพียงเพื่อให้ test ได้ แต่บั๊กจริง ๆ ซ่อนอยู่ในวิธีที่มันถูกเรียก (ไม่มี **locality**)?
+- ตรงไหนที่ module ซึ่งผูกกันแน่นรั่วข้าม seam ของตัวเอง?
+- ส่วนไหนของ codebase ที่ไม่มี test หรือ test ผ่าน interface ปัจจุบันได้ยาก?
 
-Apply the **deletion test** to anything you suspect is shallow: would deleting it concentrate complexity, or just move it? A "yes, concentrates" is the signal you want.
+ใช้ **deletion test** กับทุกอย่างที่สงสัยว่าตื้น: ถ้าลบมันทิ้ง ความซับซ้อนจะถูกรวมศูนย์ หรือแค่ย้ายที่? คำตอบ "ใช่ รวมศูนย์" คือสัญญาณที่เราต้องการ
 
-### 2. Present candidates as an HTML report
+### 2. นำเสนอ candidate เป็น HTML report
 
-Write a self-contained HTML file to the OS temp directory so nothing lands in the repo. Resolve the temp dir from `$TMPDIR`, falling back to `/tmp` (or `%TEMP%` on Windows), and write to `<tmpdir>/architecture-review-<timestamp>.html` so each run gets a fresh file. Open it for the user — `xdg-open <path>` on Linux, `open <path>` on macOS, `start <path>` on Windows — and tell them the absolute path.
+เขียนไฟล์ HTML แบบ self-contained ลง temp directory ของ OS เพื่อไม่ให้อะไรหลุดเข้าไปใน repo หา temp dir จาก `$TMPDIR` ถ้าไม่มีให้ fallback เป็น `/tmp` (หรือ `%TEMP%` บน Windows) แล้วเขียนไปที่ `<tmpdir>/architecture-review-<timestamp>.html` เพื่อให้แต่ละรอบได้ไฟล์ใหม่เสมอ เปิดไฟล์ให้ผู้ใช้ดู — `xdg-open <path>` บน Linux, `open <path>` บน macOS, `start <path>` บน Windows — แล้วบอก absolute path ให้เขาด้วย
 
-The report uses **Tailwind via CDN** for layout and styling, and **Mermaid via CDN** for diagrams where a graph/flow/sequence reliably communicates the structure. Mix Mermaid with hand-crafted CSS/SVG visuals — use Mermaid when relationships are graph-shaped (call graphs, dependencies, sequences), and hand-built divs/SVG when you want something more editorial (mass diagrams, cross-sections, collapse animations). Each candidate gets a **before/after visualisation**. Be visual.
+report ใช้ **Tailwind ผ่าน CDN** สำหรับ layout และ styling และ **Mermaid ผ่าน CDN** สำหรับ diagram ในจุดที่ graph/flow/sequence สื่อโครงสร้างได้ชัดกว่า ผสม Mermaid กับ visual ที่วาดเองด้วย CSS/SVG — ใช้ Mermaid เมื่อความสัมพันธ์มีรูปทรงแบบ graph (call graph, dependency, sequence) และใช้ div/SVG ที่ประกอบเองเมื่ออยากได้อะไรที่ editorial กว่า (mass diagram, cross-section, animation การยุบรวม) candidate แต่ละตัวต้องมี **before/after visualisation** เน้น visual เข้าไว้
 
-For each candidate, render a card with:
+candidate แต่ละตัว render เป็น card ที่มี:
 
-- **Files** — which files/modules are involved
-- **Problem** — why the current architecture is causing friction
-- **Solution** — plain English description of what would change
-- **Benefits** — explained in terms of locality and leverage, and how tests would improve
-- **Before / After diagram** — side-by-side, custom-drawn, illustrating the shallowness and the deepening
-- **Recommendation strength** — one of `Strong`, `Worth exploring`, `Speculative`, rendered as a badge
+- **Files** — ไฟล์/module ไหนบ้างที่เกี่ยวข้อง
+- **Problem** — ทำไมสถาปัตยกรรมปัจจุบันถึงสร้างความฝืด
+- **Solution** — อธิบายเป็นภาษาคนว่าอะไรจะเปลี่ยนไป
+- **Benefits** — อธิบายในแง่ locality กับ leverage และ test จะดีขึ้นอย่างไร
+- **Before / After diagram** — วางคู่กัน วาดเอง แสดงให้เห็นความตื้นและการ deepen
+- **Recommendation strength** — หนึ่งใน `Strong`, `Worth exploring`, `Speculative` แสดงเป็น badge
 
-End the report with a **Top recommendation** section: which candidate you'd tackle first and why.
+ปิดท้าย report ด้วยส่วน **Top recommendation**: candidate ตัวไหนที่ควรลงมือก่อน และเพราะอะไร
 
-**Use CONTEXT.md vocabulary for the domain, and the `/codebase-design` vocabulary for the architecture.** If `CONTEXT.md` defines "Order," talk about "the Order intake module" — not "the FooBarHandler," and not "the Order service."
+**ใช้คำศัพท์จาก CONTEXT.md สำหรับฝั่ง domain และคำศัพท์จาก `/codebase-design` สำหรับฝั่งสถาปัตยกรรม** ถ้า `CONTEXT.md` นิยามคำว่า "Order" ก็พูดว่า "the Order intake module" — ไม่ใช่ "the FooBarHandler" และไม่ใช่ "the Order service"
 
-**ADR conflicts**: if a candidate contradicts an existing ADR, only surface it when the friction is real enough to warrant revisiting the ADR. Mark it clearly in the card (e.g. a warning callout: _"contradicts ADR-0007 — but worth reopening because…"_). Don't list every theoretical refactor an ADR forbids.
+**ความขัดแย้งกับ ADR**: ถ้า candidate ขัดกับ ADR ที่มีอยู่ ให้ยกขึ้นมาเฉพาะเมื่อความฝืดนั้นจริงจังพอที่จะคุ้มกับการเปิด ADR มาทบทวนใหม่ ทำเครื่องหมายให้ชัดใน card (เช่น warning callout: _"ขัดกับ ADR-0007 — แต่ควรเปิดมาคุยใหม่เพราะ…"_) อย่าไล่ลิสต์ refactor เชิงทฤษฎีทุกตัวที่ ADR ห้ามไว้
 
-See [HTML-REPORT.md](HTML-REPORT.md) for the full HTML scaffold, diagram patterns, and styling guidance.
+ดู [HTML-REPORT.md](HTML-REPORT.md) สำหรับ HTML scaffold ฉบับเต็ม pattern ของ diagram และแนวทาง styling
 
-Do NOT propose interfaces yet. After the file is written, ask the user: "Which of these would you like to explore?"
+อย่าเพิ่งเสนอ interface ในขั้นนี้ หลังเขียนไฟล์เสร็จ ถามผู้ใช้ว่า: "อยากเจาะลึกตัวไหนต่อ?"
 
 ### 3. Grilling loop
 
-Once the user picks a candidate, run the `/grilling` skill to walk the design tree with them — constraints, dependencies, the shape of the deepened module, what sits behind the seam, what tests survive.
+พอผู้ใช้เลือก candidate แล้ว รัน skill `/grilling` เพื่อเดิน design tree ไปกับเขา — ข้อจำกัด, dependency, รูปทรงของ module ที่ deepen แล้ว, อะไรอยู่หลัง seam, test ตัวไหนรอด
 
-Side effects happen inline as decisions crystallize — run the `/domain-modeling` skill to keep the domain model current as you go:
+side effect เกิดขึ้นระหว่างทางทันทีที่การตัดสินใจตกผลึก — รัน skill `/domain-modeling` เพื่อให้ domain model ทันสมัยอยู่เสมอ:
 
-- **Naming a deepened module after a concept not in `CONTEXT.md`?** Add the term to `CONTEXT.md`. Create the file lazily if it doesn't exist.
-- **Sharpening a fuzzy term during the conversation?** Update `CONTEXT.md` right there.
-- **User rejects the candidate with a load-bearing reason?** Offer an ADR, framed as: _"Want me to record this as an ADR so future architecture reviews don't re-suggest it?"_ Only offer when the reason would actually be needed by a future explorer to avoid re-suggesting the same thing — skip ephemeral reasons ("not worth it right now") and self-evident ones.
-- **Want to explore alternative interfaces for the deepened module?** Run the `/codebase-design` skill and use its design-it-twice parallel sub-agent pattern.
+- **ตั้งชื่อ module ที่ deepen แล้วตาม concept ที่ไม่มีใน `CONTEXT.md`?** เพิ่มคำนั้นลง `CONTEXT.md` ถ้าไฟล์ยังไม่มีค่อยสร้างตอนนั้นเลย
+- **คำที่คลุมเครือคมขึ้นระหว่างคุยกัน?** อัปเดต `CONTEXT.md` ตรงนั้นทันที
+- **ผู้ใช้ปัด candidate ทิ้งด้วยเหตุผลที่มีน้ำหนัก?** เสนอทำ ADR โดยถามว่า: _"อยากให้บันทึกเรื่องนี้เป็น ADR ไหม เพื่อให้ architecture review รอบหน้าไม่เสนอซ้ำอีก?"_ เสนอเฉพาะเมื่อเหตุผลนั้นจำเป็นจริง ๆ สำหรับคนที่มาสำรวจในอนาคตเพื่อไม่ให้เสนอเรื่องเดิมซ้ำ — ข้ามเหตุผลชั่วคราว ("ตอนนี้ยังไม่คุ้ม") และเหตุผลที่ชัดในตัวเองอยู่แล้ว
+- **อยากลองสำรวจ interface ทางเลือกสำหรับ module ที่ deepen แล้ว?** รัน skill `/codebase-design` แล้วใช้ pattern design-it-twice แบบ sub-agent ขนานของมัน

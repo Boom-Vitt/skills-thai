@@ -1,45 +1,45 @@
 ---
 name: writing-fragments
-description: Writing, explore — mine raw fragments, no structure yet.
+description: งานเขียนช่วง explore — ขุด fragment ดิบ ๆ ออกมา ยังไม่ต้องมีโครงสร้าง
 disable-model-invocation: true
 ---
 
 <what-to-do>
 
-This is pure **explore**: widen the space of what could be written without committing to structure — committing is _exploit_, a separate skill's job. Run a grilling session that produces fragments, interviewing the user relentlessly about whatever they want to write about. Imposing phases, outlines, or article structure is out of scope here.
+นี่คือช่วง **explore** ล้วน ๆ: ขยายพื้นที่ของสิ่งที่เขียนได้ให้กว้างที่สุดโดยยังไม่ commit กับโครงสร้างใด ๆ — การ commit คือ _exploit_ ซึ่งเป็นงานของ skill อื่น ให้รัน session แบบซักไซ้ที่ produce fragment ออกมา โดยสัมภาษณ์ user แบบไม่ลดละเกี่ยวกับเรื่องที่เขาอยากเขียน การยัดเยียด phase, outline หรือโครงสร้างบทความอยู่นอก scope ของ skill นี้
 
-As fragments emerge from either side of the conversation, append them to a single markdown file.
+เมื่อ fragment โผล่ออกมาจากฝั่งไหนก็ตามของบทสนทนา ให้ append ลงไฟล์ markdown ไฟล์เดียว
 
-If the user did not pass a path, ask once where to save the document, then remember it for the rest of the session.
+ถ้า user ไม่ได้ส่ง path มาให้ ให้ถามครั้งเดียวว่าเซฟเอกสารไว้ที่ไหน แล้วจำไว้ตลอด session ที่เหลือ
 
-Capture fragments from the very first thing the user says, including the initial prompt.
+เก็บ fragment ตั้งแต่ประโยคแรกสุดที่ user พูด รวมถึง prompt เริ่มต้นด้วย
 
-On first write, put a single H1 at the top with a working title (it can change later) and nothing else — no metadata, no TOC, no date.
+ตอนเขียนไฟล์ครั้งแรก ใส่ H1 อันเดียวไว้บนสุดเป็น working title (เปลี่ยนทีหลังได้) และห้ามใส่อย่างอื่น — ไม่มี metadata ไม่มี TOC ไม่มีวันที่
 
 </what-to-do>
 
 <supporting-info>
 
-## What is a fragment
+## Fragment คืออะไร
 
-A fragment is any piece of text that might survive into the final article. It must be _readable by the author_ — the author can tell what it means — but it does not need to define its terms or be comprehensible to a cold reader. The bar is "is this a piece of good writing?", not "is this a self-contained argument?"
+fragment คือข้อความชิ้นไหนก็ได้ที่อาจรอดไปอยู่ในบทความฉบับสุดท้าย มันต้อง _อ่านรู้เรื่องสำหรับผู้เขียน_ — ผู้เขียนดูแล้วรู้ว่าหมายถึงอะไร — แต่ไม่จำเป็นต้องนิยามศัพท์ของตัวเองหรืออ่านรู้เรื่องสำหรับคนที่ไม่มี context เกณฑ์คือ "นี่เป็นงานเขียนที่ดีชิ้นหนึ่งไหม" ไม่ใช่ "นี่เป็น argument ที่สมบูรณ์ในตัวเองไหม"
 
-Fragments are deliberately heterogeneous. Examples of what could be a fragment:
+fragment จงใจให้หลากหลายรูปแบบ ตัวอย่างของสิ่งที่เป็น fragment ได้:
 
-- A sharp sentence you'd want to deploy somewhere but don't yet know where.
-- A claim with a one-line justification.
-- A vignette: a thing that happened, a code snippet, a scenario, an analogy.
-- A half-thought: "something about how X feels like Y, work this out later."
-- A quote, a piece of dialogue, an overheard line.
-- A list of related observations that hang together by feel.
-- A complaint, a confession, a punchline.
-- A **leading word** — a compact metaphor or coinage the whole piece can hang on (one term that names the idea, the way _tracer bullets_ or _fog of war_ names a whole pattern).
+- ประโยคคม ๆ ที่อยากเอาไปใช้สักที่ แต่ยังไม่รู้ว่าตรงไหน
+- ข้ออ้าง (claim) พร้อมเหตุผลสั้น ๆ บรรทัดเดียว
+- vignette: เหตุการณ์ที่เคยเกิดขึ้น, code snippet, สถานการณ์สมมติ, การเปรียบเทียบ
+- ความคิดครึ่ง ๆ กลาง ๆ: "อะไรสักอย่างเกี่ยวกับการที่ X ให้ความรู้สึกเหมือน Y เดี๋ยวค่อยคิดต่อ"
+- คำพูดอ้างอิง, บทสนทนา, ประโยคที่บังเอิญได้ยินมา
+- รายการข้อสังเกตที่เกี่ยวข้องกันซึ่งเกาะกลุ่มกันด้วยความรู้สึก
+- คำบ่น, คำสารภาพ, punchline
+- **leading word** — อุปมากะทัดรัดหรือคำที่บัญญัติขึ้นใหม่ที่ทั้งชิ้นงานแขวนอยู่กับมันได้ (คำเดียวที่ตั้งชื่อให้ไอเดีย แบบเดียวกับที่ _tracer bullets_ หรือ _fog of war_ ตั้งชื่อให้ pattern ทั้งชุด)
 
-Of these, the leading word is the most valuable fragment to land. It is load-bearing: name the right one in explore and it shapes the structure, the transitions, and the title later — paying dividends through the entire exploit phase. When the conversation circles a recurring idea, push to coin a word for it.
+ในบรรดาทั้งหมด leading word คือ fragment ที่มีค่าที่สุดถ้าหาเจอ มันรับน้ำหนักทั้งชิ้นงาน: ตั้งชื่อให้ถูกตั้งแต่ช่วง explore แล้วมันจะกำหนดโครงสร้าง transition และ title ทีหลัง — ให้ผลตอบแทนตลอด phase exploit ทั้งหมด เมื่อบทสนทนาวนกลับมาที่ไอเดียเดิมซ้ำ ๆ ให้ผลักดันจนได้บัญญัติคำสำหรับมัน
 
-The novelist's diary is the model: years of unstructured noticings that later get mined for raw material. Fragments are noticings.
+สมุดบันทึกของนักเขียนนิยายคือต้นแบบ: ข้อสังเกตไร้โครงสร้างที่สะสมมาหลายปี แล้วค่อยถูกขุดมาเป็นวัตถุดิบทีหลัง fragment ก็คือข้อสังเกตพวกนั้น
 
-## File format
+## Format ของไฟล์
 
 ```markdown
 # Working title
@@ -66,14 +66,14 @@ A reaction to it.
 - And want to be near each other
 ```
 
-Fragments are separated by a horizontal rule (`\n---\n`). No headings inside the body. No tags. No order beyond the order they were added.
+fragment คั่นด้วย horizontal rule (`\n---\n`) ไม่มี heading ในเนื้อไฟล์ ไม่มี tag ไม่มีลำดับอื่นนอกจากลำดับที่ถูกเพิ่มเข้ามา
 
-## Writing rhythm
+## จังหวะการเขียน
 
-Append silently. Don't ask permission for each fragment. Mention what you added in passing ("adding that"), but don't interrupt the conversation with save dialogs.
+append เงียบ ๆ ไม่ต้องขออนุญาตทีละ fragment พูดถึงสิ่งที่เพิ่มไปแบบผ่าน ๆ ("เพิ่มอันนั้นให้แล้ว") แต่อย่าขัดบทสนทนาด้วย dialog ถามเรื่องเซฟ
 
-Before every write: re-read the file from disk. The user may have edited, reordered, or deleted fragments between turns — preserve their changes. Never overwrite the file; only append (or, if the user asks, edit a specific fragment in place).
+ก่อนเขียนทุกครั้ง: อ่านไฟล์จาก disk ใหม่ก่อน user อาจแก้ สลับลำดับ หรือลบ fragment ไประหว่าง turn — ต้องรักษาการแก้ไขของเขาไว้ ห้าม overwrite ไฟล์เด็ดขาด ให้ append อย่างเดียว (หรือถ้า user ขอ ค่อยแก้ fragment ตัวใดตัวหนึ่งตรงจุดนั้น)
 
-The user can say "cut the last one", "rewrite that one sharper", "merge those two" at any time. Treat those as first-class instructions.
+user พูดได้ทุกเมื่อว่า "ตัดอันล่าสุดทิ้ง", "เขียนอันนั้นใหม่ให้คมกว่านี้", "รวมสองอันนั้นเข้าด้วยกัน" ให้ถือว่านั่นเป็นคำสั่งชั้นหนึ่ง
 
 </supporting-info>

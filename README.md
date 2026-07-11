@@ -8,178 +8,183 @@
   </a>
 </p>
 
-# Skills For Real Engineers
+# Skills สำหรับวิศวกรตัวจริง
+
+> [!NOTE]
+> repo นี้คือฉบับแปลภาษาไทยของ [mattpocock/skills](https://github.com/mattpocock/skills) โดย [Matt Pocock](https://github.com/mattpocock) ซึ่งเผยแพร่ภายใต้ [MIT license](./LICENSE) — แปลโดย Boom ([@Boom-Vitt](https://github.com/Boom-Vitt)) เนื้อหาต้นฉบับและเครดิตทั้งหมดเป็นของ Matt Pocock
 
 [![skills.sh](https://skills.sh/b/mattpocock/skills)](https://skills.sh/mattpocock/skills)
 
-My agent skills that I use every day to do real engineering - not vibe coding.
+นี่คือ agent skills ที่ผมใช้ทำงานวิศวกรรมซอฟต์แวร์จริง ๆ ทุกวัน — ไม่ใช่ vibe coding
 
-Developing real applications is hard. Approaches like GSD, BMAD, and Spec-Kit try to help by owning the process. But while doing so, they take away your control and make bugs in the process hard to resolve.
+การพัฒนาแอปพลิเคชันจริงเป็นเรื่องยาก แนวทางอย่าง GSD, BMAD และ Spec-Kit พยายามช่วยด้วยการเข้ามาคุมกระบวนการแทนเรา แต่ระหว่างนั้นมันก็พรากการควบคุมไปจากเรา และทำให้ bug ที่เกิดขึ้นในกระบวนการแก้ได้ยาก
 
-These skills are designed to be small, easy to adapt, and composable. They work with any model. They're based on decades of engineering experience. Hack around with them. Make them your own. Enjoy.
+skills ชุดนี้ถูกออกแบบมาให้เล็ก ปรับแต่งง่าย และประกอบเข้าด้วยกันได้ ใช้ได้กับทุกโมเดล และกลั่นมาจากประสบการณ์ด้านวิศวกรรมหลายสิบปี ลองแฮ็กเล่นดู ปรับให้เป็นของคุณเอง ขอให้สนุก
 
-If you want to keep up with changes to these skills, and any new ones I create, you can join ~60,000 other devs on my newsletter:
+ถ้าอยากติดตามการเปลี่ยนแปลงของ skills เหล่านี้ รวมถึง skills ใหม่ ๆ ที่ Matt สร้างขึ้น เข้าร่วม newsletter กับ dev อีกราว 60,000 คนได้ที่:
 
-[Sign Up To The Newsletter](https://www.aihero.dev/s/skills-newsletter)
+[สมัครรับ Newsletter](https://www.aihero.dev/s/skills-newsletter)
 
-## Quickstart (30-second setup)
+## เริ่มต้นใช้งาน (setup ใน 30 วินาที)
 
-1. Run the skills.sh installer:
+1. รัน installer ของ skills.sh:
 
 ```bash
-npx skills@latest add mattpocock/skills
+npx skills@latest add Boom-Vitt/skills-thai
 ```
 
-2. Pick the skills you want, and which coding agents you want to install them on. **Make sure you select `/setup-matt-pocock-skills`**.
+(หรือติดตั้งฉบับภาษาอังกฤษต้นฉบับด้วย `npx skills@latest add mattpocock/skills`)
 
-3. Run `/setup-matt-pocock-skills` in your agent. It will:
-   - Ask you which issue tracker you want to use (GitHub, Linear, or local files)
-   - Ask you what labels you apply to tickets when you triage them (`/triage` uses labels)
-   - Ask you where you want to save any docs we create
+2. เลือก skills ที่ต้องการ และเลือกว่าจะติดตั้งลง coding agent ตัวไหนบ้าง **อย่าลืมเลือก `/setup-matt-pocock-skills` ด้วย**
 
-4. Bam - you're ready to go.
+3. รัน `/setup-matt-pocock-skills` ใน agent ของคุณ มันจะ:
+   - ถามว่าคุณอยากใช้ issue tracker ตัวไหน (GitHub, Linear หรือไฟล์ local)
+   - ถามว่าคุณติด label อะไรให้ ticket ตอน triage บ้าง (`/triage` ใช้ label เหล่านี้)
+   - ถามว่าอยากเก็บเอกสารที่เราสร้างขึ้นไว้ที่ไหน
 
-## Why These Skills Exist
+4. เท่านี้ก็พร้อมใช้งานแล้ว
 
-I built these skills as a way to fix common failure modes I see with Claude Code, Codex, and other coding agents.
+## ทำไม Skills เหล่านี้ถึงเกิดขึ้น
 
-### #1: The Agent Didn't Do What I Want
+ผมสร้าง skills เหล่านี้ขึ้นมาเพื่อแก้ failure mode ที่เจอบ่อย ๆ เวลาใช้ Claude Code, Codex และ coding agent ตัวอื่น ๆ
 
-> "No-one knows exactly what they want"
+### #1: Agent ไม่ได้ทำสิ่งที่เราต้องการ
+
+> "ไม่มีใครรู้แน่ชัดหรอกว่าตัวเองต้องการอะไร"
 >
 > David Thomas & Andrew Hunt, [The Pragmatic Programmer](https://www.amazon.co.uk/Pragmatic-Programmer-Anniversary-Journey-Mastery/dp/B0833F1T3V)
 
-**The Problem**. The most common failure mode in software development is misalignment. You think the dev knows what you want. Then you see what they've built - and you realize it didn't understand you at all.
+**ปัญหา** failure mode ที่พบบ่อยที่สุดในการพัฒนาซอฟต์แวร์คือความเข้าใจที่ไม่ตรงกัน คุณคิดว่า dev รู้ว่าคุณต้องการอะไร แต่พอเห็นสิ่งที่เขาสร้างออกมา — ถึงได้รู้ว่าเขาไม่เข้าใจคุณเลย
 
-This is just the same in the AI age. There is a communication gap between you and the agent. The fix for this is a **grilling session** - getting the agent to ask you detailed questions about what you're building.
+ยุค AI ก็ไม่ต่างกัน ระหว่างคุณกับ agent มีช่องว่างในการสื่อสารอยู่ วิธีแก้คือ **grilling session** — การให้ agent ซักถามคุณอย่างละเอียดว่ากำลังจะสร้างอะไร
 
-**The Fix** is to use:
+**วิธีแก้** คือใช้:
 
-- [`/grill-me`](./skills/productivity/grill-me/SKILL.md) - for non-code uses
-- [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md) - same as [`/grill-me`](./skills/productivity/grill-me/SKILL.md), but adds more goodies (see below)
+- [`/grill-me`](./skills/productivity/grill-me/SKILL.md) - สำหรับงานที่ไม่ใช่ code
+- [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md) - เหมือน [`/grill-me`](./skills/productivity/grill-me/SKILL.md) แต่แถมของดีมาให้อีก (ดูด้านล่าง)
 
-These are my most popular skills. They help you align with the agent before you get started, and think deeply about the change you're making. Use them _every_ time you want to make a change.
+สองตัวนี้คือ skills ที่ได้รับความนิยมมากที่สุด มันช่วยให้คุณกับ agent เข้าใจตรงกันก่อนเริ่มงาน และคิดให้ลึกเกี่ยวกับการเปลี่ยนแปลงที่กำลังจะทำ ใช้มัน_ทุกครั้ง_ที่จะแก้อะไรก็ตาม
 
-### #2: The Agent Is Way Too Verbose
+### #2: Agent พูดเยอะเกินไป
 
-> With a ubiquitous language, conversations among developers and expressions of the code are all derived from the same domain model.
+> "เมื่อมี ubiquitous language บทสนทนาระหว่าง developer และสิ่งที่เขียนอยู่ใน code ล้วนมาจาก domain model เดียวกัน"
 >
 > Eric Evans, [Domain-Driven-Design](https://www.amazon.co.uk/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215)
 
-**The Problem**: At the start of a project, devs and the people they're building the software for (the domain experts) are usually speaking different languages.
+**ปัญหา**: ช่วงเริ่มต้นของโปรเจกต์ dev กับคนที่เขาสร้างซอฟต์แวร์ให้ (domain expert) มักพูดกันคนละภาษา
 
-I felt the same tension with my agents. Agents are usually dropped into a project and asked to figure out the jargon as they go. So they use 20 words where 1 will do.
+ผมรู้สึกถึงแรงตึงแบบเดียวกันกับ agent ของผม ปกติ agent จะถูกโยนเข้าไปในโปรเจกต์แล้วต้องเดาศัพท์เฉพาะเอาเองระหว่างทาง ผลคือมันใช้ 20 คำในที่ที่คำเดียวก็พอ
 
-**The Fix** for this is a shared language. It's a document that helps agents decode the jargon used in the project.
+**วิธีแก้** คือภาษากลางที่ใช้ร่วมกัน (shared language) — เอกสารที่ช่วยให้ agent ถอดรหัสศัพท์เฉพาะที่ใช้ในโปรเจกต์ได้
 
 <details>
 <summary>
-Example
+ตัวอย่าง
 </summary>
 
-Here's an example [`CONTEXT.md`](https://github.com/mattpocock/course-video-manager/blob/076a5a7a182db0fe1e62971dd7a68bcadf010f1c/CONTEXT.md), from my `course-video-manager` repo. Which one is easier to read?
+นี่คือตัวอย่าง [`CONTEXT.md`](https://github.com/mattpocock/course-video-manager/blob/076a5a7a182db0fe1e62971dd7a68bcadf010f1c/CONTEXT.md) จาก repo `course-video-manager` ของ Matt ลองดูว่าแบบไหนอ่านง่ายกว่ากัน
 
-- **BEFORE**: "There's a problem when a lesson inside a section of a course is made 'real' (i.e. given a spot in the file system)"
-- **AFTER**: "There's a problem with the materialization cascade"
+- **ก่อน**: "มีปัญหาตอนที่ lesson ใน section ของ course ถูกทำให้เป็น 'ของจริง' (คือได้ที่อยู่ใน file system)"
+- **หลัง**: "มีปัญหากับ materialization cascade"
 
-This concision pays off session after session.
+ความกระชับแบบนี้ให้ผลตอบแทนกลับมา session แล้ว session เล่า
 
 </details>
 
-This is built into [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md). It's a grilling session, but that helps you build a shared language with the AI, and document hard-to-explain decisions in ADR's.
+ความสามารถนี้ถูกฝังอยู่ใน [`/grill-with-docs`](./skills/engineering/grill-with-docs/SKILL.md) แล้ว — มันคือ grilling session ที่ช่วยคุณสร้างภาษากลางร่วมกับ AI และบันทึกการตัดสินใจที่อธิบายยาก ๆ ลงใน ADR
 
-It's hard to explain how powerful this is. It might be the single coolest technique in this repo. Try it, and see.
+พลังของเทคนิคนี้อธิบายเป็นคำพูดได้ยาก มันอาจเป็นเทคนิคที่เจ๋งที่สุดใน repo นี้เลยก็ได้ ลองใช้ดูแล้วจะเห็นเอง
 
 > [!TIP]
-> A shared language has many other benefits than reducing verbosity:
+> ภาษากลางร่วมกันมีประโยชน์มากกว่าแค่ลดความเยิ่นเย้อ:
 >
-> - **Variables, functions and files are named consistently**, using the shared language
-> - As a result, the **codebase is easier to navigate** for the agent
-> - The agent also **spends fewer tokens on thinking**, because it has access to a more concise language
+> - **ตัวแปร ฟังก์ชัน และไฟล์ถูกตั้งชื่ออย่างสม่ำเสมอ** ตามภาษากลางนั้น
+> - ผลคือ **codebase อ่านและนำทางได้ง่ายขึ้น** สำหรับ agent
+> - agent ยัง **ใช้ token ในการคิดน้อยลง** เพราะมีภาษาที่กระชับกว่าให้ใช้
 
-### #3: The Code Doesn't Work
+### #3: Code ใช้งานไม่ได้
 
-> "Always take small, deliberate steps. The rate of feedback is your speed limit. Never take on a task that’s too big."
+> "ก้าวทีละก้าวเล็ก ๆ อย่างตั้งใจเสมอ อัตราของ feedback คือขีดจำกัดความเร็วของคุณ อย่ารับงานที่ใหญ่เกินไป"
 >
 > David Thomas & Andrew Hunt, [The Pragmatic Programmer](https://www.amazon.co.uk/Pragmatic-Programmer-Anniversary-Journey-Mastery/dp/B0833F1T3V)
 
-**The Problem**: Let's say that you and the agent are aligned on what to build. What happens when the agent _still_ produces crap?
+**ปัญหา**: สมมติว่าคุณกับ agent เข้าใจตรงกันแล้วว่าจะสร้างอะไร แล้วถ้า agent _ยัง_ ผลิตของห่วยออกมาอยู่ล่ะ?
 
-It's time to look at your feedback loops. Without feedback on how the code it produces actually runs, the agent will be flying blind.
+ถึงเวลาดู feedback loop ของคุณแล้ว ถ้าไม่มี feedback ว่า code ที่มันเขียนรันได้จริงแค่ไหน agent ก็เหมือนบินโดยมองไม่เห็นอะไรเลย
 
-**The Fix**: You need the usual tranche of feedback loops: static types, browser access, and automated tests.
+**วิธีแก้**: คุณต้องมี feedback loop ชุดมาตรฐาน: static type, การเข้าถึง browser และ automated test
 
-For automated tests, a red-green-refactor loop is critical. This is where the agent writes a failing test first, then fixes the test. This helps give the agent a consistent level of feedback that results in far better code.
+สำหรับ automated test ลูป red-green-refactor คือหัวใจสำคัญ — agent เขียน test ที่ fail ก่อน แล้วค่อยแก้ให้ test ผ่าน วิธีนี้ทำให้ agent ได้รับ feedback สม่ำเสมอ และได้ code ที่ดีขึ้นมาก
 
-I've built a **[`/tdd`](./skills/engineering/tdd/SKILL.md) skill** you can slot into any project. It encourages red-green-refactor and gives the agent plenty of guidance on what makes good and bad tests.
+ผมสร้าง **skill [`/tdd`](./skills/engineering/tdd/SKILL.md)** ที่เสียบเข้ากับโปรเจกต์ไหนก็ได้ มันส่งเสริม red-green-refactor และให้แนวทาง agent อย่างละเอียดว่า test ที่ดีและไม่ดีเป็นยังไง
 
-For debugging, I've also built a **[`/diagnosing-bugs`](./skills/engineering/diagnosing-bugs/SKILL.md)** skill that wraps best debugging practices into a simple loop.
+สำหรับการ debug ผมก็สร้าง skill **[`/diagnosing-bugs`](./skills/engineering/diagnosing-bugs/SKILL.md)** ที่ห่อแนวปฏิบัติการ debug ที่ดีที่สุดไว้ในลูปง่าย ๆ
 
-### #4: We Built A Ball Of Mud
+### #4: เราสร้าง Ball Of Mud ขึ้นมา
 
-> "Invest in the design of the system _every day_."
+> "ลงทุนกับการออกแบบระบบ_ทุกวัน_"
 >
 > Kent Beck, [Extreme Programming Explained](https://www.amazon.co.uk/Extreme-Programming-Explained-Embrace-Change/dp/0321278658)
 
-> "The best modules are deep. They allow a lot of functionality to be accessed through a simple interface."
+> "module ที่ดีที่สุดคือ module ที่ลึก — เข้าถึงความสามารถจำนวนมากได้ผ่าน interface ที่เรียบง่าย"
 >
 > John Ousterhout, [A Philosophy Of Software Design](https://www.amazon.co.uk/Philosophy-Software-Design-2nd/dp/173210221X)
 
-**The Problem**: Most apps built with agents are complex and hard to change. Because agents can radically speed up coding, they also accelerate software entropy. Codebases get more complex at an unprecedented rate.
+**ปัญหา**: แอปส่วนใหญ่ที่สร้างด้วย agent มักซับซ้อนและแก้ไขยาก เพราะ agent เร่งความเร็วการเขียน code ได้มหาศาล มันจึงเร่ง entropy ของซอฟต์แวร์ไปด้วย codebase ซับซ้อนขึ้นในอัตราที่ไม่เคยมีมาก่อน
 
-**The Fix** for this is a radical new approach to AI-powered development: caring about the design of the code.
+**วิธีแก้** คือแนวทางใหม่แบบถอนรากถอนโคนสำหรับการพัฒนาด้วย AI: ใส่ใจกับการออกแบบ code
 
-This is built in to every layer of these skills:
+สิ่งนี้ถูกฝังอยู่ในทุกชั้นของ skills ชุดนี้:
 
-- [`/to-spec`](./skills/engineering/to-spec/SKILL.md) quizzes you about which modules you're touching before creating a spec
+- [`/to-spec`](./skills/engineering/to-spec/SKILL.md) จะซักถามคุณก่อนว่ากำลังแตะ module ไหนบ้าง แล้วค่อยสร้าง spec
 
-And crucially, [`/improve-codebase-architecture`](./skills/engineering/improve-codebase-architecture/SKILL.md) helps you rescue a codebase that has become a ball of mud. I recommend running it on your codebase once every few days.
+และที่สำคัญที่สุด [`/improve-codebase-architecture`](./skills/engineering/improve-codebase-architecture/SKILL.md) ช่วยกู้ codebase ที่กลายเป็น ball of mud ไปแล้ว แนะนำให้รันกับ codebase ของคุณทุก ๆ สองสามวัน
 
-### Summary
+### สรุป
 
-Software engineering fundamentals matter more than ever. These skills are my best effort at condensing these fundamentals into repeatable practices, to help you ship the best apps of your career. Enjoy.
+พื้นฐานวิศวกรรมซอฟต์แวร์สำคัญกว่าที่เคยเป็นมา skills ชุดนี้คือความพยายามอย่างดีที่สุดของ Matt ในการกลั่นพื้นฐานเหล่านั้นให้เป็นแนวปฏิบัติที่ทำซ้ำได้ เพื่อช่วยให้คุณ ship แอปที่ดีที่สุดในชีวิตการทำงานของคุณ ขอให้สนุก
 
-## Reference
+## รายการอ้างอิง
 
-These split on one axis — who can invoke them. **User-invoked** skills are reachable only when you type them (e.g. `/grill-me`); their job is to orchestrate. **Model-invoked** skills can be invoked by you _or_ reached for automatically by the agent when the task fits; they hold the reusable discipline. A user-invoked skill may invoke model-invoked skills, but never another user-invoked one.
+skills แบ่งตามแกนเดียว — ใครเป็นคนเรียกใช้ได้ **User-invoked** คือ skills ที่เข้าถึงได้เฉพาะตอนคุณพิมพ์เรียกเอง (เช่น `/grill-me`) หน้าที่ของมันคือควบคุมภาพรวม (orchestrate) ส่วน **Model-invoked** คือ skills ที่คุณเรียกก็ได้ _หรือ_ agent หยิบมาใช้เองอัตโนมัติเมื่องานเข้าเงื่อนไข มันเก็บวินัยการทำงานที่นำกลับมาใช้ซ้ำได้ skill แบบ user-invoked เรียกใช้ skill แบบ model-invoked ได้ แต่ห้ามเรียก user-invoked ด้วยกันเอง
 
 ### Engineering
 
-Skills I use daily for code work.
+skills ที่ Matt ใช้ทำงาน code ทุกวัน
 
 **User-invoked**
 
-- **[ask-matt](./skills/engineering/ask-matt/SKILL.md)** — Ask which skill or flow fits your situation. A router over the user-invoked skills in this repo.
-- **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — Grilling session that also builds your project's domain model, sharpening terminology and updating `CONTEXT.md` and ADRs inline.
-- **[triage](./skills/engineering/triage/SKILL.md)** — Move issues through a state machine of triage roles.
-- **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — Scan a codebase for deepening opportunities, present them as a visual HTML report, then grill through whichever one you pick.
-- **[setup-matt-pocock-skills](./skills/engineering/setup-matt-pocock-skills/SKILL.md)** — Configure this repo for the engineering skills (issue tracker, triage labels, domain doc layout). Run once per repo before using the other engineering skills.
-- **[to-spec](./skills/engineering/to-spec/SKILL.md)** — Turn the current conversation into a spec and publish it to the issue tracker. No interview — just synthesizes what you've already discussed.
-- **[to-tickets](./skills/engineering/to-tickets/SKILL.md)** — Break any plan, spec, or conversation into a set of tracer-bullet tickets, each declaring its blocking edges — written as text in a local file, or as native blocking links on a real tracker.
-- **[implement](./skills/engineering/implement/SKILL.md)** — Build the work described by a spec or set of tickets, driving `/tdd` at pre-agreed seams and closing out with `/code-review` before committing.
-- **[wayfinder](./skills/engineering/wayfinder/SKILL.md)** — Plan a huge chunk of work, more than one agent session can hold, as a shared map of investigation tickets on the issue tracker — resolve them one at a time until the way to the destination is clear.
+- **[ask-matt](./skills/engineering/ask-matt/SKILL.md)** — ถามว่า skill หรือ flow ไหนเหมาะกับสถานการณ์ของคุณ เป็น router ครอบ skills แบบ user-invoked ทั้งหมดใน repo นี้
+- **[grill-with-docs](./skills/engineering/grill-with-docs/SKILL.md)** — grilling session ที่ช่วยสร้าง domain model ของโปรเจกต์ไปด้วย ลับคมศัพท์เฉพาะ และอัปเดต `CONTEXT.md` กับ ADR ไปพร้อมกัน
+- **[triage](./skills/engineering/triage/SKILL.md)** — พา issue เดินผ่าน state machine ของบทบาท triage ต่าง ๆ
+- **[improve-codebase-architecture](./skills/engineering/improve-codebase-architecture/SKILL.md)** — สแกน codebase หาโอกาสทำให้ module ลึกขึ้น นำเสนอเป็นรายงาน HTML แบบเห็นภาพ แล้ว grill เจาะลึกตัวที่คุณเลือก
+- **[setup-matt-pocock-skills](./skills/engineering/setup-matt-pocock-skills/SKILL.md)** — ตั้งค่า repo นี้สำหรับ engineering skills (issue tracker, triage label, โครงสร้างเอกสาร domain) รันครั้งเดียวต่อ repo ก่อนใช้ engineering skills ตัวอื่น
+- **[to-spec](./skills/engineering/to-spec/SKILL.md)** — เปลี่ยนบทสนทนาปัจจุบันให้เป็น spec แล้วส่งขึ้น issue tracker ไม่มีการสัมภาษณ์ — แค่สังเคราะห์จากสิ่งที่คุยกันไปแล้ว
+- **[to-tickets](./skills/engineering/to-tickets/SKILL.md)** — แตกแผน spec หรือบทสนทนาใด ๆ ให้เป็นชุด ticket แบบ tracer-bullet โดยแต่ละใบประกาศว่า block อะไรอยู่บ้าง — เขียนเป็นข้อความในไฟล์ local หรือเป็น blocking link จริงบน tracker ก็ได้
+- **[implement](./skills/engineering/implement/SKILL.md)** — สร้างงานตามที่ spec หรือชุด ticket อธิบายไว้ ขับเคลื่อนด้วย `/tdd` ที่ seam ซึ่งตกลงกันไว้ล่วงหน้า และปิดท้ายด้วย `/code-review` ก่อน commit
+- **[wayfinder](./skills/engineering/wayfinder/SKILL.md)** — วางแผนงานก้อนใหญ่มาก ๆ ที่เกิน agent session เดียวจะรับไหว ในรูปแผนที่ร่วมของ investigation ticket บน issue tracker — ค่อย ๆ ไขทีละใบจนเส้นทางสู่จุดหมายชัดเจน
 
 **Model-invoked**
 
-- **[prototype](./skills/engineering/prototype/SKILL.md)** — Build a throwaway prototype to answer a design question — a runnable terminal app for state/logic questions, or several radically different UI variations toggleable from one route.
-- **[diagnosing-bugs](./skills/engineering/diagnosing-bugs/SKILL.md)** — Disciplined diagnosis loop for hard bugs and performance regressions: reproduce → minimise → hypothesise → instrument → fix → regression-test.
-- **[research](./skills/engineering/research/SKILL.md)** — Investigate a question against high-trust primary sources and capture the findings as a cited Markdown file in the repo, run as a background agent.
-- **[tdd](./skills/engineering/tdd/SKILL.md)** — Test-driven development with a red-green-refactor loop. Builds features or fixes bugs one vertical slice at a time.
-- **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)** — Actively build and sharpen a project's domain model — challenge terms against the glossary, stress-test with edge-case scenarios, and update `CONTEXT.md` and ADRs inline.
-- **[codebase-design](./skills/engineering/codebase-design/SKILL.md)** — Shared discipline and vocabulary for designing deep modules: a lot of behaviour behind a small interface, placed at a clean seam, testable through that interface.
-- **[code-review](./skills/engineering/code-review/SKILL.md)** — Two-axis review of the diff since a fixed point: **Standards** (does it follow the repo's coding standards, plus a Fowler smell baseline?) and **Spec** (does it faithfully implement the originating issue/PRD?), run as parallel sub-agents so neither pollutes the other.
+- **[prototype](./skills/engineering/prototype/SKILL.md)** — สร้าง prototype แบบใช้แล้วทิ้งเพื่อตอบคำถามด้านการออกแบบ — เป็น terminal app ที่รันได้สำหรับคำถามเรื่อง state/logic หรือ UI หลายแบบที่ต่างกันสุดขั้ว สลับดูได้จาก route เดียว
+- **[diagnosing-bugs](./skills/engineering/diagnosing-bugs/SKILL.md)** — ลูปวินิจฉัยอย่างมีวินัยสำหรับ bug ยาก ๆ และ performance regression: reproduce → minimise → hypothesise → instrument → fix → regression-test
+- **[research](./skills/engineering/research/SKILL.md)** — สืบค้นคำถามจากแหล่งข้อมูลปฐมภูมิที่เชื่อถือได้สูง แล้วบันทึกสิ่งที่พบเป็นไฟล์ Markdown พร้อมอ้างอิงใน repo รันเป็น background agent
+- **[tdd](./skills/engineering/tdd/SKILL.md)** — test-driven development ด้วยลูป red-green-refactor สร้างฟีเจอร์หรือแก้ bug ทีละ vertical slice
+- **[domain-modeling](./skills/engineering/domain-modeling/SKILL.md)** — สร้างและลับคม domain model ของโปรเจกต์อย่างจริงจัง — ท้าทายศัพท์กับ glossary ทดสอบด้วยสถานการณ์ edge case และอัปเดต `CONTEXT.md` กับ ADR ไปพร้อมกัน
+- **[codebase-design](./skills/engineering/codebase-design/SKILL.md)** — วินัยและคลังคำศัพท์ร่วมสำหรับการออกแบบ deep module: พฤติกรรมจำนวนมากอยู่หลัง interface เล็ก ๆ วางไว้ที่ seam ที่สะอาด และ test ได้ผ่าน interface นั้น
+- **[code-review](./skills/engineering/code-review/SKILL.md)** — review diff จากจุดอ้างอิงคงที่ในสองแกน: **Standards** (ตาม coding standard ของ repo บวก baseline ของ Fowler smell หรือเปล่า?) และ **Spec** (implement ตาม issue/PRD ต้นเรื่องอย่างซื่อตรงหรือเปล่า?) รันเป็น sub-agent คู่ขนานเพื่อไม่ให้ปนเปื้อนกัน
 
 ### Productivity
 
-General workflow tools, not code-specific.
+เครื่องมือ workflow ทั่วไป ไม่เจาะจงเรื่อง code
 
 **User-invoked**
 
-- **[grill-me](./skills/productivity/grill-me/SKILL.md)** — Get relentlessly interviewed about a plan or design until every branch of the decision tree is resolved.
-- **[handoff](./skills/productivity/handoff/SKILL.md)** — Compact the current conversation into a handoff document so another agent can continue the work.
-- **[teach](./skills/productivity/teach/SKILL.md)** — Teach the user a new skill or concept over multiple sessions, using the current directory as a stateful teaching workspace.
-- **[writing-great-skills](./skills/productivity/writing-great-skills/SKILL.md)** — Reference for writing and editing skills well: the vocabulary and principles that make a skill predictable.
+- **[grill-me](./skills/productivity/grill-me/SKILL.md)** — โดนสัมภาษณ์แบบไม่ปล่อยเกี่ยวกับแผนหรือการออกแบบ จนทุกกิ่งของ decision tree ถูกไขจนหมด
+- **[handoff](./skills/productivity/handoff/SKILL.md)** — บีบอัดบทสนทนาปัจจุบันให้เป็นเอกสารส่งมอบงาน เพื่อให้ agent ตัวอื่นทำงานต่อได้
+- **[teach](./skills/productivity/teach/SKILL.md)** — สอน skill หรือแนวคิดใหม่ให้ผู้ใช้ต่อเนื่องหลาย session โดยใช้ directory ปัจจุบันเป็นพื้นที่สอนที่เก็บ state ได้
+- **[writing-great-skills](./skills/productivity/writing-great-skills/SKILL.md)** — เอกสารอ้างอิงสำหรับการเขียนและแก้ไข skill ให้ดี: คำศัพท์และหลักการที่ทำให้ skill คาดเดาพฤติกรรมได้
 
 **Model-invoked**
 
-- **[grilling](./skills/productivity/grilling/SKILL.md)** — Interview the user relentlessly about a plan or design until every branch of the decision tree is resolved. The reusable loop behind `grill-me` and `grill-with-docs`.
+- **[grilling](./skills/productivity/grilling/SKILL.md)** — สัมภาษณ์ผู้ใช้แบบไม่ปล่อยเกี่ยวกับแผนหรือการออกแบบ จนทุกกิ่งของ decision tree ถูกไขจนหมด เป็นลูปที่นำกลับมาใช้ซ้ำได้เบื้องหลัง `grill-me` และ `grill-with-docs`
