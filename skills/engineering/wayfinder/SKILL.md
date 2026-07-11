@@ -52,7 +52,7 @@ Wayfinder คือการ**วางแผน**โดย default: แต่�
 <!-- see "Out of scope": work ruled beyond the destination; closed, never graduates -->
 ```
 
-### Ticket
+### Tickets
 
 แต่ละ ticket เป็น **child issue** ของแผนที่; issue id ของ tracker คือ identity ของมัน เนื้อหาของ ticket คือคำถาม ขนาดพอดีกับ agent session ขนาด 100K token หนึ่ง session:
 
@@ -70,7 +70,7 @@ session จะ **claim** ticket ด้วยการ assign ให้ dev ท�
 
 คำตอบไม่ใช่ส่วนหนึ่งของเนื้อหา ticket — มันถูกบันทึกตอน resolve (ดู [ไล่ทำตามแผนที่](#work-through-the-map)) asset ที่สร้างขึ้นระหว่าง resolve ticket ให้ลิงก์จาก issue ไม่ใช่แปะเนื้อหาลงไปตรง ๆ
 
-## ประเภทของ ticket
+## Ticket Types
 
 ทุก ticket เป็นได้อย่างใดอย่างหนึ่ง: **HITL** — human in the loop, ทำ*ร่วมกับ*มนุษย์ที่พูดแทนตัวเองได้ — หรือ **AFK** ที่ agent ขับเคลื่อนคนเดียว ticket แบบ HITL จะ resolve ได้ก็ต่อเมื่อมีการแลกเปลี่ยนสด ๆ นั้นเท่านั้น; agent ห้ามสวมบทตอบแทนฝั่งมนุษย์เด็ดขาด (agent ที่ grill แล้วตอบคำถามตัวเองคือละเมิดข้อนี้แล้ว)
 
@@ -114,7 +114,7 @@ section **Not yet specified** ของแผนที่คือที่จ�
 4. **สร้าง ticket ที่ระบุได้ตอนนี้** เป็น child issue ของแผนที่ — แล้วค่อยโยงเส้น blocking ใน**รอบที่สอง** (issue ต้องมี id ก่อนถึงจะอ้างถึงกันได้) การโยงเส้นจะแยกพวกมันออกเป็น frontier กับพวกที่ถูก block; อะไรที่ยังระบุไม่ได้ให้คงอยู่ในหมอก — section **Not yet specified**
 5. หยุด — การวาดแผนที่คืองานของหนึ่ง session; อย่าเลยไป resolve ticket ต่อ
 
-### ไล่ทำตามแผนที่
+### Work through the map
 
 ผู้ใช้เรียกใช้พร้อมแผนที่ (URL หรือหมายเลข) จะระบุ ticket มาด้วยหรือไม่ก็ได้ — ถ้าไม่ระบุ คุณเป็นคนเลือกการตัดสินใจถัดไป ไม่ใช่ผู้ใช้
 
